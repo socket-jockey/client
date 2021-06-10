@@ -5,6 +5,10 @@ import CollabWorld from '../CollabRoomPage/CollabWorld';
 
 const RoomsPage = ({ setRoom, room }) => {
   const [globalControls, setGlobalControls] = useState(false);
+  const [controlPanel, setControlPanel] = useState(false);
+  const [tone, setTone] = useState(1);
+  const [tempo, setTempo] = useState(1);
+  const [volume, setVolume] = useState(1);
 
   if (!room)
     return (
@@ -16,11 +20,18 @@ const RoomsPage = ({ setRoom, room }) => {
     );
   return (
     <>
-      {room === 'solo' ? <SoloWorld /> : <CollabWorld />}
+      {room === 'solo' ? (
+        <SoloWorld setControlPanel={setControlPanel} />
+      ) : (
+        <CollabWorld setControlPanel={setControlPanel} />
+      )}
       {!globalControls ? (
         <div onClick={() => setGlobalControls(true)}>⚙️</div>
       ) : (
         <div onClick={() => setGlobalControls(false)}>Global Control Panel</div>
+      )}
+      {controlPanel && (
+        <div onClick={() => setControlPanel(false)}>Body Controls</div>
       )}
     </>
   );

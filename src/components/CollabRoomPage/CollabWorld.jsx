@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const CollabWorld = () => {
-  const [controlPanel, setControlPanel] = useState(false);
-
+const CollabWorld = ({ setControlPanel }) => {
   return (
     <>
       <div
@@ -12,9 +10,6 @@ const CollabWorld = () => {
       >
         Collab World
       </div>
-      {controlPanel && (
-        <div onClick={() => setControlPanel(false)}>Body Controls</div>
-      )}
     </>
   );
 };

@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 const socket = io.connect('http://localhost:8000');
 import { Typography } from '@material-ui/core';
 
-const SoloWorld = ({ setControlPanel }) => {
+const SoloWorld = ({ bodyRef, worldRef }) => {
   const sceneRef = useRef(null);
   const engineRef = useRef(null);
 
@@ -73,7 +73,7 @@ const SoloWorld = ({ setControlPanel }) => {
     render.mouse = mouse;
 
     Matter.Events.on(mouseConstraint, 'mouseup', (event) => {
-      console.log(event);
+      // console.log(event);
       Composite.add(
         world,
         Bodies.circle(event.mouse.position.x, event.mouse.position.y, 30, {
@@ -85,9 +85,7 @@ const SoloWorld = ({ setControlPanel }) => {
 
   return (
     <>
-      <Typography onClick={() => setControlPanel(true)} variant={'h1'}>
-        Solo World
-      </Typography>
+      <Typography variant={'h1'}>Solo World</Typography>
       <div ref={sceneRef}></div>
     </>
   );

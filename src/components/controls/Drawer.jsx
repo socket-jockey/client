@@ -46,7 +46,7 @@ export default function TemporaryDrawer({
 
   return (
     <div>
-      <Button onClick={toggleDrawer('right', true)}>{'right'}</Button>
+      <Button onClick={toggleDrawer('right', true)}>controls</Button>
       <Drawer
         anchor={'right'}
         open={state['right']}

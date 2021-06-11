@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SoloWorld from '../SoloRoomPage/SoloWorld';
 import CollabWorld from '../CollabRoomPage/CollabWorld';
 import BodyControls from '../controls/BodyControls';
+import WorldControls from '../controls/WorldControls';
 
 const RoomsPage = ({ setRoom, room }) => {
   const [viewGlobalControls, setViewGlobalControls] = useState(false);
@@ -21,6 +22,10 @@ const RoomsPage = ({ setRoom, room }) => {
 
   const worldRef = useRef({
     worldSize: { x: 600, y: 600 },
+    gravityX: 0,
+    gravityY: 0,
+    reverb: 0,
+    toggles: [],
   });
 
   const [bodyControls, setBodyControls] = useState(bodyRef.current);
@@ -38,6 +43,10 @@ const RoomsPage = ({ setRoom, room }) => {
 
   const handleBodyRemove = () => {
     console.log('body removed!');
+  };
+
+  const handleWorldClear = () => {
+    console.log('world cleared!');
   };
 
   if (!room)
@@ -58,9 +67,15 @@ const RoomsPage = ({ setRoom, room }) => {
       {!viewGlobalControls ? (
         <div onClick={() => setViewGlobalControls(true)}>⚙️</div>
       ) : (
-        <div onClick={() => setViewGlobalControls(false)}>
-          Global Control Panel
-        </div>
+        <>
+          <div onClick={() => setViewGlobalControls(false)}>close</div>
+          <WorldControls
+            worldControlsHandler={worldControlsHandler}
+            worldControls={worldControls}
+            worldRef={worldRef}
+            handleWorldClear={handleWorldClear}
+          />
+        </>
       )}
       {!viewBodyControls ? (
         <div onClick={() => setViewBodyControls(true)}>🟣</div>

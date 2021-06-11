@@ -83,12 +83,7 @@ const SoloWorld = ({ bodyRef, worldRef }) => {
     });
   }, []);
 
-  return (
-    <>
-      <Typography variant={'h1'}>Solo World</Typography>
-      <div ref={sceneRef}></div>
-    </>
-  );
+  return <div ref={sceneRef}></div>;
 };
 
 SoloWorld.propTypes = {};

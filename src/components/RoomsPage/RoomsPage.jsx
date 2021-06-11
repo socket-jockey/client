@@ -4,6 +4,8 @@ import SoloWorld from '../SoloRoomPage/SoloWorld';
 import CollabWorld from '../CollabRoomPage/CollabWorld';
 import BodyControls from '../controls/BodyControls';
 import WorldControls from '../controls/WorldControls';
+import styles from './RoomsPage.css';
+import TemporaryDrawer from '../controls/Drawer';
 
 const RoomsPage = ({ setRoom, room }) => {
   const [viewGlobalControls, setViewGlobalControls] = useState(false);
@@ -18,6 +20,8 @@ const RoomsPage = ({ setRoom, room }) => {
     toggles: [],
     wrap: false,
     static: false,
+    shape: '',
+    material: '',
   });
 
   const worldRef = useRef({
@@ -51,23 +55,45 @@ const RoomsPage = ({ setRoom, room }) => {
 
   if (!room)
     return (
-      <div>
-        <h1>Rooms Page</h1>
-        <p onClick={() => setRoom('solo')}>solo</p>
-        <p onClick={() => setRoom('collab')}>collab</p>
-      </div>
+      <article>
+        <section
+          onClick={() => setRoom('solo')}
+          className={styles.soloContainer}
+        >
+          <img
+            src="../../../public/solo.png"
+            alt="solo world experience"
+            className={styles.soloImage}
+          />
+        </section>
+        <section
+          onClick={() => setRoom('collab')}
+          className={styles.collabContainer}
+        >
+          <img
+            src="../../../public/collab.png"
+            alt="collaborative world experience"
+            className={styles.collabImage}
+          />
+        </section>
+      </article>
     );
   return (
-    <>
+    <article>
+      <TemporaryDrawer />
       {room === 'solo' ? (
-        <SoloWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
+        <section className={styles.solo}>
+          <SoloWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
+        </section>
       ) : (
-        <CollabWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
+        <section className={styles.collab}>
+          <CollabWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
+        </section>
       )}
       {!viewGlobalControls ? (
         <div onClick={() => setViewGlobalControls(true)}>⚙️</div>
       ) : (
-        <>
+        <div>
           <div onClick={() => setViewGlobalControls(false)}>close</div>
           <WorldControls
             worldControlsHandler={worldControlsHandler}
@@ -75,12 +101,12 @@ const RoomsPage = ({ setRoom, room }) => {
             worldRef={worldRef}
             handleWorldClear={handleWorldClear}
           />
-        </>
+        </div>
       )}
       {!viewBodyControls ? (
         <div onClick={() => setViewBodyControls(true)}>🟣</div>
       ) : (
-        <>
+        <div>
           <div onClick={() => setViewBodyControls(false)}>close</div>
           <BodyControls
             bodyControlsHandler={bodyControlsHandler}
@@ -88,9 +114,9 @@ const RoomsPage = ({ setRoom, room }) => {
             worldRef={worldRef}
             handleBodyRemove={handleBodyRemove}
           />
-        </>
+        </div>
       )}
-    </>
+    </article>
   );
 };
 

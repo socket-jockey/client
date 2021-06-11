@@ -17,8 +17,40 @@ const BodyControls = ({
   handleBodyRemove,
 }) => {
   return (
-    <Container>
-      <FormGroup style={{ width: 300 }}>
+    <Container style={{ width: 300 }}>
+      <ToggleButtonGroup
+        size="small"
+        value={bodyControls.shape}
+        onChange={(_, value) => bodyControlsHandler('shape', value)}
+        exclusive
+      >
+        <ToggleButton value="circle">circle</ToggleButton>
+        <ToggleButton value="square">square</ToggleButton>
+        <ToggleButton value="triangle">triangle</ToggleButton>
+        <ToggleButton value="hexagon">hexagon</ToggleButton>
+        <ToggleButton value="polygon">polygon</ToggleButton>
+        <ToggleButton value="orbit">orbit</ToggleButton>
+        <ToggleButton value="draw">draw</ToggleButton>
+      </ToggleButtonGroup>
+      <ToggleButtonGroup
+        size="small"
+        value={bodyControls.material}
+        onChange={(_, value) => bodyControlsHandler('material', value)}
+        exclusive
+      >
+        <ToggleButton value="wood">wood</ToggleButton>
+        <ToggleButton value="metal">metal</ToggleButton>
+        <ToggleButton value="bubble">bubble</ToggleButton>
+        <ToggleButton value="cloth">cloth</ToggleButton>
+        <ToggleButton value="synthetic">synthetic</ToggleButton>
+        <ToggleButton value="rain cloud">rain cloud</ToggleButton>
+        <ToggleButton value="rubber">rubber</ToggleButton>
+        <ToggleButton value="crystal">crystal</ToggleButton>
+        <ToggleButton value="glitter">glitter</ToggleButton>
+        <ToggleButton value="liquid">liquid</ToggleButton>
+        <ToggleButton value="random">random</ToggleButton>
+      </ToggleButtonGroup>
+      <FormGroup>
         <InputLabel>
           Synth Pitch
           <Slider
@@ -63,24 +95,8 @@ const BodyControls = ({
         value={bodyControls.toggles}
         onChange={(_, value) => bodyControlsHandler('toggles', value)}
       >
-        <ToggleButton
-          value="wrap"
-          // selected={bodyControls.wrap}
-          // onChange={() => {
-          //   bodyControlsHandler('wrap', !bodyControls.wrap);
-          // }}
-        >
-          wrap
-        </ToggleButton>
-        <ToggleButton
-          value="static"
-          // selected={bodyControls.static}
-          // onChange={() => {
-          //   bodyControlsHandler('static', !bodyControls.static);
-          // }}
-        >
-          static
-        </ToggleButton>
+        <ToggleButton value="wrap">wrap</ToggleButton>
+        <ToggleButton value="static">static</ToggleButton>
       </ToggleButtonGroup>
       <Button onClick={handleBodyRemove} variant="outlined">
         undo

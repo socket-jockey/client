@@ -17,7 +17,7 @@ const BodyControls = ({
   handleBodyRemove,
 }) => {
   return (
-    <Container style={{ width: 300 }}>
+    <FormGroup>
       <ToggleButtonGroup
         size="small"
         value={bodyControls.shape}
@@ -101,7 +101,7 @@ const BodyControls = ({
       <Button onClick={handleBodyRemove} variant="outlined">
         undo
       </Button>
-    </Container>
+    </FormGroup>
   );
 };
 

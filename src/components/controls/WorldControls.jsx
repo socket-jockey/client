@@ -20,7 +20,7 @@ const WorldControls = ({
 
   return (
     <Container>
-      <FormGroup style={{ width: 300 }}>
+      <FormGroup>
         <InputLabel>
           X Gravity
           <Slider

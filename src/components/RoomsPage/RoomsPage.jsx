@@ -8,9 +8,6 @@ import styles from './RoomsPage.css';
 import TemporaryDrawer from '../controls/Drawer';
 
 const RoomsPage = ({ setRoom, room }) => {
-  const [viewGlobalControls, setViewGlobalControls] = useState(false);
-  const [viewBodyControls, setViewBodyControls] = useState(false);
-
   const bodyRef = useRef({
     frictionAir: 0.01,
     tempo: 0,
@@ -80,7 +77,15 @@ const RoomsPage = ({ setRoom, room }) => {
     );
   return (
     <article>
-      <TemporaryDrawer />
+      <TemporaryDrawer
+        bodyControlsHandler={bodyControlsHandler}
+        bodyControls={bodyControls}
+        worldRef={worldRef}
+        handleBodyRemove={handleBodyRemove}
+        worldControlsHandler={worldControlsHandler}
+        worldControls={worldControls}
+        handleWorldClear={handleWorldClear}
+      />
       {room === 'solo' ? (
         <section className={styles.solo}>
           <SoloWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
@@ -89,32 +94,6 @@ const RoomsPage = ({ setRoom, room }) => {
         <section className={styles.collab}>
           <CollabWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
         </section>
-      )}
-      {!viewGlobalControls ? (
-        <div onClick={() => setViewGlobalControls(true)}>⚙️</div>
-      ) : (
-        <div>
-          <div onClick={() => setViewGlobalControls(false)}>close</div>
-          <WorldControls
-            worldControlsHandler={worldControlsHandler}
-            worldControls={worldControls}
-            worldRef={worldRef}
-            handleWorldClear={handleWorldClear}
-          />
-        </div>
-      )}
-      {!viewBodyControls ? (
-        <div onClick={() => setViewBodyControls(true)}>🟣</div>
-      ) : (
-        <div>
-          <div onClick={() => setViewBodyControls(false)}>close</div>
-          <BodyControls
-            bodyControlsHandler={bodyControlsHandler}
-            bodyControls={bodyControls}
-            worldRef={worldRef}
-            handleBodyRemove={handleBodyRemove}
-          />
-        </div>
       )}
     </article>
   );

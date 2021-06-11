@@ -1,0 +1,45 @@
+/* @font-face {
+  font-family: 'tan_-_astoriaregular';
+  src: url('../../fonts/tan-astoria-display.woff2') format('woff2'),
+    url('../../fonts/tan-astoria-display.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+} */
+
+.colorChange {
+  color: white;
+  transition: 0.8s;
+  font-size: 24px;
+  text-align: center;
+  /* font-family: 'tan_-_astoriaregular'; */
+}
+
+.colorChange:hover {
+  color: black;
+  cursor: pointer;
+  transition-duration: 4s;
+}
+/* .colorChange:active {
+  /* visibility: hidden;
+  opacity: 0;
+  transition: 2s; */
+
+/* color: white;
+  transition: 4s;
+  transform: scale(0.7); */
+/* } */
+body {
+  background-image: url('../../../public/landing.png');
+  background-size: cover;
+  width: 100%;
+  height: auto;
+}
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 800px;
+}
+h1 {
+  font-family: 'tan_-_astoriaregular';
+}

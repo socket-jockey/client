@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+}
+
+main {
+  display: grid;
+  grid-template-rows: 3rem auto 3rem;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url('../../../public/landing.png');
+  background-size: cover;
+}
+
+header {
+  grid-row: 1 / 2;
+}
+
+article {
+  grid-row: 2 / 3;
+  display: flex;
+  justify-content: center;
+}
+
+section {
+}
+
+footer {
+  grid-row: 3 / 4;
+}

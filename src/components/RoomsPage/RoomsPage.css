@@ -1,0 +1,19 @@
+.soloContainer {
+  width: 50%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.soloImage {
+  width: 100%;
+  object-fit: contain;
+}
+
+.collabContainer {
+  width: 50%;
+}
+
+.collabImage {
+  width: 100%;
+  object-fit: contain;
+}

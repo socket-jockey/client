@@ -1,22 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import BodyControls from './BodyControls';
 import WorldControls from './WorldControls';
 
-const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-});
-
-export default function TemporaryDrawer({
+const ControlsDrawer = ({
   bodyControlsHandler,
   bodyControls,
   worldRef,
@@ -24,16 +13,10 @@ export default function TemporaryDrawer({
   worldControlsHandler,
   worldControls,
   handleWorldClear,
-}) {
-  const classes = useStyles();
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+}) => {
+  const [drawerView, setDrawerView] = React.useState(false);
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawer = (open) => (event) => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
@@ -41,17 +24,13 @@ export default function TemporaryDrawer({
       return;
     }
 
-    setState({ ...state, [anchor]: open });
+    setDrawerView(open);
   };
 
   return (
     <div>
-      <Button onClick={toggleDrawer('right', true)}>controls</Button>
-      <Drawer
-        anchor={'right'}
-        open={state['right']}
-        onClose={toggleDrawer('right', false)}
-      >
+      <Button onClick={toggleDrawer(true)}>controls</Button>
+      <Drawer anchor={'right'} open={drawerView} onClose={toggleDrawer(false)}>
         <BodyControls
           bodyControlsHandler={bodyControlsHandler}
           bodyControls={bodyControls}
@@ -68,4 +47,6 @@ export default function TemporaryDrawer({
       </Drawer>
     </div>
   );
-}
+};
+
+export default ControlsDrawer;

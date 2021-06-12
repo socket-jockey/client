@@ -5,7 +5,7 @@ import CollabWorld from '../CollabRoomPage/CollabWorld';
 import BodyControls from '../controls/BodyControls';
 import WorldControls from '../controls/WorldControls';
 import styles from './RoomsPage.css';
-import TemporaryDrawer from '../controls/Drawer';
+import ControlsDrawer from '../controls/ControlsDrawer';
 
 const RoomsPage = ({ setRoom, room }) => {
   const bodyRef = useRef({
@@ -27,6 +27,7 @@ const RoomsPage = ({ setRoom, room }) => {
     gravityY: 0,
     reverb: 0,
     toggles: [],
+    vibe: '',
   });
 
   const [bodyControls, setBodyControls] = useState(bodyRef.current);
@@ -77,7 +78,7 @@ const RoomsPage = ({ setRoom, room }) => {
     );
   return (
     <article>
-      <TemporaryDrawer
+      <ControlsDrawer
         bodyControlsHandler={bodyControlsHandler}
         bodyControls={bodyControls}
         worldRef={worldRef}

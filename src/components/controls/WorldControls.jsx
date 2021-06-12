@@ -62,6 +62,15 @@ const WorldControls = ({
       >
         <ToggleButton value="pause motion">pause motion</ToggleButton>
       </ToggleButtonGroup>
+      <ToggleButtonGroup
+        value={worldControls.vibe}
+        onChange={(_, value) => worldControlsHandler('vibe', value)}
+        exclusive
+      >
+        <ToggleButton value="major">major</ToggleButton>
+        <ToggleButton value="minor">minor</ToggleButton>
+        <ToggleButton value="chromatic">chromatic</ToggleButton>
+      </ToggleButtonGroup>
       <Button onClick={handleWorldClear} variant="outlined">
         remove all
       </Button>

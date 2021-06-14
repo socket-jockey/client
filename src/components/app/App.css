@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+
+/* body {
+} */
+
+main {
+  display: grid;
+  grid-template-rows: 3rem auto 3rem;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+header {
+  grid-row: 1 / 2;
+}
+
+article {
+  grid-row: 2 / 3;
+  display: flex;
+  justify-content: center;
+}
+
+/* section {
+} */
+
+footer {
+  grid-row: 3 / 4;
+}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Footer = (props) => {
   return (
     <footer>
-      <h3>Footer</h3>
+      <h3>copyright 2021 MEGAGROUP</h3>
     </footer>
   );
 };

@@ -1,0 +1,42 @@
+.hole {
+  object-fit: contain;
+  width: 55vmin;
+  z-index: 0;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.colorChange {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: 0.8s;
+  font-size: 5.5vmin;
+  line-height: 6.5vmin;
+  font-family: 'tan_-_astoriaregular';
+  color: rgb(255, 255, 255);
+  opacity: 0;
+  z-index: 1;
+  margin-top: 5vmin;
+  position: absolute;
+}
+
+.colorChange:hover {
+  opacity: 100;
+  cursor: pointer;
+  transition-duration: 4s;
+}
+
+@font-face {
+  font-family: 'tan_-_astoriaregular';
+  src: url('../../../public/fonts/tan-astoria-display.woff2') format('woff2'),
+    url('../../../public/fonts/tan-astoria-display.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

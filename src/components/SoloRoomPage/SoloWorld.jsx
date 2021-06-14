@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Matter from 'matter-js';
 import { io } from 'socket.io-client';
-const socket = io.connect('http://localhost:8000');
+const socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
 import { Typography } from '@material-ui/core';
 
 const SoloWorld = ({ bodyRef, worldRef }) => {

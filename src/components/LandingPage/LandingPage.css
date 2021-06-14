@@ -35,8 +35,8 @@
 
 @font-face {
   font-family: 'tan_-_astoriaregular';
-  src: url('./fonts/tan-astoria-display.woff2') format('woff2'),
-    url('./fonts/tan-astoria-display.woff') format('woff');
+  src: url('/fonts/tan-astoria-display.woff2') format('woff2'),
+    url('/fonts/tan-astoria-display.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }

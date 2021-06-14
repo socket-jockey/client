@@ -11,7 +11,7 @@ const LandingPage = ({ setLanding }) => {
         Jockey
       </p>
       <img
-        src="../../../public/theHole.png"
+        src="/theHole.png"
         alt="the hole"
         className={style.hole}
       />

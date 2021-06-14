@@ -59,7 +59,7 @@ const RoomsPage = ({ setRoom, room }) => {
           className={styles.soloContainer}
         >
           <img
-            src="../../../public/solo.png"
+            src="/solo.png"
             alt="solo world experience"
             className={styles.soloImage}
           />
@@ -69,7 +69,7 @@ const RoomsPage = ({ setRoom, room }) => {
           className={styles.collabContainer}
         >
           <img
-            src="../../../public/collab.png"
+            src="/collab.png"
             alt="collaborative world experience"
             className={styles.collabImage}
           />

@@ -16,16 +16,6 @@ main {
   padding: 2rem;
 }
 
-.landing {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-size: 100% 100%;
-  /* background-image: url('./landing.png'); */
-  /* background-size: cover; */
-}
-
 header {
   grid-row: 1 / 2;
 }

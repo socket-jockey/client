@@ -11,6 +11,16 @@
   position: relative;
 }
 
+.landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-size: 100% 100%;
+  /* background-image: url('./landing.png'); */
+  /* background-size: cover; */
+}
+
 .colorChange {
   display: flex;
   justify-content: center;
@@ -25,6 +35,8 @@
   z-index: 1;
   margin-top: 5vmin;
   position: absolute;
+  /* top: 50px;
+  left: 50px; */
 }
 
 .colorChange:hover {

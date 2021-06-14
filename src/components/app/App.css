@@ -4,8 +4,8 @@
   margin: 0px;
 }
 
-body {
-}
+/* body {
+} */
 
 main {
   display: grid;
@@ -21,8 +21,9 @@ main {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-image: url('../../../public/landing.png');
-  background-size: cover;
+  background-size: 100% 100%;
+  /* background-image: url('./landing.png'); */
+  /* background-size: cover; */
 }
 
 header {
@@ -35,8 +36,8 @@ article {
   justify-content: center;
 }
 
-section {
-}
+/* section {
+} */
 
 footer {
   grid-row: 3 / 4;

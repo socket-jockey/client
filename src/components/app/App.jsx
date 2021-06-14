@@ -9,9 +9,11 @@ const App = () => {
   const [landing, setLanding] = useState(true);
   const [room, setRoom] = useState('');
 
-  if (landing)
+  if(landing)
     return (
-      <main className={styles.landing}>
+      <main style={{
+        backgroundImage: 'url(landing.png)',
+      }} className={styles.landing}>
         <LandingPage setLanding={setLanding} />
       </main>
     );

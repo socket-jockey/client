@@ -84,12 +84,12 @@ module.exports = {
           options: { limit: 1000 },
         },
       },
-      {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        use: {
-          loader: 'url-loader'
-        }
-      }
+      // {
+      //   test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      //   use: {
+      //     loader: 'url-loader'
+      //   }
+      // }
     ],
   },
 };

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SoloWorld from '../SoloRoomPage/SoloWorld';
 import CollabWorld from '../CollabRoomPage/CollabWorld';
@@ -6,6 +6,7 @@ import BodyControls from '../controls/BodyControls';
 import WorldControls from '../controls/WorldControls';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
+
 
 const RoomsPage = ({ setRoom, room }) => {
   const bodyRef = useRef({
@@ -94,6 +95,7 @@ const RoomsPage = ({ setRoom, room }) => {
       ) : (
         <section className={styles.collab}>
           <CollabWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
+          {/* <Chat socketRoom={socketRoom} /> */}
         </section>
       )}
     </article>

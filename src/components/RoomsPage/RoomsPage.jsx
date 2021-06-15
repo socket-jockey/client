@@ -11,8 +11,8 @@ const RoomsPage = () => {
     canvasX = 1000;
     canvasY = 800;
   } else {
-    canvasX = (window.innerWidth / 3) * 2;
-    canvasY = (window.innerHeight / 3) * 2;
+    canvasX = window.innerWidth * 0.8 ;
+    canvasY = window.innerHeight * 0.8;
   }
 
   const { room } = useParams();

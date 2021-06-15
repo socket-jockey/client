@@ -5,8 +5,9 @@
 }
 
 .soloImage {
-  width: 100%;
-  object-fit: contain;
+  width: 90%;
+  margin-top: 30%;
+  /* object-fit: contain; */
 }
 
 .collabContainer {
@@ -14,6 +15,7 @@
 }
 
 .collabImage {
-  width: 100%;
-  object-fit: contain;
+  width: 90%;
+
+  /* object-fit: contain; */
 }

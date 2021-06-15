@@ -7,11 +7,20 @@ import Container from '@material-ui/core/Container';
 const RoomSelectionPage = () => {
   return (
     <Container
-    maxWidth='lg'
+      style={{
+        marginTop: '5%',
+      }}
+      maxWidth="md"
     >
-      <Grid container direction="row" spacing={3} wrap="wrap">
-      <Grid item sm={6} md={6} lg={6} xl={6}></Grid>
-        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}  alignItems="center">
+      <Grid
+        container
+        direction="row"
+        spacing={3}
+        wrap="wrap"
+        alignItems="center"
+      >
+        <Grid item sm={6} md={6} lg={6} xl={6}></Grid>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6} alignItems="center">
           <Link to="/rooms/collab">
             <img
               src="/collab.png"
@@ -20,7 +29,15 @@ const RoomSelectionPage = () => {
             />
           </Link>
         </Grid>
-        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}  alignContent="flex-start">
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={6}
+          xl={6}
+          alignContent="flex-start"
+        >
           <Link to="/rooms/solo">
             <img
               src="/solo.png"
@@ -29,7 +46,7 @@ const RoomSelectionPage = () => {
             />
           </Link>
         </Grid>
-         <Grid item sm={6} md={6} lg={6} xl={6}></Grid>
+        <Grid item sm={6} md={6} lg={6} xl={6}></Grid>
       </Grid>
     </Container>
   );

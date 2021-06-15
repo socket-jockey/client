@@ -1,18 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { SocketContext } from '../app/App';
 
-const Chat = ({socketRoom }) => {
+const Chat = ({ socket, socketRoom }) => {
   const [input, setInput] = useState('');
   const [display, setDisplay] = useState('init');
-  // const socket = useContext(SocketContext);
 
-  // useEffect(() => {
-  //   socket.on('server chat', msg => setDisplay(msg));
-  // }, []);
+  useEffect(() => {
+    socket.on('server chat', msg => {
+      setDisplay(msg);
+      console.log('message', msg);
+    });
+  }, []);
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // socket.emit('client chat', input, socketRoom);
+    console.log('input', input);
+    console.log('room', socketRoom);
+    socket.emit('client chat', input, socketRoom);
   };
 
   const handleInputChange = (e) => {

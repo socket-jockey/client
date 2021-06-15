@@ -1,36 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './RoomsPage.css';
-
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 
 const RoomSelectionPage = () => {
   return (
-    <article>
-      <Link to="/rooms/solo">
-        <section
-          // onClick={() => setRoom('solo')}
-          className={styles.soloContainer}
-        >
-          <img
-            src="/solo.png"
-            alt="solo world experience"
-            className={styles.soloImage}
-          />
-        </section>
-      </Link>
-      <Link to="/rooms/collab">
-        <section
-          // onClick={() => setRoom('collab')}
-          className={styles.collabContainer}
-        >
-          <img
-            src="/collab.png"
-            alt="collaborative world experience"
-            className={styles.collabImage}
-          />
-        </section>
-      </Link>
-    </article>
+    <Container
+    maxWidth='lg'
+    >
+      <Grid container direction="row" spacing={3} wrap="wrap">
+      <Grid item sm={6} md={6}></Grid>
+        <Grid item sm={6} md={6} xs={12} alignItems="center">
+          <Link to="/rooms/collab">
+            <img
+              src="/collab.png"
+              alt="collaborative world experience"
+              className={styles.collabImage}
+            />
+          </Link>
+        </Grid>
+        <Grid item sm={6} md={6} xs={12} alignContent="flex-start">
+          <Link to="/rooms/solo">
+            <img
+              src="/solo.png"
+              alt="solo world experience"
+              className={styles.soloImage}
+            />
+          </Link>
+        </Grid>
+         <Grid item sm={6} md={6}></Grid>
+      </Grid>
+    </Container>
   );
 };
 

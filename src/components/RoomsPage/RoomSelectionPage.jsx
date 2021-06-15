@@ -22,12 +22,19 @@ const RoomSelectionPage = () => {
           >
             <Link to="/rooms/solo">
               <img
-                src="/solo.png"
+                src="https://i.imgur.com/kMsm46E.png"
                 alt="solo world experience"
-                className={styles.soloImage}
-                style={{
-                  marginTop: '30%',
-                }}
+                className={styles.soloClouds}
+              />
+              <img
+                src="https://i.imgur.com/9wSFL7M.png"
+                alt="solo world experience"
+                className={styles.soloText}
+              />
+              <img
+                src="https://i.imgur.com/CCh62Ir.png"
+                alt="solo world experience"
+                className={styles.soloMountains}
               />
             </Link>
           </div>
@@ -38,16 +45,38 @@ const RoomSelectionPage = () => {
               height: '100vh',
             }}
           >
-            <Link to="/rooms/collab">
-              <img
-                src="/collab.png"
-                alt="collaborative world experience"
-                className={styles.collabImage}
-                style={{
-                  justifyContent: 'center',
-                }}
-              />
-            </Link>
+            <img
+              src="https://i.imgur.com/8jDSKJW.png"
+              alt="collaborative world experience"
+              className={styles.collabClouds}
+              style={{
+                justifyContent: 'center',
+              }}
+            />
+            <img
+              src="https://i.imgur.com/WGq5sFA.png"
+              alt="collaborative world experience"
+              className={styles.collabText}
+              style={{
+                justifyContent: 'center',
+              }}
+            />
+            <img
+              src="https://i.imgur.com/wCb8kLF.png"
+              alt="collaborative world experience"
+              className={styles.collabBlackMountains}
+              style={{
+                justifyContent: 'center',
+              }}
+            />
+            <img
+              src="https://i.imgur.com/nDa5QFE.png"
+              alt="collaborative world experience"
+              className={styles.collabWhiteMountains}
+              style={{
+                justifyContent: 'center',
+              }}
+            />
           </div>
         </Grid>
       </Grid>

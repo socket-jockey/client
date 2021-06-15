@@ -54,7 +54,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     //socket stuff
     let socket;
     if (!noFriendButStillCool) {
-      socket = io.connect('http://localhost:8000');
+      socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
       socket.emit('collab');
       socket.on('set room', (room) => {
         socket.currentRoom = room;
@@ -122,7 +122,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
 
     Matter.Events.on(
       engineRef.current,
-      'collisionStart collisionActive collisionEnd',
+      'collisionStart',
       (event) => {
         const { bodyA, bodyB } = event.pairs[0];
         console.log(bodyA, bodyB);

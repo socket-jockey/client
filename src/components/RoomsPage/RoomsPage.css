@@ -6,9 +6,8 @@
 }
 
 .soloClouds {
-  width: 30%;
-  margin-top: 25%;
-  margin-left: 5%;
+  width: 40%;
+  margin-top: 20%;
   z-index: -1;
   position: absolute;
   /* object-fit: contain; */
@@ -24,9 +23,9 @@
 }
 
 .soloMountains {
-  width: 30%;
+  width: 40%;
   margin-left: 5%;
-  margin-top: 25%;
+  margin-top: 20%;
   position: absolute;
   z-index: 1;
   /* object-fit: contain; */
@@ -38,8 +37,7 @@
 }
 
 .collabClouds {
-  width: 30%;
-  margin-left: 5%;
+  width: 40%;
   z-index: -1;
   position: absolute;
   /* object-fit: contain; */
@@ -47,23 +45,22 @@
 
 .collabText {
   width: 30%;
-  margin-left: 5%;
+  margin-left: 3%;
+  margin-top: 3%;
   z-index: 0;
   position: absolute;
   /* object-fit: contain; */
 }
 
 .collabWhiteMountains {
-  width: 30%;
-  margin-left: 5%;
+  width: 50%;
   z-index: 1;
   position: absolute;
   /* object-fit: contain; */
 }
 
 .collabBlackMountains {
-  width: 30%;
-  margin-left: 5%;
+  width: 50%;
   z-index: 2;
   position: absolute;
   /* object-fit: contain; */

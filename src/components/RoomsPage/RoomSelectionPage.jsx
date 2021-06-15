@@ -8,18 +8,18 @@ const RoomSelectionPage = () => {
   return (
     <Container
       style={{
-        marginTop: '5%',
+        // marginTop: '5%',
       }}
-      maxWidth="md"
+      maxWidth={false}
     >
       <Grid
         container
         direction="row"
-        spacing={3}
+        // spacing={3}
         wrap="wrap"
         alignItems="center"
       >
-        <Grid item sm={6} md={6} lg={6} xl={6}></Grid>
+        <Grid item md={6} lg={6} xl={6}></Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6} alignItems="center">
           <Link to="/rooms/collab">
             <img
@@ -46,7 +46,7 @@ const RoomSelectionPage = () => {
             />
           </Link>
         </Grid>
-        <Grid item sm={6} md={6} lg={6} xl={6}></Grid>
+        <Grid item md={6} lg={6} xl={6}></Grid>
       </Grid>
     </Container>
   );

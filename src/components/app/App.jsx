@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import CollabWorld from '../CollabRoomPage/CollabWorld';
 import LandingPage from '../LandingPage/LandingPage';
 import RoomsPage from '../RoomsPage/RoomsPage';
 import SoloWorld from '../SoloRoomPage/SoloWorld';
@@ -32,14 +31,8 @@ const App = () => {
         />
 
         <Route 
-          exact path = "/rooms/solo"
-          component={SoloWorld}
-          // room={room}
-        />
-
-        <Route 
-          exact path = "/rooms/:collab"
-          component={CollabWorld}
+          exact path = "/rooms/:room"
+          component={RoomsPage}
         />
 
         <Route 

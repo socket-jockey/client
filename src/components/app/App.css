@@ -8,8 +8,8 @@
 } */
 
 main {
-  display: grid;
-  grid-template-rows: 3rem auto 3rem;
+  /* display: grid;
+  grid-template-rows: 3rem auto 3rem; */
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -17,11 +17,11 @@ main {
 }
 
 header {
-  grid-row: 1 / 2;
+  /* grid-row: 1 / 2; */
 }
 
 article {
-  grid-row: 2 / 3;
+  /* grid-row: 2 / 3; */
   display: flex;
   justify-content: center;
 }
@@ -29,6 +29,9 @@ article {
 /* section {
 } */
 
-footer {
-  grid-row: 3 / 4;
+.Footer {
+  position: absolute;
+  bottom: 0%;
+  color: lightgrey;
+  /* grid-row: 3 / 4; */
 }

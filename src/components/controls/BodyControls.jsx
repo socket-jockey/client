@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-  Container,
   FormGroup,
   InputLabel,
   Slider,
@@ -11,23 +10,25 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const BodyControls = ({
+  handleBodyControls,
   bodyControls,
-  worldRef,
-  bodyControlsHandler,
-  handleBodyRemove,
+  maxCanvas,
+  handleUndo,
+  handleStatic,
+  handleLoop
 }) => {
   return (
     <FormGroup>
       <ToggleButtonGroup
         size="small"
         value={bodyControls.shape}
-        onChange={(_, value) => bodyControlsHandler('shape', value)}
+        onChange={(_, value) => handleBodyControls('shape', value)}
         exclusive
       >
-        <ToggleButton value="circle">circle</ToggleButton>
-        <ToggleButton value="square">square</ToggleButton>
-        <ToggleButton value="triangle">triangle</ToggleButton>
-        <ToggleButton value="hexagon">hexagon</ToggleButton>
+        <ToggleButton value="CIRCLE">circle</ToggleButton>
+        <ToggleButton value="SQUARE">square</ToggleButton>
+        <ToggleButton value="TRIANGLE">triangle</ToggleButton>
+        <ToggleButton value="HEXAGON">hexagon</ToggleButton>
         <ToggleButton value="polygon">polygon</ToggleButton>
         <ToggleButton value="orbit">orbit</ToggleButton>
         <ToggleButton value="draw">draw</ToggleButton>
@@ -35,7 +36,7 @@ const BodyControls = ({
       <ToggleButtonGroup
         size="small"
         value={bodyControls.material}
-        onChange={(_, value) => bodyControlsHandler('material', value)}
+        onChange={(_, value) => handleBodyControls('material', value)}
         exclusive
       >
         <ToggleButton value="wood">wood</ToggleButton>
@@ -52,10 +53,10 @@ const BodyControls = ({
       </ToggleButtonGroup>
       <FormGroup>
         <InputLabel>
-          Synth Pitch
+          Size
           <Slider
-            value={bodyControls.synthPitch}
-            onChange={(_, value) => bodyControlsHandler('synthPitch', value)}
+            value={bodyControls.size}
+            onChange={(_, value) => handleBodyControls('size', value)}
             min={0}
             max={27}
             step={1}
@@ -65,46 +66,60 @@ const BodyControls = ({
         <InputLabel>
           Air Friction
           <Slider
-            value={bodyControls.frictionAir}
-            onChange={(_, value) => bodyControlsHandler('frictionAir', value)}
+            value={bodyControls.speed}
+            onChange={(_, value) => handleBodyControls('speed', value)}
             min={0}
             max={1}
             step={0.01}
           />
         </InputLabel>
         <InputLabel>
-          Wrap X
+          Loop Size
           <Slider
-            value={bodyControls.wrapX}
-            onChange={(_, value) => bodyControlsHandler('wrapX', value)}
+            value={bodyControls.loopSize}
+            onChange={(_, value) => handleBodyControls('loopSize', value)}
             min={50}
-            max={worldRef.current.worldSize.x}
-          />
-        </InputLabel>
-        <InputLabel>
-          Wrap Y
-          <Slider
-            value={bodyControls.wrapY}
-            onChange={(_, value) => bodyControlsHandler('wrapY', value)}
-            min={50}
-            max={worldRef.current.worldSize.y}
+            max={maxCanvas}
           />
         </InputLabel>
       </FormGroup>
       <ToggleButtonGroup
-        value={bodyControls.toggles}
-        onChange={(_, value) => bodyControlsHandler('toggles', value)}
+        value={bodyControls.doesLoop && 'doesLoop'}
+        onChange={handleLoop}
+        exclusive
       >
-        <ToggleButton value="wrap">wrap</ToggleButton>
-        <ToggleButton value="static">static</ToggleButton>
+        <ToggleButton value="doesLoop">loop</ToggleButton>
       </ToggleButtonGroup>
-      <Button onClick={handleBodyRemove} variant="outlined">
+      <ToggleButtonGroup
+        value={bodyControls.isStatic && 'isStatic'}
+        onChange={handleStatic}
+        exclusive
+      >
+        <ToggleButton value="isStatic">static</ToggleButton>
+      </ToggleButtonGroup>
+      <Button onClick={handleUndo} variant="outlined">
         undo
       </Button>
     </FormGroup>
   );
 };
 
-BodyControls.propTypes = {};
+BodyControls.propTypes = {
+  bodyControls: PropTypes.shape({
+    shape: PropTypes.string.isRequired,
+    isStatic: PropTypes.bool.isRequired,
+    size: PropTypes.number.isRequired,
+    material: PropTypes.string.isRequired,
+    doesLoop: PropTypes.bool.isRequired,
+    loopSize: PropTypes.number.isRequired,
+    speed: PropTypes.number.isRequired,
+    toggles: PropTypes.arrayOf(PropTypes.string).isRequired
+  }),
+  handleBodyControls: PropTypes.func.isRequired,
+  handleStatic: PropTypes.func.isRequired,
+  handleLoop: PropTypes.func.isRequired,
+  maxCanvas: PropTypes.number.isRequired,
+  handleUndo:PropTypes.func.isRequired,
+};
 
 export default BodyControls;

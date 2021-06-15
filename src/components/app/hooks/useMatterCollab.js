@@ -1,16 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import Matter from 'matter-js';
-import { addBody } from './addBody';
+import { addBody } from '../utils/addBody';
 import * as Tone from 'tone';
-import { scales } from './vibes';
+import { scales } from '../utils/scales';
+import { io } from 'socket.io-client';
 
-export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
+export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
+  try {
+    if (typeof MatterWrap !== 'undefined') {
+      // either use by name from plugin registry (Browser global)
+      Matter.use('matter-wrap');
+    } else {
+      // or require and use the plugin directly (Node.js, Webpack etc.)
+      Matter.use(require('matter-wrap'));
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
   const engineRef = useRef(null);
-
   const sceneRef = useRef(null);
-
-  const reverb = new Tone.Reverb();
-
   const bodyRef = useRef({
     shape: 'CIRCLE',
     isStatic: false,
@@ -21,19 +30,17 @@ export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
     speed: 0.3,
     toggles: [],
   });
-
+  const reverbRef = useRef(null);
+  // const [socketRoom, setSocketRoom] = useState('');
   const [bodyControls, setBodyControls] = useState(bodyRef.current);
   const [gravity, setGravity] = useState({
     x: 0.5,
     y: 0.5,
   });
-
   const [reverbAmount, setReverbAmount] = useState(50);
-
   const [vibe, setVibe] = useState('major');
   const vibeRef = useRef(vibe);
-
-  const [pause, setPause] = useState(false);
+  const [pause, setPause] = useState('');
   const [pastGrav, setPastGrav] = useState(gravity);
 
   const Engine = Matter.Engine;
@@ -44,6 +51,19 @@ export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
   const Composite = Matter.Composite;
 
   useEffect(() => {
+    //socket stuff
+    let socket;
+    if (!noFriendButStillCool) {
+      socket = io.connect('http://localhost:8000');
+      socket.emit('collab');
+      socket.on('set room', (room) => {
+        socket.currentRoom = room;
+      });
+    }
+
+    //start audio
+    Tone.start();
+    reverbRef.current = new Tone.Reverb();
     // create new engine
     engineRef.current = Engine.create({});
 
@@ -76,7 +96,7 @@ export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
     Composite.add(engineRef.current.world, mouseConstraint);
 
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
-      socket.emit('object dropped', roomId, {
+      socket.emit('add object', socket.currentRoom, {
         ...bodyRef.current,
         mouseX: event.mouse.mousedownPosition.x,
         mouseY: event.mouse.mousedownPosition.y,
@@ -125,7 +145,7 @@ export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
       }
     });
     socket.on(
-      'emit drop',
+      'emit add object',
       ({
         shape,
         isStatic,
@@ -150,7 +170,6 @@ export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
             speed,
             mouseX,
             mouseY,
-            vibe: vibeRef.current,
           })
         );
       }
@@ -166,10 +185,28 @@ export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
     bodyRef.current[key] = value;
   };
   const handleGravityChange = (key, value) => {
-    setGravity((prev) => ({ ...prev, key: value }));
+    setGravity((prev) => ({ ...prev, [key]: value }));
     engineRef.current.gravity[key] = value;
   };
-
+  const handleStatic = () => {
+    if (bodyControls.isStatic){
+      setBodyControls(prev => ({...prev, isStatic: false}))
+      bodyRef.current.isStatic = false;
+    } else {
+      setBodyControls(prev => ({...prev, isStatic: true}))
+      bodyRef.current.isStatic = true;
+    }
+  };
+  const handleLoop = () => {
+    if (bodyControls.doesLoop){
+      setBodyControls(prev => ({...prev, doesLoop: false}))
+      bodyRef.current.doesLoop = false;
+    } else {
+      setBodyControls(prev => ({...prev, doesLoop: true}))
+      bodyRef.current.doesLoop = true;
+    }
+  };
+  
   const handleSettingTheVibe = (_, value) => {
     switch (value) {
       case 'MAJOR':
@@ -194,26 +231,27 @@ export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
     setReverbAmount(value);
     const mix = value / 100;
     const decay = value / 10;
-    reverb.mix = mix;
-    reverb.decay = decay;
+    reverbRef.current.mix = mix;
+    reverbRef.current.decay = decay;
   };
 
   const handleUndo = () => {
     engineRef.current.world.bodies.pop();
   };
+
   const handlePause = () => {
-    if (!pause) {
+    if (pause === '') {
       setPastGrav({
         x: engineRef.current.gravity.x,
         y: engineRef.current.gravity.y,
       });
       engineRef.current.gravity.x = 0;
       engineRef.current.gravity.y = 0;
-      setPause(true);
+      setPause('paused');
     } else {
       engineRef.current.gravity.x = pastGrav.x;
       engineRef.current.gravity.y = pastGrav.y;
-      setPause(false);
+      setPause('');
     }
   };
 
@@ -230,5 +268,9 @@ export const useMatterCollab = ({ roomId, socket, canvasX, canvasY }) => {
     handleGravityChange,
     handlePause,
     handleUndo,
+    handleStatic,
+    handleLoop
   };
 };
+
+

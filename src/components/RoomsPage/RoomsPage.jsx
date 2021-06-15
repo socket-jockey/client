@@ -1,18 +1,23 @@
-import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
-import SoloWorld from '../SoloRoomPage/SoloWorld';
-import CollabWorld from '../CollabRoomPage/CollabWorld';
-import BodyControls from '../controls/BodyControls';
-import WorldControls from '../controls/WorldControls';
+import React from 'react';
+import { useParams } from 'react-router';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
 
-const RoomsPage = ({ setRoom, roomId }) => {
-  
-  const socket = useContext(SocketContext);
+const RoomsPage = () => {
+  let canvasX, canvasY;
 
-  const { 
+  if (room === 'collab') {
+    canvasX = 1000;
+    canvasY = 800;
+  } else {
+    canvasX = (window.innerWidth / 3) * 2;
+    canvasY = (window.innerHeight / 3) * 2;
+  }
+
+  const { room } = useParams();
+  const noFriendButStillCool = room === 'solo';
+  const {
     sceneRef,
     bodyControls,
     pause,
@@ -24,101 +29,34 @@ const RoomsPage = ({ setRoom, roomId }) => {
     handleReverbChange,
     handleGravityChange,
     handlePause,
-    handleUndo
-  } = useMatterCollab({roomId, socket, canvasX, canvasY});
-
-  const bodyRef = useRef({
-    frictionAir: 0.01,
-    tempo: 0,
-    synthPitch: 0,
-    wrapX: 50,
-    wrapY: 50,
-    toggles: [],
-    wrap: false,
-    static: false,
-    shape: '',
-    material: '',
-  });
-
-  const worldRef = useRef({
-    worldSize: { x: 600, y: 600 },
-    gravityX: 0,
-    gravityY: 0,
-    reverb: 0,
-    toggles: [],
-    vibe: '',
-  });
-
-  const [bodyControls, setBodyControls] = useState(bodyRef.current);
-  const [worldControls, setWorldControls] = useState(worldRef.current);
-
-  const bodyControlsHandler = (key, value) => {
-    setBodyControls((prev) => ({ ...prev, [key]: value }));
-    bodyRef.current[key] = value;
-  };
-
-  const worldControlsHandler = (key, value) => {
-    setWorldControls((prev) => ({ ...prev, [key]: value }));
-    worldRef.current[key] = value;
-  };
-
-  const handleBodyRemove = () => {
-    console.log('body removed!');
-  };
-
-  const handleWorldClear = () => {
-    console.log('world cleared!');
-  };
-
-  if (!room)
-    return (
-      <article>
-        <section
-          onClick={() => setRoom('solo')}
-          className={styles.soloContainer}
-        >
-          <img
-            src="/solo.png"
-            alt="solo world experience"
-            className={styles.soloImage}
-          />
-        </section>
-        <section
-          onClick={() => setRoom('collab')}
-          className={styles.collabContainer}
-        >
-          <img
-            src="/collab.png"
-            alt="collaborative world experience"
-            className={styles.collabImage}
-          />
-        </section>
-      </article>
-    );
+    handleUndo,
+    handleStatic,
+    handleLoop
+  } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
     <article>
       <ControlsDrawer
-        bodyControlsHandler={bodyControlsHandler}
+        handleBodyControls={handleBodyControls}
         bodyControls={bodyControls}
-        worldRef={worldRef}
-        handleBodyRemove={handleBodyRemove}
-        worldControlsHandler={worldControlsHandler}
-        worldControls={worldControls}
-        handleWorldClear={handleWorldClear}
+        maxCanvas={canvasX}
+        handleUndo={handleUndo}
+        pause={pause}
+        handlePause={handlePause}
+        gravity={gravity}
+        handleGravityChange={handleGravityChange}
+        vibe={vibe}
+        handleSettingTheVibe={handleSettingTheVibe}
+        reverbAmount={reverbAmount}
+        handleReverbChange={handleReverbChange}
+        handleStatic={handleStatic}
+        handleLoop={handleLoop}
       />
-      {room === 'solo' ? (
-        <section className={styles.solo}>
-          <SoloWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
-        </section>
-      ) : (
-        <section className={styles.collab}>
-          <CollabWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
-        </section>
-      )}
+      <div
+        ref={sceneRef}
+        className={room === 'solo' ? styles.solo : styles.collab}
+      ></div>
     </article>
   );
 };
-
-RoomsPage.propTypes = {};
 
 export default RoomsPage;

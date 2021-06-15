@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button,
+  // Button,
   Container,
   FormGroup,
   InputLabel,
@@ -11,12 +11,15 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const WorldControls = ({
-  worldControls,
-  worldRef,
-  worldControlsHandler,
-  handleWorldClear,
+  pause,
+  handlePause,
+  gravity,
+  handleGravityChange,
+  vibe,
+  handleSettingTheVibe,
+  reverbAmount,
+  handleReverbChange,
 }) => {
-  // const [reverb, setReverb] = useState(0);
 
   return (
     <Container>
@@ -24,8 +27,8 @@ const WorldControls = ({
         <InputLabel>
           X Gravity
           <Slider
-            value={worldControls.gravityX}
-            onChange={(_, value) => worldControlsHandler('gravityX', value)}
+            value={gravity.x}
+            onChange={(_, value) => handleGravityChange('x', value)}
             min={-1}
             max={1}
             step={0.1}
@@ -35,8 +38,8 @@ const WorldControls = ({
         <InputLabel>
           Y Gravity
           <Slider
-            value={worldControls.gravityY}
-            onChange={(_, value) => worldControlsHandler('gravityY', value)}
+            value={gravity.y}
+            onChange={(_, value) => handleGravityChange('y', value)}
             min={-1}
             max={1}
             step={0.1}
@@ -47,9 +50,9 @@ const WorldControls = ({
           Reverb
           <Slider
             // value={reverb}
-            value={worldControls.reverb}
+            value={reverbAmount}
             // onChange={(_, value) => setReverb(value)}
-            onChange={(_, value) => worldControlsHandler('reverb', value)}
+            onChange={handleReverbChange}
             min={0}
             max={100}
             valueLabelDisplay="auto"
@@ -57,27 +60,41 @@ const WorldControls = ({
         </InputLabel>
       </FormGroup>
       <ToggleButtonGroup
-        value={worldControls.toggles}
-        onChange={(_, value) => worldControlsHandler('toggles', value)}
-      >
-        <ToggleButton value="pause motion">pause motion</ToggleButton>
-      </ToggleButtonGroup>
-      <ToggleButtonGroup
-        value={worldControls.vibe}
-        onChange={(_, value) => worldControlsHandler('vibe', value)}
+        value={pause}
+        onChange={handlePause}
         exclusive
       >
-        <ToggleButton value="major">major</ToggleButton>
-        <ToggleButton value="minor">minor</ToggleButton>
-        <ToggleButton value="chromatic">chromatic</ToggleButton>
+        <ToggleButton value="paused">pause motion</ToggleButton>
       </ToggleButtonGroup>
-      <Button onClick={handleWorldClear} variant="outlined">
+      <ToggleButtonGroup
+        value={vibe}
+        onChange={handleSettingTheVibe}
+        exclusive
+      >
+        <ToggleButton value="MAJOR">major</ToggleButton>
+        <ToggleButton value="MINOR">minor</ToggleButton>
+        <ToggleButton value="CHROMATIC">chromatic</ToggleButton>
+      </ToggleButtonGroup>
+
+      {/* <Button onClick={handleWorldClear} variant="outlined">
         remove all
-      </Button>
+      </Button> */}
     </Container>
   );
 };
 
-WorldControls.propTypes = {};
+WorldControls.propTypes = {
+  pause: PropTypes.string.isRequired,
+  handlePause: PropTypes.func.isRequired,
+  gravity: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
+  }),
+  handleGravityChange: PropTypes.func.isRequired,
+  vibe: PropTypes.string.isRequired,
+  handleSettingTheVibe: PropTypes.func.isRequired,
+  reverbAmount: PropTypes.number.isRequired,
+  handleReverbChange: PropTypes.func.isRequired
+};
 
 export default WorldControls;

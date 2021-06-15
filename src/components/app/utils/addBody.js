@@ -31,8 +31,8 @@ export const addBody = ({
     body = Bodies.circle(mouseX, mouseY, size);
   } else if (shape === 'SQUARE') {
     body = Bodies.rectangle(mouseX, mouseY, size, size);
-  } else if (shape === 'OCTAGON') {
-    body = Bodies.polygon(mouseX, mouseY, 8, size);
+  } else if (shape === 'HEXAGON') {
+    body = Bodies.polygon(mouseX, mouseY, 6, size);
   } else if (shape === 'RECTANGLE') {
     body = Bodies.rectangle(mouseX, mouseY, size * 4, size);
   }

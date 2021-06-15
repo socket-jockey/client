@@ -1,28 +1,50 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LandingPage from '../LandingPage/LandingPage';
 import RoomsPage from '../RoomsPage/RoomsPage';
-import Footer from './Footer';
+import SoloWorld from '../SoloRoomPage/SoloWorld';
+// import Footer from './Footer';
+// import Header from './Header';
+import './App.css';
 import Header from './Header';
-import styles from './App.css';
+import Footer from './Footer';
+import RoomSelectionPage from '../RoomsPage/RoomSelectionPage';
 
 
 
 const App = () => {
-  const [landing, setLanding] = useState(true);
-  const [room, setRoom] = useState('');
+  // const [room, setRoom] = useState('');
 
-  if (landing)
-    return (
-      <main className={styles.landing}>
-        <LandingPage setLanding={setLanding} />
-      </main>
-    );
   return (
-    <main>
-      <Header room={room} setRoom={setRoom} />
-      <RoomsPage setRoom={setRoom} room={room} />
+    <Router>
+      <Switch>
+        <Route 
+          exact path = "/"
+          component={LandingPage}
+        />
+      </Switch>
+      <Header /> 
+      <Switch>
+        
+          
+        <Route
+          exact path = "/rooms"
+          component={RoomSelectionPage}
+        />
+
+        <Route 
+          exact path = "/rooms/:room"
+          component={RoomsPage}
+        />
+
+        <Route 
+          exact path = "/about"
+          // component={AboutDevs}
+        />
+
+      </Switch>
       <Footer />
-    </main>
+    </Router>
   );
 };
 

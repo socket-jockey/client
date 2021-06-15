@@ -1,26 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import style from './LandingPage.css';
+import { Link } from 'react-router-dom';
+import styles from './LandingPage.css';
 
-const LandingPage = ({ setLanding }) => {
+const LandingPage = () => {
   return (
-    <div onClick={() => setLanding(false)} className={style.titleContainer}>
-      <p className={style.colorChange}>
-        Socket
-        <br />
-        Jockey
-      </p>
-      <img
-        src="../../../public/theHole.png"
-        alt="the hole"
-        className={style.hole}
-      />
-    </div>
+    <main style={{
+      backgroundImage: 'url(landing.png)',
+    }} className={styles.landing}>
+      <Link to="/rooms">
+        <div className={styles.titleContainer}>
+          <p className={styles.colorChange}>
+      Socket
+            <br />
+      Jockey
+          </p>
+          <img
+            src="/theHole.png"
+            alt="the hole"
+            className={styles.hole}
+          />
+        </div>
+      </Link>
+    </main>
   );
-};
-
-LandingPage.propTypes = {
-  setLanding: PropTypes.func.isRequired,
 };
 
 export default LandingPage;

@@ -4,8 +4,8 @@
   margin: 0px;
 }
 
-body {
-}
+/* body {
+} */
 
 main {
   display: grid;
@@ -14,15 +14,6 @@ main {
   height: 100vh;
   overflow: hidden;
   padding: 2rem;
-}
-
-.landing {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-image: url('../../../public/landing.png');
-  background-size: cover;
 }
 
 header {
@@ -35,8 +26,8 @@ article {
   justify-content: center;
 }
 
-section {
-}
+/* section {
+} */
 
 footer {
   grid-row: 3 / 4;

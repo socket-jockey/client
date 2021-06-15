@@ -9,9 +9,9 @@ import SoloWorld from '../SoloRoomPage/SoloWorld';
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
+import RoomSelectionPage from '../RoomsPage/RoomSelectionPage';
 
 const App = () => {
-  // const [landing, setLanding] = useState(true);
   // const [room, setRoom] = useState('');
 
   return (
@@ -26,18 +26,19 @@ const App = () => {
       <Switch>
         
           
-        <Route 
+        <Route
           exact path = "/rooms"
-          component={RoomsPage}
+          component={RoomSelectionPage}
         />
 
         <Route 
           exact path = "/rooms/solo"
           component={SoloWorld}
+          // room={room}
         />
 
         <Route 
-          exact path = "/rooms/collab"
+          exact path = "/rooms/:collab"
           component={CollabWorld}
         />
 
@@ -45,7 +46,7 @@ const App = () => {
           exact path = "/about"
           // component={AboutDevs}
         />
-        
+
       </Switch>
       <Footer />
     </Router>

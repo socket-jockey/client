@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SoloWorld from '../SoloRoomPage/SoloWorld';
 import CollabWorld from '../CollabRoomPage/CollabWorld';
@@ -32,6 +34,7 @@ const RoomsPage = ({ setRoom, room }) => {
 
   const [bodyControls, setBodyControls] = useState(bodyRef.current);
   const [worldControls, setWorldControls] = useState(worldRef.current);
+  // const { id } = useParams();
 
   const bodyControlsHandler = (key, value) => {
     setBodyControls((prev) => ({ ...prev, [key]: value }));
@@ -51,7 +54,7 @@ const RoomsPage = ({ setRoom, room }) => {
     console.log('world cleared!');
   };
 
-  if (!room)
+  if(!room)
     return (
       <article>
         <section

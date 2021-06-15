@@ -10,8 +10,8 @@ const RoomSelectionPage = () => {
     maxWidth='lg'
     >
       <Grid container direction="row" spacing={3} wrap="wrap">
-      <Grid item sm={6} md={6}></Grid>
-        <Grid item sm={6} md={6} xs={12} alignItems="center">
+      <Grid item sm={6} md={6} lg={6} xl={6}></Grid>
+        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}  alignItems="center">
           <Link to="/rooms/collab">
             <img
               src="/collab.png"
@@ -20,7 +20,7 @@ const RoomSelectionPage = () => {
             />
           </Link>
         </Grid>
-        <Grid item sm={6} md={6} xs={12} alignContent="flex-start">
+        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}  alignContent="flex-start">
           <Link to="/rooms/solo">
             <img
               src="/solo.png"
@@ -29,7 +29,7 @@ const RoomSelectionPage = () => {
             />
           </Link>
         </Grid>
-         <Grid item sm={6} md={6}></Grid>
+         <Grid item sm={6} md={6} lg={6} xl={6}></Grid>
       </Grid>
     </Container>
   );

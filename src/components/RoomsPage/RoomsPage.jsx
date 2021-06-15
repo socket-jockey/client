@@ -6,8 +6,27 @@ import BodyControls from '../controls/BodyControls';
 import WorldControls from '../controls/WorldControls';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
+import { useMatterCollab } from '../app/hooks/useMatterCollab';
 
-const RoomsPage = ({ setRoom, room }) => {
+const RoomsPage = ({ setRoom, roomId }) => {
+  
+  const socket = useContext(SocketContext);
+
+  const { 
+    sceneRef,
+    bodyControls,
+    pause,
+    gravity,
+    reverbAmount,
+    vibe,
+    handleBodyControls,
+    handleSettingTheVibe,
+    handleReverbChange,
+    handleGravityChange,
+    handlePause,
+    handleUndo
+  } = useMatterCollab({roomId, socket, canvasX, canvasY});
+
   const bodyRef = useRef({
     frictionAir: 0.01,
     tempo: 0,

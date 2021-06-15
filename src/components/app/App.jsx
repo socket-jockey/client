@@ -5,7 +5,7 @@ import RoomsPage from '../RoomsPage/RoomsPage';
 
 import './App.css';
 // import Header from './Header';
-import Footer from './Footer';
+// import Footer from './Footer';
 import RoomSelectionPage from '../RoomsPage/RoomSelectionPage';
 import { Container } from '@material-ui/core';
 
@@ -30,7 +30,7 @@ const App = () => {
             // component={AboutDevs}
           />
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </Container>
   );

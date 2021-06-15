@@ -1,10 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 const RoomsPage = () => {
+  const classes = useStyles();
+
   let canvasX, canvasY;
 
   if (room === 'collab') {
@@ -16,7 +46,9 @@ const RoomsPage = () => {
   }
 
   const { room } = useParams();
+  
   const noFriendButStillCool = room === 'solo';
+
   const {
     sceneRef,
     bodyControls,
@@ -24,6 +56,8 @@ const RoomsPage = () => {
     gravity,
     reverbAmount,
     vibe,
+    participants,
+    participantsRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -33,6 +67,21 @@ const RoomsPage = () => {
     handleStatic,
     handleLoop
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
+
+  const [open, setOpen] = useState(true);
+  const [modalStyle] = useState(getModalStyle);
+
+  
+
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  console.log(participants);
+  // const modalBody = (
+   
+  // );
+
   return (
     <article>
       <ControlsDrawer
@@ -51,6 +100,21 @@ const RoomsPage = () => {
         handleStatic={handleStatic}
         handleLoop={handleLoop}
       />
+      <Modal
+        open={open}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
+          <div style={modalStyle} className={classes.paper}>
+            <h2 id="simple-modal-title">Text in a modal</h2>
+            <p id="simple-modal-description">
+        Number of participants:{participants}
+            </p>
+            <button onClick={handleClose}>begin</button>
+          </div>
+        </Fade>
+      </Modal>
       <div
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}
@@ -58,5 +122,5 @@ const RoomsPage = () => {
     </article>
   );
 };
-
+      
 export default RoomsPage;

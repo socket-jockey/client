@@ -42,6 +42,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const vibeRef = useRef(vibe);
   const [pause, setPause] = useState('');
   const [pastGrav, setPastGrav] = useState(gravity);
+  const [participants, setParticipants] = useState('');
+  const participantsRef = useRef(null);
 
   const Engine = Matter.Engine;
   const Render = Matter.Render;
@@ -49,18 +51,20 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const Mouse = Matter.Mouse;
   const MouseConstraint = Matter.MouseConstraint;
   const Composite = Matter.Composite;
-
+  
   useEffect(() => {
     //socket stuff
     let socket;
     if (!noFriendButStillCool) {
       socket = io.connect('http://localhost:8000');
       socket.emit('collab');
-      socket.on('set room', (room) => {
+      socket.on('set room', (room, numOfParticipants) => {
         socket.currentRoom = room;
+        setParticipants(numOfParticipants);
+        participantsRef.current = numOfParticipants;
       });
     }
-
+   
     //start audio
     Tone.start();
     reverbRef.current = new Tone.Reverb();
@@ -190,19 +194,19 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   };
   const handleStatic = () => {
     if (bodyControls.isStatic){
-      setBodyControls(prev => ({...prev, isStatic: false}))
+      setBodyControls(prev => ({ ...prev, isStatic: false }));
       bodyRef.current.isStatic = false;
     } else {
-      setBodyControls(prev => ({...prev, isStatic: true}))
+      setBodyControls(prev => ({ ...prev, isStatic: true }));
       bodyRef.current.isStatic = true;
     }
   };
   const handleLoop = () => {
     if (bodyControls.doesLoop){
-      setBodyControls(prev => ({...prev, doesLoop: false}))
+      setBodyControls(prev => ({ ...prev, doesLoop: false }));
       bodyRef.current.doesLoop = false;
     } else {
-      setBodyControls(prev => ({...prev, doesLoop: true}))
+      setBodyControls(prev => ({ ...prev, doesLoop: true }));
       bodyRef.current.doesLoop = true;
     }
   };
@@ -262,6 +266,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     gravity,
     reverbAmount,
     vibe,
+    participants,
+    participantsRef,
+    setParticipants,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -269,7 +276,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     handlePause,
     handleUndo,
     handleStatic,
-    handleLoop
+    handleLoop,
   };
 };
 

@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { Container } from '@material-ui/core';
 import Matter from 'matter-js';
 import { io } from 'socket.io-client';
-const socket = io.connect('http://localhost:8000');
-import { Typography } from '@material-ui/core';
+const socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
 
 const SoloWorld = ({ bodyRef, worldRef }) => {
   const sceneRef = useRef(null);
@@ -83,9 +82,11 @@ const SoloWorld = ({ bodyRef, worldRef }) => {
     });
   }, []);
 
-  return <div ref={sceneRef}></div>;
+  return (
+    <Container>
+      <div ref={sceneRef}></div>
+    </Container>
+  );
 };
-
-SoloWorld.propTypes = {};
 
 export default SoloWorld;

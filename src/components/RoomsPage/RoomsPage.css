@@ -1,3 +1,9 @@
+.solo,
+.collab {
+  background-image: url('https://i.imgur.com/JKax46x.png');
+  background-color: white;
+}
+
 .soloContainer {
   width: 50%;
   display: flex;
@@ -72,4 +78,7 @@
 
 .slideLeft {
   width: 204%;
+}
+
+.modal {
 }

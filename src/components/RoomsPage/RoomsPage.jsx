@@ -11,6 +11,7 @@ import Chat from '../CollabRoomPage/Chat';
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
@@ -19,7 +20,31 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
   },
+  logo: {
+    width: '20%',
+  },
+  dotContainer: {
+    width: '50%',
+    display: 'flex',
+    justifyContent: 'space-evenly'
+  },
+  dots: {
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    backgroundColor: 'lightgrey',
+  },
+  dotFilled: {
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    backgroundColor: 'blue',
+  },
+  inlineChat: {
+    position: 'static',
+  }
 }));
 
 function getModalStyle() {
@@ -61,7 +86,6 @@ const RoomsPage = () => {
     vibe,
     participants,
     open,
-    socketRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -73,58 +97,63 @@ const RoomsPage = () => {
     handleBegin,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <div
+    <main
+      className={styles.roomContainer}
       style={{
         position: 'relative',
       }}>
-      <div
+      <header
         style={{
-          position: 'relative',
+          position: 'absolute',
+          top: '0px',
+          right: '0px',
+          paddingRight: '1rem',
         }}
       >
-        <header
-          style={{
-            position: 'absolute',
-            top: '0px',
-            right: '0px',
-            paddingRight: '1rem',
-          }}
-        >
-          <ControlsDrawer
-            handleBodyControls={handleBodyControls}
-            bodyControls={bodyControls}
-            maxCanvas={canvasX}
-            handleUndo={handleUndo}
-            pause={pause}
-            handlePause={handlePause}
-            gravity={gravity}
-            handleGravityChange={handleGravityChange}
-            vibe={vibe}
-            handleSettingTheVibe={handleSettingTheVibe}
-            reverbAmount={reverbAmount}
-            handleReverbChange={handleReverbChange}
-            handleStatic={handleStatic}
-            handleLoop={handleLoop}
-          />  
-        </header>
-      </div>
-      <Chat socketRef={socketRef}/>
+        <ControlsDrawer
+          handleBodyControls={handleBodyControls}
+          bodyControls={bodyControls}
+          maxCanvas={canvasX}
+          handleUndo={handleUndo}
+          pause={pause}
+          handlePause={handlePause}
+          gravity={gravity}
+          handleGravityChange={handleGravityChange}
+          vibe={vibe}
+          handleSettingTheVibe={handleSettingTheVibe}
+          reverbAmount={reverbAmount}
+          handleReverbChange={handleReverbChange}
+          handleStatic={handleStatic}
+          handleLoop={handleLoop}
+        />  
+      </header>
+          
+      {room === 'collab' && <Chat />}
+
       <Modal
-        open={open}
+        open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Text in a modal</h2>
-            <p id="simple-modal-description">
+            <h2 id="simple-modal-title">Welcome to the Collab Room!</h2>
+            <p>Wait here until others arrive, then push begin when everyone is ready.</p>
+            <img className={classes.logo} src="https://icon-library.com/images/36f183ca9c_30066.png" alt="" />
+            <section className={classes.dotContainer}>
+              <div className={classes.dotFilled}></div>
+              <div className={participants >= 2 ? classes.dotFilled : classes.dots}></div>
+              <div className={participants === 3 ? classes.dotFilled : classes.dots}></div>
+            </section>
+            {/* {open && <Chat className={classes.inlineChat}/>} */}
+            {/* <p id="simple-modal-description">
               Number of participants:{participants}
-            </p>
+            </p> */}
             <button onClick={handleBegin}>begin</button>
           </div>
         </Fade>
       </Modal>
-      <div
+      <section
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}
         style={{
@@ -139,8 +168,8 @@ const RoomsPage = () => {
           // paddingBottom: '4rem',
         }}
       >
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

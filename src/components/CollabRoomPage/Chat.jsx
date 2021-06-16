@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Animated } from 'react-animated-css';
 import styles from './Chat.css';
 
 const Chat = ({ socket, socketRoom }) => {

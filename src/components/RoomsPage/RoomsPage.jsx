@@ -1,17 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import { io } from 'socket.io-client';
-import SoloWorld from '../SoloRoomPage/SoloWorld';
-// import CollabWorld from '../CollabRoomPage/CollabWorld';
-// import BodyControls from '../controls/BodyControls';
-// import WorldControls from '../controls/WorldControls';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
-import Chat from '../CollabRoomPage/Chat';
+import { useMatterCollab } from '../app/hooks/useMatterCollab';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
 
-const socket = io.connect('http://localhost:8000');
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 const RoomsPage = () => {
+  const classes = useStyles();
+
+  let canvasX, canvasY;
+
+  if (room === 'collab') {
+    canvasX = window.innerWidth;
+    canvasY = window.innerHeight;
+  } else {
+    canvasX = window.innerWidth;
+    canvasY = window.innerHeight;
+  }
+
   const { room } = useParams();
   const [socketRoom, setSocketRoom] = useState('');
   console.log('socketRoom', socketRoom);
@@ -23,29 +56,90 @@ const RoomsPage = () => {
   }, []);
 
 
+  const noFriendButStillCool = room === 'solo';
+
+  const [modalStyle] = useState(getModalStyle);
+
+  const {
+    sceneRef,
+    bodyControls,
+    pause,
+    gravity,
+    reverbAmount,
+    vibe,
+    participants,
+    open,
+    handleBodyControls,
+    handleSettingTheVibe,
+    handleReverbChange,
+    handleGravityChange,
+    handlePause,
+    handleUndo,
+    handleStatic,
+    handleLoop,
+    handleBegin,
+  } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <article>
+    <div
+      style={{
+        position: 'relative',
+      }}
+    >
+      <header
+        style={{
+          position: 'absolute',
+          top: '0px',
+          right: '0px',
+          paddingRight: '1rem',
+        }}
+      ></header>
       <ControlsDrawer
-        // bodyControlsHandler={bodyControlsHandler}
-        // bodyControls={bodyControls}
-        // worldRef={worldRef}
-        // handleBodyRemove={handleBodyRemove}
-        // worldControlsHandler={worldControlsHandler}
-        // worldControls={worldControls}
-        // handleWorldClear={handleWorldClear}
+        handleBodyControls={handleBodyControls}
+        bodyControls={bodyControls}
+        maxCanvas={canvasX}
+        handleUndo={handleUndo}
+        pause={pause}
+        handlePause={handlePause}
+        gravity={gravity}
+        handleGravityChange={handleGravityChange}
+        vibe={vibe}
+        handleSettingTheVibe={handleSettingTheVibe}
+        reverbAmount={reverbAmount}
+        handleReverbChange={handleReverbChange}
+        handleStatic={handleStatic}
+        handleLoop={handleLoop}
       />
-      {room === 'solo' ? (
-        <section className={styles.solo}>
-          {/* <SoloWorld setBodyControls={setBodyControls} bodyRef={bodyRef} /> */}
-        </section>
-      ) : (
-        <section className={styles.collab}>
-          <SoloWorld />
-          <button onClick={() => socket.emit('collab')}>collab</button>
-          <Chat socket={socket} socketRoom={socketRoom} />
-        </section>
-      )}
-    </article>
+      <Modal
+        open={open}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
+          <div style={modalStyle} className={classes.paper}>
+            <h2 id="simple-modal-title">Text in a modal</h2>
+            <p id="simple-modal-description">
+              Number of participants:{participants}
+            </p>
+            <button onClick={handleBegin}>begin</button>
+          </div>
+        </Fade>
+      </Modal>
+      <div
+        ref={sceneRef}
+        className={room === 'solo' ? styles.solo : styles.collab}
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          minHeight: '100vh',
+          paddingBottom: '4rem',
+        }}
+      ></div>
+    </div>
   );
 };
 

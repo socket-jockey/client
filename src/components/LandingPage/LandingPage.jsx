@@ -4,21 +4,20 @@ import styles from './LandingPage.css';
 
 const LandingPage = () => {
   return (
-    <main style={{
-      backgroundImage: 'url(landing.png)',
-    }} className={styles.landing}>
+    <main
+      style={{
+        backgroundImage: 'url(landing.png)',
+      }}
+      className={styles.landing}
+    >
       <Link to="/rooms">
         <div className={styles.titleContainer}>
           <p className={styles.colorChange}>
-      Socket
+            Socket
             <br />
-      Jockey
+            Jockey
           </p>
-          <img
-            src="/theHole.png"
-            alt="the hole"
-            className={styles.hole}
-          />
+          <img src="/theHole.png" alt="the hole" className={styles.hole} />
         </div>
       </Link>
     </main>

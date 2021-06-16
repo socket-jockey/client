@@ -11,6 +11,7 @@ import Chat from '../CollabRoomPage/Chat';
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
@@ -20,6 +21,29 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  logo: {
+    width: '20%',
+  },
+  dotContainer: {
+    width: '50%',
+    display: 'flex',
+    justifyContent: 'space-evenly'
+  },
+  dots: {
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    backgroundColor: 'lightgrey',
+  },
+  dotFilled: {
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    backgroundColor: 'blue',
+  },
+  inlineChat: {
+    position: 'static',
+  }
 }));
 
 function getModalStyle() {
@@ -61,7 +85,6 @@ const RoomsPage = () => {
     vibe,
     participants,
     open,
-    socketRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -108,7 +131,9 @@ const RoomsPage = () => {
           />  
         </header>
       </div>
-      {room === 'collab' && <Chat socketRef={socketRef}/>}
+
+      {room === 'collab' && <Chat />}
+
       <Modal
         open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"
@@ -116,10 +141,18 @@ const RoomsPage = () => {
       >
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Text in a modal</h2>
-            <p id="simple-modal-description">
+            <h2 id="simple-modal-title">Welcome to the Collab Room!</h2>
+            <p>Wait here until others arrive, then push begin when everyone is ready.</p>
+            <img className={classes.logo} src="https://icon-library.com/images/36f183ca9c_30066.png" alt="" />
+            <section className={classes.dotContainer}>
+              <div className={classes.dotFilled}></div>
+              <div className={participants >= 2 ? classes.dotFilled : classes.dots}></div>
+              <div className={participants === 3 ? classes.dotFilled : classes.dots}></div>
+            </section>
+            {/* {open && <Chat className={classes.inlineChat}/>} */}
+            {/* <p id="simple-modal-description">
               Number of participants:{participants}
-            </p>
+            </p> */}
             <button onClick={handleBegin}>begin</button>
           </div>
         </Fade>

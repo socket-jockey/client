@@ -2,20 +2,74 @@
   width: 50%;
   display: flex;
   align-items: flex-end;
+  position: relative;
 }
 
-.soloImage {
-  width: 90%;
-  margin-top: 30%;
+.soloClouds {
+  width: 40%;
+  margin-top: 20%;
+  z-index: -1;
+  position: absolute;
+  /* object-fit: contain; */
+}
+
+.soloText {
+  width: 30%;
+  margin-top: 25%;
+  margin-left: 5%;
+  position: absolute;
+  z-index: 0;
+  /* object-fit: contain; */
+}
+
+.soloMountains {
+  width: 40%;
+  margin-left: 5%;
+  margin-top: 20%;
+  position: absolute;
+  z-index: 1;
   /* object-fit: contain; */
 }
 
 .collabContainer {
   width: 50%;
+  position: relative;
 }
 
-.collabImage {
-  width: 90%;
-
+.collabClouds {
+  width: 40%;
+  z-index: -1;
+  position: absolute;
   /* object-fit: contain; */
+}
+
+.collabText {
+  width: 30%;
+  margin-left: 3%;
+  margin-top: 3%;
+  z-index: 0;
+  position: absolute;
+  /* object-fit: contain; */
+}
+
+.collabWhiteMountains {
+  width: 50%;
+  z-index: 0;
+  position: absolute;
+  /* object-fit: contain; */
+}
+
+.collabBlackMountains {
+  width: 50%;
+  z-index: 1;
+  position: absolute;
+  /* object-fit: contain; */
+}
+
+.slideRight {
+  width: 206%;
+}
+
+.slideLeft {
+  width: 204%;
 }

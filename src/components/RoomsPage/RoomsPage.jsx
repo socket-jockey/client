@@ -6,7 +6,7 @@ import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
-import Chat from '../CollabRoomPage/Chat';
+import Chat from '../Chat/Chat';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

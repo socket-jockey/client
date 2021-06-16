@@ -54,14 +54,22 @@
 
 .collabWhiteMountains {
   width: 50%;
-  z-index: 1;
+  z-index: 0;
   position: absolute;
   /* object-fit: contain; */
 }
 
 .collabBlackMountains {
   width: 50%;
-  z-index: 2;
+  z-index: 1;
   position: absolute;
   /* object-fit: contain; */
+}
+
+.slideRight {
+  width: 206%;
+}
+
+.slideLeft {
+  width: 200%;
 }

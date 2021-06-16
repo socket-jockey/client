@@ -32,7 +32,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   });
   const reverbRef = useRef(null);
   const gainRef = useRef(new Tone.Gain(0.9));
-  const socketRef = useRef(null);
+  const socketRef = useRef(io.connect('http://localhost:8000'));
   // const [socketRoom, setSocketRoom] = useState('');
   const [bodyControls, setBodyControls] = useState(bodyRef.current);
   const [gravity, setGravity] = useState({
@@ -60,13 +60,13 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     let socket;
     //socket stuff
     if (!noFriendButStillCool) {
-      socket = io.connect('http://localhost:8000');
+      socket = socketRef.current;
       // socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
       socket.emit('collab');
       socket.on('set room', (room) => {
         socket.currentRoom = room;
       });
-      socketRef.current = socket;
+      // socketRef.current = socket;
       socket.on('num participants', data => {
         setParticipants(data);
       });
@@ -286,7 +286,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       setPause('');
     }
   };
-
+  
   return {
     sceneRef,
     bodyControls,
@@ -296,6 +296,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     vibe,
     participants,
     open,
+    socketRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,

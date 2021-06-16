@@ -71,35 +71,38 @@ const RoomsPage = () => {
     handleBegin,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <div
-      style={{
-        position: 'relative',
-      }}
-    >
-      <header
+    <>
+      <div
         style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          paddingRight: '1rem',
+          position: 'relative',
         }}
-      ></header>
-      <ControlsDrawer
-        handleBodyControls={handleBodyControls}
-        bodyControls={bodyControls}
-        maxCanvas={canvasX}
-        handleUndo={handleUndo}
-        pause={pause}
-        handlePause={handlePause}
-        gravity={gravity}
-        handleGravityChange={handleGravityChange}
-        vibe={vibe}
-        handleSettingTheVibe={handleSettingTheVibe}
-        reverbAmount={reverbAmount}
-        handleReverbChange={handleReverbChange}
-        handleStatic={handleStatic}
-        handleLoop={handleLoop}
-      />
+      >
+        <header
+          style={{
+            position: 'absolute',
+            top: '0px',
+            right: '0px',
+            paddingRight: '1rem',
+          }}
+        >
+          <ControlsDrawer
+            handleBodyControls={handleBodyControls}
+            bodyControls={bodyControls}
+            maxCanvas={canvasX}
+            handleUndo={handleUndo}
+            pause={pause}
+            handlePause={handlePause}
+            gravity={gravity}
+            handleGravityChange={handleGravityChange}
+            vibe={vibe}
+            handleSettingTheVibe={handleSettingTheVibe}
+            reverbAmount={reverbAmount}
+            handleReverbChange={handleReverbChange}
+            handleStatic={handleStatic}
+            handleLoop={handleLoop}
+          />
+        </header>
+      </div>
       <Modal
         open={open}
         aria-labelledby="simple-modal-title"
@@ -130,7 +133,7 @@ const RoomsPage = () => {
           paddingBottom: '4rem',
         }}
       ></div>
-    </div>
+    </>
   );
 };
 

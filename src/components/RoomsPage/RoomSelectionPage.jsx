@@ -12,6 +12,9 @@ const RoomSelectionPage = () => {
 
   const handleBlackMountain = () => {
     setCollabAnimation(false);
+    setTimeout(() => {
+      history.push('/rooms/collab');
+    }, 2000);
   };
 
   const handleSoloMountain = () => {

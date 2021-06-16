@@ -1,14 +1,25 @@
-import React, { useState, useEffect } from 'react';
-// import { SocketContext } from '../app/App';
+import React, { useState, useEffect, useRef } from 'react';
+import { Animated } from 'react-animated-css';
+import styles from './Chat.css';
 
 const Chat = ({ socket, socketRoom }) => {
   const [input, setInput] = useState('');
-  const [display, setDisplay] = useState('init');
+  const [display, setDisplay] = useState(['', '', '', '', '', '']);
+  const msgCount = useRef([]);
 
   useEffect(() => {
     socket.on('server chat', msg => {
-      setDisplay(msg);
-      console.log('message', msg);
+      // if (msgCount.current.length < 6){
+      //   setDisplay(prev => [...prev, msg]);
+      //   msgCount.current = [...msgCount.current, msg];
+      // } else {
+      setDisplay((prev) => {
+        const subArr = prev.slice(1);
+        return [...subArr, msg];
+      });
+      const subArr = msgCount.current.slice(1);
+      msgCount.current = [...subArr, msg];
+      // } 
     });
   }, []);
 
@@ -26,7 +37,14 @@ const Chat = ({ socket, socketRoom }) => {
   };
   return (
     <> 
-      <div>{display}</div>
+      {/* <div className={display.length <= 5 ? styles.chatDiv : styles.chatDivFull} >{display && display.map((msg, i) => { */}
+      <ul className={styles.chatDivFull} >{display && display.map((msg, i) => {
+        return <li key={i} className={styles.chatMessages}>{msg}</li>;
+      }
+      )}
+      </ul>
+
+
       <form onSubmit={handleSubmit}>
         <input onChange={handleInputChange}
           value={input} 

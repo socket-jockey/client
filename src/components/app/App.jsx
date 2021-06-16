@@ -19,13 +19,11 @@ const App = () => {
         </Switch>
         <Switch>
           <Route exact path="/rooms" component={RoomSelectionPage} />
-
           <Route exact path="/rooms/:room">
             <SocketContext.Provider value={socket}>
               <RoomsPage />
             </SocketContext.Provider>
           </Route>
-
           <Route
             exact
             path="/about"

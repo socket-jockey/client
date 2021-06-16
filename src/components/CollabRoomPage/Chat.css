@@ -15,33 +15,17 @@ li {
   color: salmon;
 }
 
+.chatDivWrapper {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
 .chatDivFull li:nth-child(1) {
   color: red;
 	-webkit-animation: slide-top 2.5s linear both;
 	animation: slide-top 2.5s linear both;
 }
-
-@-webkit-keyframes slide-top {
-  0% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-  }
-  100% {
-    -webkit-transform: translateY(-600px);
-            transform: translateY(-600px);
-  }
-}
-@keyframes slide-top {
-  0% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-  }
-  100% {
-    -webkit-transform: translateY(-600px);
-            transform: translateY(-600px);
-  }
-}
-
 
 .chatDivFull li:nth-child(2) {
   opacity: 0.25
@@ -62,3 +46,24 @@ li {
 .chatDivFull li:nth-child(6) {
   opacity: 0.9
 } 
+
+@-webkit-keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-600px);
+    transform: translateY(-600px);
+  }
+}
+@keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-600px);
+    transform: translateY(-600px);
+  }
+}

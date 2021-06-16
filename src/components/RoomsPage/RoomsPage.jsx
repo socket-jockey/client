@@ -6,6 +6,7 @@ import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
+import Chat from '../CollabRoomPage/Chat';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -60,6 +61,7 @@ const RoomsPage = () => {
     vibe,
     participants,
     open,
+    socketRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -71,7 +73,10 @@ const RoomsPage = () => {
     handleBegin,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <>
+    <div
+      style={{
+        position: 'relative',
+      }}>
       <div
         style={{
           position: 'relative',
@@ -100,9 +105,10 @@ const RoomsPage = () => {
             handleReverbChange={handleReverbChange}
             handleStatic={handleStatic}
             handleLoop={handleLoop}
-          />
+          />  
         </header>
       </div>
+      <Chat socketRef={socketRef}/>
       <Modal
         open={open}
         aria-labelledby="simple-modal-title"
@@ -130,10 +136,11 @@ const RoomsPage = () => {
           alignItems: 'center',
           textAlign: 'center',
           minHeight: '100vh',
-          paddingBottom: '4rem',
+          // paddingBottom: '4rem',
         }}
-      ></div>
-    </>
+      >
+      </div>
+    </div>
   );
 };
 

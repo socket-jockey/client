@@ -6,6 +6,7 @@ import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
+import Chat from '../CollabRoomPage/Chat';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,6 +62,7 @@ const RoomsPage = () => {
     vibe,
     participants,
     open,
+    socketRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -75,32 +77,39 @@ const RoomsPage = () => {
     <div
       style={{
         position: 'relative',
-      }}
-    >
-      <header
+      }}>
+      <div
         style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          paddingRight: '1rem',
+          position: 'relative',
         }}
-      ></header>
-      <ControlsDrawer
-        handleBodyControls={handleBodyControls}
-        bodyControls={bodyControls}
-        maxCanvas={canvasX}
-        handleUndo={handleUndo}
-        pause={pause}
-        handlePause={handlePause}
-        gravity={gravity}
-        handleGravityChange={handleGravityChange}
-        vibe={vibe}
-        handleSettingTheVibe={handleSettingTheVibe}
-        reverbAmount={reverbAmount}
-        handleReverbChange={handleReverbChange}
-        handleStatic={handleStatic}
-        handleLoop={handleLoop}
-      />
+      >
+        <header
+          style={{
+            position: 'absolute',
+            top: '0px',
+            right: '0px',
+            paddingRight: '1rem',
+          }}
+        >
+          <ControlsDrawer
+            handleBodyControls={handleBodyControls}
+            bodyControls={bodyControls}
+            maxCanvas={canvasX}
+            handleUndo={handleUndo}
+            pause={pause}
+            handlePause={handlePause}
+            gravity={gravity}
+            handleGravityChange={handleGravityChange}
+            vibe={vibe}
+            handleSettingTheVibe={handleSettingTheVibe}
+            reverbAmount={reverbAmount}
+            handleReverbChange={handleReverbChange}
+            handleStatic={handleStatic}
+            handleLoop={handleLoop}
+          />  
+        </header>
+      </div>
+      <Chat socketRef={socketRef}/>
       <Modal
         open={open}
         aria-labelledby="simple-modal-title"
@@ -129,9 +138,10 @@ const RoomsPage = () => {
           alignItems: 'center',
           textAlign: 'center',
           minHeight: '100vh',
-          paddingBottom: '4rem',
+          // paddingBottom: '4rem',
         }}
-      ></div>
+      >
+      </div>
     </div>
   );
 };

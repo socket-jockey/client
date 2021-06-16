@@ -13,7 +13,6 @@ try {
 } catch (e) {
   // could not require the plugin or install needed
 }
-const Events = Matter.Events;
 export const addBody = ({
   shape,
   isStatic,
@@ -124,8 +123,5 @@ export const addBody = ({
       },
     });
   }
-  Events.on(body, 'collisionStart', () => {
-    console.log(`${body.id} collision`);
-  });
   return body;
 };

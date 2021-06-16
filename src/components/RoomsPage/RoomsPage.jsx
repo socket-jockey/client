@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
   },
   logo: {
     width: '20%',
@@ -96,42 +97,37 @@ const RoomsPage = () => {
     handleBegin,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <div
+    <main
+      className={styles.roomContainer}
       style={{
         position: 'relative',
       }}>
-      <div
+      <header
         style={{
-          position: 'relative',
+          position: 'absolute',
+          top: '0px',
+          right: '0px',
+          paddingRight: '1rem',
         }}
       >
-        <header
-          style={{
-            position: 'absolute',
-            top: '0px',
-            right: '0px',
-            paddingRight: '1rem',
-          }}
-        >
-          <ControlsDrawer
-            handleBodyControls={handleBodyControls}
-            bodyControls={bodyControls}
-            maxCanvas={canvasX}
-            handleUndo={handleUndo}
-            pause={pause}
-            handlePause={handlePause}
-            gravity={gravity}
-            handleGravityChange={handleGravityChange}
-            vibe={vibe}
-            handleSettingTheVibe={handleSettingTheVibe}
-            reverbAmount={reverbAmount}
-            handleReverbChange={handleReverbChange}
-            handleStatic={handleStatic}
-            handleLoop={handleLoop}
-          />  
-        </header>
-      </div>
-
+        <ControlsDrawer
+          handleBodyControls={handleBodyControls}
+          bodyControls={bodyControls}
+          maxCanvas={canvasX}
+          handleUndo={handleUndo}
+          pause={pause}
+          handlePause={handlePause}
+          gravity={gravity}
+          handleGravityChange={handleGravityChange}
+          vibe={vibe}
+          handleSettingTheVibe={handleSettingTheVibe}
+          reverbAmount={reverbAmount}
+          handleReverbChange={handleReverbChange}
+          handleStatic={handleStatic}
+          handleLoop={handleLoop}
+        />  
+      </header>
+          
       {room === 'collab' && <Chat />}
 
       <Modal
@@ -157,7 +153,7 @@ const RoomsPage = () => {
           </div>
         </Fade>
       </Modal>
-      <div
+      <section
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}
         style={{
@@ -172,8 +168,8 @@ const RoomsPage = () => {
           // paddingBottom: '4rem',
         }}
       >
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

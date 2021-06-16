@@ -74,59 +74,37 @@ const RoomsPage = () => {
     handleBegin,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <div
+    <main
+      className={styles.roomContainer}
       style={{
         position: 'relative',
       }}>
-      <div
+      <header
         style={{
-          position: 'relative',
+          position: 'absolute',
+          top: '0px',
+          right: '0px',
+          paddingRight: '1rem',
         }}
       >
-        <header
-          style={{
-            position: 'absolute',
-            top: '0px',
-            right: '0px',
-            paddingRight: '1rem',
-          }}
-        >
-          <ControlsDrawer
-            handleBodyControls={handleBodyControls}
-            bodyControls={bodyControls}
-            maxCanvas={canvasX}
-            handleUndo={handleUndo}
-            pause={pause}
-            handlePause={handlePause}
-            gravity={gravity}
-            handleGravityChange={handleGravityChange}
-            vibe={vibe}
-            handleSettingTheVibe={handleSettingTheVibe}
-            reverbAmount={reverbAmount}
-            handleReverbChange={handleReverbChange}
-            handleStatic={handleStatic}
-            handleLoop={handleLoop}
-          />  
-        </header>
-      </div>
-      <Chat socketRef={socketRef}/>
-      <Modal
-        open={open}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <Fade in={open} timeout={{ enter: 800, exit: 600 }}
-        >
-          <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Waiting for Collaborators to arrive:  {participants} </h2>
-            {/* <p id="simple-modal-description">
-              collaborators on the way:  {participants}
-            </p> */}
-            <button onClick= {handleBegin}>begin</  button>
-          </div>
-        </Fade>
-      </Modal>
-      <div
+        <ControlsDrawer
+          handleBodyControls={handleBodyControls}
+          bodyControls={bodyControls}
+          maxCanvas={canvasX}
+          handleUndo={handleUndo}
+          pause={pause}
+          handlePause={handlePause}
+          gravity={gravity}
+          handleGravityChange={handleGravityChange}
+          vibe={vibe}
+          handleSettingTheVibe={handleSettingTheVibe}
+          reverbAmount={reverbAmount}
+          handleReverbChange={handleReverbChange}
+          handleStatic={handleStatic}
+          handleLoop={handleLoop}
+        />  
+      </header>
+      <section
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}
         style={{
@@ -141,8 +119,28 @@ const RoomsPage = () => {
           // paddingBottom: '4rem',
         }}
       >
-      </div>
-    </div>
+      </section>
+      <Chat socketRef={socketRef}/>
+      <Modal
+        open={open}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Fade in={open} timeout={{ enter: 800, exit: 600 }}
+        >
+          <section 
+            style={modalStyle} 
+            className={classes.paper}
+          >
+            <h2 id="simple-modal-title">Waiting for Collaborators to arrive:  {participants} </h2>
+            {/* <p id="simple-modal-description">
+              collaborators on the way:  {participants}
+            </p> */}
+            <button onClick= {handleBegin}>begin</  button>
+          </section>
+        </Fade>
+      </Modal>
+    </main>
   );
 };
 

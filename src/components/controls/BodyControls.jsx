@@ -39,17 +39,17 @@ const BodyControls = ({
         onChange={(_, value) => handleBodyControls('material', value)}
         exclusive
       >
-        <ToggleButton value="wood">wood</ToggleButton>
-        <ToggleButton value="metal">metal</ToggleButton>
-        <ToggleButton value="bubble">bubble</ToggleButton>
-        <ToggleButton value="cloth">cloth</ToggleButton>
-        <ToggleButton value="synthetic">synthetic</ToggleButton>
-        <ToggleButton value="rain cloud">rain cloud</ToggleButton>
-        <ToggleButton value="rubber">rubber</ToggleButton>
-        <ToggleButton value="crystal">crystal</ToggleButton>
-        <ToggleButton value="glitter">glitter</ToggleButton>
-        <ToggleButton value="liquid">liquid</ToggleButton>
-        <ToggleButton value="random">random</ToggleButton>
+        <ToggleButton value="WOOD">wood</ToggleButton>
+        <ToggleButton value="METAL">metal</ToggleButton>
+        <ToggleButton value="BUBBLE">bubble</ToggleButton>
+        <ToggleButton value="CLOTH">cloth</ToggleButton>
+        <ToggleButton value="SYNTHETIC">synthetic</ToggleButton>
+        <ToggleButton value="RAIN CLOUD">rain cloud</ToggleButton>
+        <ToggleButton value="RUBBER">rubber</ToggleButton>
+        <ToggleButton value="CRYSTAL">crystal</ToggleButton>
+        <ToggleButton value="GLITTER">glitter</ToggleButton>
+        <ToggleButton value="LIQUID">liquid</ToggleButton>
+        <ToggleButton value="RANDOM">random</ToggleButton>
       </ToggleButtonGroup>
       <FormGroup>
         <InputLabel>
@@ -57,8 +57,8 @@ const BodyControls = ({
           <Slider
             value={bodyControls.size}
             onChange={(_, value) => handleBodyControls('size', value)}
-            min={0}
-            max={27}
+            min={-27}
+            max={0}
             step={1}
             marks
           />
@@ -68,8 +68,8 @@ const BodyControls = ({
           <Slider
             value={bodyControls.speed}
             onChange={(_, value) => handleBodyControls('speed', value)}
-            min={0}
-            max={1}
+            min={bodyControls.size / -200}
+            max={0.5}
             step={0.01}
           />
         </InputLabel>

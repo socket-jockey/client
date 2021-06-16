@@ -41,13 +41,24 @@ const RoomsPage = () => {
     canvasX = 1000;
     canvasY = 800;
   } else {
-    canvasX = (window.innerWidth / 3) * 2;
-    canvasY = (window.innerHeight / 3) * 2;
+    canvasX = window.innerWidth * 0.8 ;
+    canvasY = window.innerHeight * 0.8;
   }
 
   const { room } = useParams();
   
   const noFriendButStillCool = room === 'solo';
+
+  const [open, setOpen] = useState(true);
+  const [modalStyle] = useState(getModalStyle);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+  // const modalBody = (
+   
+  // );
+
 
   const {
     sceneRef,
@@ -57,7 +68,6 @@ const RoomsPage = () => {
     reverbAmount,
     vibe,
     participants,
-    participantsRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -67,21 +77,6 @@ const RoomsPage = () => {
     handleStatic,
     handleLoop
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
-
-  const [open, setOpen] = useState(true);
-  const [modalStyle] = useState(getModalStyle);
-
-  
-
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  console.log(participants);
-  // const modalBody = (
-   
-  // );
-
   return (
     <article>
       <ControlsDrawer
@@ -109,7 +104,7 @@ const RoomsPage = () => {
           <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">Text in a modal</h2>
             <p id="simple-modal-description">
-        Number of participants:{participants}
+            Number of participants:{participants}
             </p>
             <button onClick={handleClose}>begin</button>
           </div>

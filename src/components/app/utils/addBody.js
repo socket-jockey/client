@@ -2,7 +2,6 @@ import Matter from 'matter-js';
 import * as Tone from 'tone';
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
-
 try {
   if (typeof MatterWrap !== 'undefined') {
     // either use by name from plugin registry (Browser global)
@@ -14,6 +13,7 @@ try {
 } catch (e) {
   // could not require the plugin or install needed
 }
+const Events = Matter.Events;
 export const addBody = ({
   shape,
   isStatic,
@@ -24,20 +24,23 @@ export const addBody = ({
   speed,
   mouseX,
   mouseY,
+  canvasX,
+  canvasY,
+  gainRef
 }) => {
   let body;
-
+  const bodySize = size * -3 + 5; 
   if (shape === 'CIRCLE') {
-    body = Bodies.circle(mouseX, mouseY, size);
+    body = Bodies.circle(mouseX, mouseY, bodySize);
   } else if (shape === 'SQUARE') {
-    body = Bodies.rectangle(mouseX, mouseY, size, size);
+    body = Bodies.rectangle(mouseX, mouseY, bodySize, bodySize);
   } else if (shape === 'HEXAGON') {
-    body = Bodies.polygon(mouseX, mouseY, 6, size);
+    body = Bodies.polygon(mouseX, mouseY, 6, bodySize);
   } else if (shape === 'RECTANGLE') {
-    body = Bodies.rectangle(mouseX, mouseY, size * 4, size);
+    body = Bodies.rectangle(mouseX, mouseY, bodySize * 4, bodySize);
   }
 
-  body.pitch = size * -1 + 27;
+  body.pitch = size + 27;
 
   switch (material) {
     case 'WOOD':
@@ -46,7 +49,7 @@ export const addBody = ({
         density: 0.005,
         frictionAir: speed,
       });
-      body.synth = new Tone.MembraneSynth();
+      body.synth = new Tone.MembraneSynth().connect(gainRef.current);
       break;
     case 'METAL':
       Body.set(body, {
@@ -54,7 +57,7 @@ export const addBody = ({
         density: 0.01,
         frictionAir: speed,
       });
-      body.synth = new Tone.MetalSynth();
+      body.synth = new Tone.MetalSynth().connect(gainRef.current);
       break;
     case 'RUBBER':
       Body.set(body, {
@@ -62,7 +65,7 @@ export const addBody = ({
         density: 0.005,
         frictionAir: speed,
       });
-      body.synth = new Tone.FMSynth();
+      body.synth = new Tone.FMSynth().connect(gainRef.current);
       break;
     case 'CLOTH':
       Body.set(body, {
@@ -70,7 +73,7 @@ export const addBody = ({
         density: 0.001,
         frictionAir: speed,
       });
-      body.synth = new Tone.AMSynth();
+      body.synth = new Tone.AMSynth().connect(gainRef.current);
       break;
     case 'BUBBLE':
       Body.set(body, {
@@ -79,7 +82,7 @@ export const addBody = ({
         frictionAir: speed * 10,
       });
       body.bubble = true;
-      body.synth = new Tone.PluckSynth();
+      body.synth = new Tone.PluckSynth().connect(gainRef.current);
       break;
     default:
       Body.set(body, {
@@ -88,6 +91,7 @@ export const addBody = ({
         frictionAir: speed,
       });
   }
+  body.synth.silent = true;
   if (isStatic) Body.setStatic(body, isStatic);
   if (doesLoop) {
     Body.set(body, {
@@ -104,6 +108,24 @@ export const addBody = ({
         },
       },
     });
+  } else {
+    Body.set(body, {
+      plugin: {
+        wrap: {
+          min: {
+            x: 0,
+            y: 0
+          },
+          max: {
+            x: canvasX,
+            y: canvasY
+          },
+        },
+      },
+    });
   }
+  Events.on(body, 'collisionStart', () => {
+    console.log(`${body.id} collision`);
+  });
   return body;
 };

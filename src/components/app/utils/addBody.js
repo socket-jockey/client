@@ -78,16 +78,23 @@ export const addBody = ({
       Body.set(body, {
         restitution: 0,
         density: 0.001,
-        frictionAir: speed * 10,
+        frictionAir: speed * 2,
+        render: {
+          visible: true,
+          fillStyle: 'transparent',
+          lineWidth: 5
+        }
+        
       });
       body.bubble = true;
       body.synth = new Tone.PluckSynth().connect(gainRef.current);
+      console.log(body);
       break;
     default:
       Body.set(body, {
         restitution: 1,
         density: 0.003,
-        frictionAir: speed,
+        frictionAir: speed * 5,
       });
   }
   body.synth.silent = true;

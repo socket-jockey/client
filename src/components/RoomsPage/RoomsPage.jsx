@@ -131,7 +131,7 @@ const RoomsPage = () => {
       {room === 'collab' && <Chat />}
 
       <Modal
-        open={open}
+        open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -169,26 +169,6 @@ const RoomsPage = () => {
         }}
       >
       </section>
-      <Chat />
-      <Modal
-        open={open}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <Fade in={open} timeout={{ enter: 800, exit: 600 }}
-        >
-          <section 
-            style={modalStyle} 
-            className={classes.paper}
-          >
-            <h2 id="simple-modal-title">Waiting for Collaborators to arrive:  {participants} </h2>
-            {/* <p id="simple-modal-description">
-              collaborators on the way:  {participants}
-            </p> */}
-            <button onClick= {handleBegin}>begin</  button>
-          </section>
-        </Fade>
-      </Modal>
     </main>
   );
 };

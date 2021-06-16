@@ -3,25 +3,10 @@ import { useParams } from 'react-router';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
-<<<<<<< HEAD
-
-const RoomsPage = () => {
-  let canvasX, canvasY;
-
-  if (room === 'collab') {
-    canvasX = 1000;
-    canvasY = 800;
-  } else {
-    canvasX = window.innerWidth * 0.8 ;
-    canvasY = window.innerHeight * 0.8;
-  }
-
-  const { room } = useParams();
-  const noFriendButStillCool = room === 'solo';
-=======
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
+import Chat from '../CollabRoomPage/Chat';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -67,7 +52,6 @@ const RoomsPage = () => {
 
   const [modalStyle] = useState(getModalStyle);
 
->>>>>>> 5b394087da7cb8cb510d1fda87b3f83e3f5f89af
   const {
     sceneRef,
     bodyControls,
@@ -75,11 +59,9 @@ const RoomsPage = () => {
     gravity,
     reverbAmount,
     vibe,
-<<<<<<< HEAD
-=======
     participants,
     open,
->>>>>>> 5b394087da7cb8cb510d1fda87b3f83e3f5f89af
+    socketRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -87,50 +69,46 @@ const RoomsPage = () => {
     handlePause,
     handleUndo,
     handleStatic,
-<<<<<<< HEAD
-    handleLoop
-=======
     handleLoop,
     handleBegin,
->>>>>>> 5b394087da7cb8cb510d1fda87b3f83e3f5f89af
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
     <div
       style={{
         position: 'relative',
-      }}
-    >
-      <header
-        style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          paddingRight: '1rem',
-        }}
-      ></header>
-      <ControlsDrawer
-        handleBodyControls={handleBodyControls}
-        bodyControls={bodyControls}
-        maxCanvas={canvasX}
-        handleUndo={handleUndo}
-        pause={pause}
-        handlePause={handlePause}
-        gravity={gravity}
-        handleGravityChange={handleGravityChange}
-        vibe={vibe}
-        handleSettingTheVibe={handleSettingTheVibe}
-        reverbAmount={reverbAmount}
-        handleReverbChange={handleReverbChange}
-        handleStatic={handleStatic}
-        handleLoop={handleLoop}
-      />
-<<<<<<< HEAD
+      }}>
       <div
-        ref={sceneRef}
-        className={room === 'solo' ? styles.solo : styles.collab}
-      ></div>
-    </article>
-=======
+        style={{
+          position: 'relative',
+        }}
+      >
+        <header
+          style={{
+            position: 'absolute',
+            top: '0px',
+            right: '0px',
+            paddingRight: '1rem',
+          }}
+        >
+          <ControlsDrawer
+            handleBodyControls={handleBodyControls}
+            bodyControls={bodyControls}
+            maxCanvas={canvasX}
+            handleUndo={handleUndo}
+            pause={pause}
+            handlePause={handlePause}
+            gravity={gravity}
+            handleGravityChange={handleGravityChange}
+            vibe={vibe}
+            handleSettingTheVibe={handleSettingTheVibe}
+            reverbAmount={reverbAmount}
+            handleReverbChange={handleReverbChange}
+            handleStatic={handleStatic}
+            handleLoop={handleLoop}
+          />  
+        </header>
+      </div>
+      <Chat socketRef={socketRef}/>
       <Modal
         open={open}
         aria-labelledby="simple-modal-title"
@@ -158,11 +136,11 @@ const RoomsPage = () => {
           alignItems: 'center',
           textAlign: 'center',
           minHeight: '100vh',
-          paddingBottom: '4rem',
+          // paddingBottom: '4rem',
         }}
-      ></div>
+      >
+      </div>
     </div>
->>>>>>> 5b394087da7cb8cb510d1fda87b3f83e3f5f89af
   );
 };
 

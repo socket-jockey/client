@@ -110,7 +110,7 @@ const RoomsPage = () => {
       </div>
       <Chat socketRef={socketRef}/>
       <Modal
-        open={open}
+        open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >

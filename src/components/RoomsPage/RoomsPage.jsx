@@ -108,7 +108,7 @@ const RoomsPage = () => {
           />  
         </header>
       </div>
-      <Chat socketRef={socketRef}/>
+      {room === 'collab' && <Chat socketRef={socketRef}/>}
       <Modal
         open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"

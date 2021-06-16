@@ -1,105 +1,147 @@
-import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
-import SoloWorld from '../SoloRoomPage/SoloWorld';
-import CollabWorld from '../CollabRoomPage/CollabWorld';
-import BodyControls from '../controls/BodyControls';
-import WorldControls from '../controls/WorldControls';
+import React, { useState } from 'react';
+import { useParams } from 'react-router';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
+import { useMatterCollab } from '../app/hooks/useMatterCollab';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
+import Chat from '../CollabRoomPage/Chat';
 
-const RoomsPage = ({ setRoom, room }) => {
-  const bodyRef = useRef({
-    frictionAir: 0.01,
-    tempo: 0,
-    synthPitch: 0,
-    wrapX: 50,
-    wrapY: 50,
-    toggles: [],
-    wrap: false,
-    static: false,
-    shape: '',
-    material: '',
-  });
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
-  const worldRef = useRef({
-    worldSize: { x: 600, y: 600 },
-    gravityX: 0,
-    gravityY: 0,
-    reverb: 0,
-    toggles: [],
-    vibe: '',
-  });
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
 
-  const [bodyControls, setBodyControls] = useState(bodyRef.current);
-  const [worldControls, setWorldControls] = useState(worldRef.current);
-
-  const bodyControlsHandler = (key, value) => {
-    setBodyControls((prev) => ({ ...prev, [key]: value }));
-    bodyRef.current[key] = value;
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
   };
+}
 
-  const worldControlsHandler = (key, value) => {
-    setWorldControls((prev) => ({ ...prev, [key]: value }));
-    worldRef.current[key] = value;
-  };
+const RoomsPage = () => {
+  const classes = useStyles();
 
-  const handleBodyRemove = () => {
-    console.log('body removed!');
-  };
+  let canvasX, canvasY;
 
-  const handleWorldClear = () => {
-    console.log('world cleared!');
-  };
+  if (room === 'collab') {
+    canvasX = window.innerWidth;
+    canvasY = window.innerHeight;
+  } else {
+    canvasX = window.innerWidth;
+    canvasY = window.innerHeight;
+  }
 
-  if (!room)
-    return (
-      <article>
-        <section
-          onClick={() => setRoom('solo')}
-          className={styles.soloContainer}
-        >
-          <img
-            src="../../../public/solo.png"
-            alt="solo world experience"
-            className={styles.soloImage}
-          />
-        </section>
-        <section
-          onClick={() => setRoom('collab')}
-          className={styles.collabContainer}
-        >
-          <img
-            src="../../../public/collab.png"
-            alt="collaborative world experience"
-            className={styles.collabImage}
-          />
-        </section>
-      </article>
-    );
+  const { room } = useParams();
+
+  const noFriendButStillCool = room === 'solo';
+
+  const [modalStyle] = useState(getModalStyle);
+
+  const {
+    sceneRef,
+    bodyControls,
+    pause,
+    gravity,
+    reverbAmount,
+    vibe,
+    participants,
+    open,
+    socketRef,
+    handleBodyControls,
+    handleSettingTheVibe,
+    handleReverbChange,
+    handleGravityChange,
+    handlePause,
+    handleUndo,
+    handleStatic,
+    handleLoop,
+    handleBegin,
+  } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <article>
-      <ControlsDrawer
-        bodyControlsHandler={bodyControlsHandler}
-        bodyControls={bodyControls}
-        worldRef={worldRef}
-        handleBodyRemove={handleBodyRemove}
-        worldControlsHandler={worldControlsHandler}
-        worldControls={worldControls}
-        handleWorldClear={handleWorldClear}
-      />
-      {room === 'solo' ? (
-        <section className={styles.solo}>
-          <SoloWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
-        </section>
-      ) : (
-        <section className={styles.collab}>
-          <CollabWorld setBodyControls={setBodyControls} bodyRef={bodyRef} />
-        </section>
-      )}
-    </article>
+    <div
+      style={{
+        position: 'relative',
+      }}>
+      <div
+        style={{
+          position: 'relative',
+        }}
+      >
+        <header
+          style={{
+            position: 'absolute',
+            top: '0px',
+            right: '0px',
+            paddingRight: '1rem',
+          }}
+        >
+          <ControlsDrawer
+            handleBodyControls={handleBodyControls}
+            bodyControls={bodyControls}
+            maxCanvas={canvasX}
+            handleUndo={handleUndo}
+            pause={pause}
+            handlePause={handlePause}
+            gravity={gravity}
+            handleGravityChange={handleGravityChange}
+            vibe={vibe}
+            handleSettingTheVibe={handleSettingTheVibe}
+            reverbAmount={reverbAmount}
+            handleReverbChange={handleReverbChange}
+            handleStatic={handleStatic}
+            handleLoop={handleLoop}
+          />  
+        </header>
+      </div>
+      <Chat socketRef={socketRef}/>
+      <Modal
+        open={open}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
+          <div style={modalStyle} className={classes.paper}>
+            <h2 id="simple-modal-title">Text in a modal</h2>
+            <p id="simple-modal-description">
+              Number of participants:{participants}
+            </p>
+            <button onClick={handleBegin}>begin</button>
+          </div>
+        </Fade>
+      </Modal>
+      <div
+        ref={sceneRef}
+        className={room === 'solo' ? styles.solo : styles.collab}
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          minHeight: '100vh',
+          // paddingBottom: '4rem',
+        }}
+      >
+      </div>
+    </div>
   );
 };
-
-RoomsPage.propTypes = {};
 
 export default RoomsPage;

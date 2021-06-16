@@ -1,11 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Footer = (props) => {
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import styles from './App.css';
+
+const Footer = () => {
   return (
-    <footer>
-      <h3>copyright 2021 MEGAGROUP</h3>
-    </footer>
+    <Container className={styles.Footer}>
+      <Typography variant="body1">copyright 2021 MEGAGROUP</Typography>
+    </Container>
   );
 };
 

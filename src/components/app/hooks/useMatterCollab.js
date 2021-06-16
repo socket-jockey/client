@@ -286,7 +286,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       setPause('');
     }
   };
-  console.log('socketRef from hook', socketRef);
+  
   return {
     sceneRef,
     bodyControls,

@@ -91,7 +91,6 @@ export const addBody = ({
       });
       body.bubble = true;
       body.synth = new Tone.PluckSynth().connect(gainRef.current);
-      console.log(body);
       break;
     case 'CLOUD':
       Body.set(body, {

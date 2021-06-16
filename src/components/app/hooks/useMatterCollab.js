@@ -133,6 +133,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
 
     Matter.Events.on(engineRef.current, 'collisionStart', (event) => {
       const { bodyA, bodyB } = event.pairs[0];
+
       if (bodyA.cloud === true || bodyB.cloud === true) {
         if (bodyA.cloud === true && bodyA.isSounding === false) {
           console.log('CLOUD COLLISION STARTED', bodyA);

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Container } from '@material-ui/core';
 import Matter from 'matter-js';
 import { io } from 'socket.io-client';
 const socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
@@ -81,7 +82,11 @@ const SoloWorld = ({ bodyRef, worldRef }) => {
     });
   }, []);
 
-  return <div ref={sceneRef}></div>;
+  return (
+    <Container>
+      <div ref={sceneRef}></div>
+    </Container>
+  );
 };
 
 export default SoloWorld;

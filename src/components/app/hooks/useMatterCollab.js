@@ -54,7 +54,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     //socket stuff
     let socket;
     if (!noFriendButStillCool) {
-      socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
+      // socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
+      socket = io.connect('http://localhost:8000');
       socket.emit('collab');
       socket.on('set room', (room) => {
         socket.currentRoom = room;
@@ -78,7 +79,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         width: canvasX,
         height: canvasY,
         wireframes: false,
-        // background:'#F8B195',
+        // background: '#F8B195',
+        background:'000000'
       },
     });
 

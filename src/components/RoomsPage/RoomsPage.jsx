@@ -49,16 +49,7 @@ const RoomsPage = () => {
   
   const noFriendButStillCool = room === 'solo';
 
-  const [open, setOpen] = useState(true);
   const [modalStyle] = useState(getModalStyle);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  
-  // const modalBody = (
-   
-  // );
-
 
   const {
     sceneRef,
@@ -68,6 +59,7 @@ const RoomsPage = () => {
     reverbAmount,
     vibe,
     participants,
+    open,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -75,7 +67,8 @@ const RoomsPage = () => {
     handlePause,
     handleUndo,
     handleStatic,
-    handleLoop
+    handleLoop,
+    handleBegin,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
     <article>
@@ -104,9 +97,9 @@ const RoomsPage = () => {
           <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">Text in a modal</h2>
             <p id="simple-modal-description">
-            Number of participants:{participants}
+              Number of participants:{participants}
             </p>
-            <button onClick={handleClose}>begin</button>
+            <button onClick={handleBegin}>begin</button>
           </div>
         </Fade>
       </Modal>

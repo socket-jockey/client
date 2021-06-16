@@ -30,7 +30,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     toggles: [],
   });
   const reverbRef = useRef(null);
-  const gainRef = useRef(null);
+  const gainRef = useRef(new Tone.Gain(0.9));
+  const socketRef = useRef(null);
   // const [socketRoom, setSocketRoom] = useState('');
   const [bodyControls, setBodyControls] = useState(bodyRef.current);
   const [gravity, setGravity] = useState({
@@ -43,6 +44,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const vibeRef = useRef(0);
   const [pause, setPause] = useState('');
   const [pastGrav, setPastGrav] = useState(gravity);
+  const [participants, setParticipants] = useState('');
+
+  const [open, setOpen] = useState(true);
 
   const Engine = Matter.Engine;
   const Render = Matter.Render;
@@ -52,28 +56,34 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const Composite = Matter.Composite;
   
   useEffect(() => {
-    //socket stuff
     let socket;
+    //socket stuff
     if (!noFriendButStillCool) {
-      socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
+      socket = io.connect('http://localhost:8000');
+      // socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
       socket.emit('collab');
       socket.on('set room', (room) => {
         socket.currentRoom = room;
       });
+      socketRef.current = socket;
       socket.on('num participants', data => {
-        console.log(data);
+        setParticipants(data);
+      });
+      socket.on('close modal', () => {
+        handleCloseModal();
+        console.log('line 71', open);
       }); 
     }
-
     //start audio
     Tone.start();
     const limiter = new Tone.Limiter(-20).toDestination();
     reverbRef.current = new Tone.Reverb().connect(limiter);
-    gainRef.current = new Tone.Gain(0.9).connect(reverbRef.current);
-
+    
+    gainRef.current.connect(reverbRef.current);
+    
     // create new engine
     engineRef.current = Engine.create({});
-
+    
     //set up renderer
     const render = Render.create({
       element: sceneRef.current,
@@ -85,11 +95,11 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         // background:'#F8B195',
       },
     });
-
+    
     Render.setPixelRatio(render, 'auto');
-
+    
     const mouse = Mouse.create(render.canvas);
-
+    
     const mouseConstraint = MouseConstraint.create(engineRef.current, {
       mouse,
       constraint: {
@@ -99,9 +109,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         },
       },
     });
-
+    
     Composite.add(engineRef.current.world, mouseConstraint);
-
+    
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
       if (!noFriendButStillCool) {
         socket.emit('add object', socket.currentRoom, {
@@ -123,13 +133,12 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         );
       }
     });
-
+      
     Matter.Events.on(
       engineRef.current,
       'collisionStart',
       (event) => {
         const { bodyA, bodyB } = event.pairs[0];
-        console.log(bodyA, bodyB);
         if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
@@ -155,42 +164,44 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       }
     );
     !noFriendButStillCool &&
-      socket.on(
-        'emit add object',
-        ({
-          shape,
-          isStatic,
-          size,
-          material,
-          doesLoop,
-          loopSize,
-          speed,
-          mouseX,
-          mouseY,
-        }) => {
-          Composite.add(
-            engineRef.current.world,
-            addBody({
-              shape,
-              isStatic,
-              size,
-              material,
-              doesLoop,
-              loopSize,
-              speed,
-              mouseX,
-              mouseY,
-              canvasX,
-              canvasY,
-            })
-          );
-        }
-      );
-
+            socket.on(
+              'emit add object',
+              ({
+                shape,
+                isStatic,
+                size,
+                material,
+                doesLoop,
+                loopSize,
+                speed,
+                mouseX,
+                mouseY,
+              }) => {
+                Composite.add(
+                  engineRef.current.world,
+                  addBody({
+                    shape,
+                    isStatic,
+                    size,
+                    material,
+                    doesLoop,
+                    loopSize,
+                    speed,
+                    mouseX,
+                    mouseY,
+                    canvasX,
+                    canvasY,
+                    gainRef
+                    
+                  })
+                );
+              }
+            );
+                
     Matter.Runner.run(engineRef.current);
     Render.run(render);
   }, []);
-
+  
   //define handlers
   const handleBodyControls = (key, value) => {
     setBodyControls((prev) => ({ ...prev, [key]: value }));
@@ -208,6 +219,12 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       setBodyControls((prev) => ({ ...prev, isStatic: true }));
       bodyRef.current.isStatic = true;
     }
+  };
+  const handleBegin = () => {
+    socketRef.current.emit('begin', socketRef.current.currentRoom);
+  };
+  const handleCloseModal = () => {
+    setOpen(false);
   };
   const handleLoop = () => {
     if (bodyControls.doesLoop) {
@@ -274,6 +291,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     gravity,
     reverbAmount,
     vibe,
+    participants,
+    open,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -282,5 +301,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     handleUndo,
     handleStatic,
     handleLoop,
+    handleBegin,
   };
 };

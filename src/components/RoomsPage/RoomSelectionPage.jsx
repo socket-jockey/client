@@ -14,10 +14,6 @@ const RoomSelectionPage = () => {
     setCollabAnimation(false);
   };
 
-  const handleWhiteMountain = () => {
-    
-  };
-
   const handleSoloMountain = () => {
     setCollabAnimation(false);
     setTimeout(() => {
@@ -40,7 +36,7 @@ const RoomSelectionPage = () => {
               height: '100vh',
             }}
           >
-              <a onClick={handleSoloMountain}>
+            <a onClick={handleSoloMountain}>
               <img
                 src="https://i.imgur.com/kMsm46E.png"
                 alt="solo world experience"
@@ -51,20 +47,20 @@ const RoomSelectionPage = () => {
                 alt="solo world experience"
                 className={styles.soloText}
               />
-            <Animated
-              animationOut="slideOutLeft"
-              animationOutDuration={5000}
-              isVisible={collabAnimation}
-              className={styles.slideLeft}
-            >
+              <Animated
+                animationOut="slideOutLeft"
+                animationOutDuration={5000}
+                isVisible={collabAnimation}
+                className={styles.slideLeft}
+              >
                 <img
                   src="https://i.imgur.com/CCh62Ir.png"
                   alt="solo world experience"
                   className={styles.soloMountains}
                 />
-            </Animated>
+              </Animated>
             </a>
-            </div>
+          </div>
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
           <div

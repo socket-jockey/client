@@ -131,9 +131,11 @@ const RoomsPage = () => {
           />  
         </header>
       </div>
-      <Chat />
+
+      {room === 'collab' && <Chat />}
+
       <Modal
-        open={open}
+        open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >

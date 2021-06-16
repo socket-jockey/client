@@ -5,7 +5,7 @@ import RoomsPage from '../RoomsPage/RoomsPage';
 import './App.css';
 import RoomSelectionPage from '../RoomsPage/RoomSelectionPage';
 import { Container } from '@material-ui/core';
-import {SocketContext, socket} from './context/socketProvider';
+import { SocketContext, socket } from './context/socketProvider';
 
 
 const App = () => {
@@ -17,7 +17,6 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={LandingPage} />
         </Switch>
-       
         <Switch>
           <Route exact path="/rooms" component={RoomSelectionPage} />
 

@@ -38,15 +38,15 @@ const RoomsPage = () => {
   let canvasX, canvasY;
 
   if (room === 'collab') {
-    canvasX = 1000;
-    canvasY = 800;
+    canvasX = window.innerWidth;
+    canvasY = window.innerHeight;
   } else {
-    canvasX = window.innerWidth * 0.8 ;
-    canvasY = window.innerHeight * 0.8;
+    canvasX = window.innerWidth;
+    canvasY = window.innerHeight;
   }
 
   const { room } = useParams();
-  
+
   const noFriendButStillCool = room === 'solo';
 
   const [modalStyle] = useState(getModalStyle);
@@ -71,7 +71,19 @@ const RoomsPage = () => {
     handleBegin,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <article>
+    <div
+      style={{
+        position: 'relative',
+      }}
+    >
+      <header
+        style={{
+          position: 'absolute',
+          top: '0px',
+          right: '0px',
+          paddingRight: '1rem',
+        }}
+      ></header>
       <ControlsDrawer
         handleBodyControls={handleBodyControls}
         bodyControls={bodyControls}
@@ -106,9 +118,20 @@ const RoomsPage = () => {
       <div
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          minHeight: '100vh',
+          paddingBottom: '4rem',
+        }}
       ></div>
-    </article>
+    </div>
   );
 };
-      
+
 export default RoomsPage;

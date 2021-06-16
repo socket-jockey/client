@@ -15,6 +15,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       Matter.use(require('matter-wrap'));
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
   }
   const engineRef = useRef(null);
@@ -71,6 +72,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       });
       socket.on('close modal', () => {
         handleCloseModal();
+        // eslint-disable-next-line no-console
         console.log('line 71', open);
       }); 
     }
@@ -92,7 +94,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         width: canvasX,
         height: canvasY,
         wireframes: false,
-        // background:'#F8B195',
+        // background: '#F8B195',
+        background:'000000'
       },
     });
     

@@ -1,15 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import styles from './Chat.css';
+import { SocketContext } from '../app/context/socketProvider';
 
-const Chat = ({ socketRef }) => {
+const Chat = () => {
   const [input, setInput] = useState('');
+<<<<<<< HEAD
   const [display, setDisplay] = useState([]);
   const msgCountRef = useRef([]);
 
   useEffect(() => {
     socketRef.current.on('server chat', (msg) => {
+=======
+  const [display, setDisplay] = useState(['', '', '', '', '', '']);
+  const msgCount = useRef([]);
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    socket.on('server chat', (msg) => {
+>>>>>>> e5ef57a8e1c5632094cc70aec3bcef65758c2e12
       setDisplay((prev) => {
         // const subArr = prev.length > 5 ? prev.slice(1) : prev;
         msgCountRef.current = [...prev, msg];
@@ -20,7 +29,7 @@ const Chat = ({ socketRef }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socketRef.current.emit('client chat', input, socketRef.current.currentRoom);
+    socket.emit('client chat', input, socket.currentRoom);
     setInput('');
   };
 
@@ -29,6 +38,7 @@ const Chat = ({ socketRef }) => {
   };
   return (
     <div className={styles.chatDivWrapper}>
+<<<<<<< HEAD
       <ul className={styles.chatUl}>
         {display &&
           display.map((msg, i) => {
@@ -41,6 +51,13 @@ const Chat = ({ socketRef }) => {
                     : styles.chatMessages
                 }
               >
+=======
+      <ul className={styles.chatDivFull}>
+        {display &&
+          display.map((msg, i) => {
+            return (
+              <li key={i} className={styles.chatMessages}>
+>>>>>>> e5ef57a8e1c5632094cc70aec3bcef65758c2e12
                 {msg}
               </li>
             );
@@ -60,17 +77,17 @@ const Chat = ({ socketRef }) => {
           style={{ height: '56px' }}
           size="large"
           variant="outlined"
+<<<<<<< HEAD
           type="sumbit"
+=======
+          type="submit"
+>>>>>>> e5ef57a8e1c5632094cc70aec3bcef65758c2e12
         >
           send
         </Button>
       </form>
     </div>
   );
-};
-
-Chat.propTypes = {
-  socketRef: PropTypes.object.isRequired,
 };
 
 export default Chat;

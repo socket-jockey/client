@@ -2,13 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LandingPage from '../LandingPage/LandingPage';
 import RoomsPage from '../RoomsPage/RoomsPage';
-
 import './App.css';
-// import Header from './Header';
-// import Footer from './Footer';
 import RoomSelectionPage from '../RoomsPage/RoomSelectionPage';
 import { Container } from '@material-ui/core';
-
+import { SocketContext, socket } from './context/socketProvider';
 
 
 const App = () => {
@@ -20,11 +17,14 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={LandingPage} />
         </Switch>
-       
         <Switch>
           <Route exact path="/rooms" component={RoomSelectionPage} />
 
-          <Route exact path="/rooms/:room" component={RoomsPage} />
+          <Route exact path="/rooms/:room">
+            <SocketContext.Provider value={socket}>
+              <RoomsPage />
+            </SocketContext.Provider>
+          </Route>
 
           <Route
             exact

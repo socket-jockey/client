@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { SocketContext } from '../context/socketProvider';
 import Matter from 'matter-js';
 import { addBody } from '../utils/addBody';
 import * as Tone from 'tone';
 import { scales } from '../utils/scales';
-import { io } from 'socket.io-client';
+import { useAudio } from './useAudio';
+// import { io } from 'socket.io-client';
 
 export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   try {
@@ -32,60 +34,51 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   });
   const reverbRef = useRef(null);
   const gainRef = useRef(new Tone.Gain(0.9));
-  const socketRef = useRef(io.connect('http://localhost:8000'));
-  // const [socketRoom, setSocketRoom] = useState('');
   const [bodyControls, setBodyControls] = useState(bodyRef.current);
   const [gravity, setGravity] = useState({
     x: 0.5,
     y: 0.5,
   });
-  
+
   const [reverbAmount, setReverbAmount] = useState(50);
   const [vibe, setVibe] = useState('MAJOR');
   const vibeRef = useRef(0);
   const [pause, setPause] = useState('');
   const [pastGrav, setPastGrav] = useState(gravity);
   const [participants, setParticipants] = useState('');
-
   const [open, setOpen] = useState(true);
 
+  
   const Engine = Matter.Engine;
   const Render = Matter.Render;
   // const Bodies = Matter.Bodies;
   const Mouse = Matter.Mouse;
   const MouseConstraint = Matter.MouseConstraint;
   const Composite = Matter.Composite;
-  
+  const socket = useContext(SocketContext);
   useEffect(() => {
-    let socket;
+    
     //socket stuff
     if (!noFriendButStillCool) {
-      socket = socketRef.current;
-      // socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
       socket.emit('collab');
       socket.on('set room', (room) => {
         socket.currentRoom = room;
       });
-      // socketRef.current = socket;
-      socket.on('num participants', data => {
+      socket.on('num participants', (data) => {
         setParticipants(data);
       });
       socket.on('close modal', () => {
         handleCloseModal();
-        // eslint-disable-next-line no-console
-        console.log('line 71', open);
-      }); 
+      });
     }
+
     //start audio
-    Tone.start();
-    const limiter = new Tone.Limiter(-20).toDestination();
-    reverbRef.current = new Tone.Reverb().connect(limiter);
-    
-    gainRef.current.connect(reverbRef.current);
-    
+    useAudio(reverbRef, gainRef);
+
+
     // create new engine
     engineRef.current = Engine.create({});
-    
+
     //set up renderer
     const render = Render.create({
       element: sceneRef.current,
@@ -95,14 +88,14 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         height: canvasY,
         wireframes: false,
         // background: '#F8B195',
-        background:'000000'
+        background: '000000',
       },
     });
-    
+
     Render.setPixelRatio(render, 'auto');
-    
+
     const mouse = Mouse.create(render.canvas);
-    
+
     const mouseConstraint = MouseConstraint.create(engineRef.current, {
       mouse,
       constraint: {
@@ -112,9 +105,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         },
       },
     });
-    
+
     Composite.add(engineRef.current.world, mouseConstraint);
-    
+
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
       if (!noFriendButStillCool) {
         socket.emit('add object', socket.currentRoom, {
@@ -136,75 +129,70 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         );
       }
     });
-      
-    Matter.Events.on(
-      engineRef.current,
-      'collisionStart',
-      (event) => {
-        const { bodyA, bodyB } = event.pairs[0];
-        if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
-          bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
-          bodyA.synth.triggerAttackRelease(
-            scales[vibeRef.current][bodyA.pitch],
-            '16n'
-          );
-          bodyA.synth.silent = false;
-          setTimeout(() => {
-            bodyA.synth.silent = true;
-          }, 50);
-        }
-        if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
-          bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
-          bodyB.synth.triggerAttackRelease(
-            scales[vibeRef.current][bodyB.pitch],
-            '16n'
-          );
-          bodyB.synth.silent = false;
-          setTimeout(() => {
-            bodyB.synth.silent = true;
-          }, 50);
-        }
+
+    Matter.Events.on(engineRef.current, 'collisionStart', (event) => {
+      const { bodyA, bodyB } = event.pairs[0];
+      if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
+        bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
+        bodyA.synth.triggerAttackRelease(
+          scales[vibeRef.current][bodyA.pitch],
+          '16n'
+        );
+        bodyA.synth.silent = false;
+        setTimeout(() => {
+          bodyA.synth.silent = true;
+        }, 50);
       }
-    );
+      if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
+        bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
+        bodyB.synth.triggerAttackRelease(
+          scales[vibeRef.current][bodyB.pitch],
+          '16n'
+        );
+        bodyB.synth.silent = false;
+        setTimeout(() => {
+          bodyB.synth.silent = true;
+        }, 50);
+      }
+    });
     !noFriendButStillCool &&
-            socket.on(
-              'emit add object',
-              ({
-                shape,
-                isStatic,
-                size,
-                material,
-                doesLoop,
-                loopSize,
-                speed,
-                mouseX,
-                mouseY,
-              }) => {
-                Composite.add(
-                  engineRef.current.world,
-                  addBody({
-                    shape,
-                    isStatic,
-                    size,
-                    material,
-                    doesLoop,
-                    loopSize,
-                    speed,
-                    mouseX,
-                    mouseY,
-                    canvasX,
-                    canvasY,
-                    gainRef
-                    
-                  })
-                );
-              }
-            );
-                
+      socket.on(
+        'emit add object',
+        ({
+          shape,
+          isStatic,
+          size,
+          material,
+          doesLoop,
+          loopSize,
+          speed,
+          mouseX,
+          mouseY,
+        }) => {
+          Composite.add(
+            engineRef.current.world,
+            addBody({
+              shape,
+              isStatic,
+              size,
+              material,
+              doesLoop,
+              loopSize,
+              speed,
+              mouseX,
+              mouseY,
+              canvasX,
+              canvasY,
+              gainRef,
+            })
+          );
+        }
+      );
+
     Matter.Runner.run(engineRef.current);
     Render.run(render);
   }, []);
-  
+
   //define handlers
   const handleBodyControls = (key, value) => {
     setBodyControls((prev) => ({ ...prev, [key]: value }));
@@ -224,7 +212,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     }
   };
   const handleBegin = () => {
-    socketRef.current.emit('begin', socketRef.current.currentRoom);
+    socket.emit('begin', socket.currentRoom);
   };
   const handleCloseModal = () => {
     setOpen(false);
@@ -286,7 +274,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       setPause('');
     }
   };
-  
+
   return {
     sceneRef,
     bodyControls,
@@ -296,7 +284,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     vibe,
     participants,
     open,
-    socketRef,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,

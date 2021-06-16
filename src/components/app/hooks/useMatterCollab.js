@@ -58,9 +58,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       socket = io.connect('https://socket-jockey-server-dev.herokuapp.com/');
       socket.emit('collab');
       socket.on('set room', (room) => {
-        console.log(room);
         socket.currentRoom = room;
       });
+      socket.on('num o')
     }
 
     //start audio

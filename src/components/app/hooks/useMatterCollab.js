@@ -70,6 +70,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       socket.on('close modal', () => {
         handleCloseModal();
       });
+      socket.on('undo last', () => {
+        engineRef.current.world.bodies.pop();
+      });
     }
 
     //start audio
@@ -128,7 +131,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           })
         );
       }
-      console.log(bodyRef.current);
     });
 
     Matter.Events.on(engineRef.current, 'collisionStart', (event) => {
@@ -261,7 +263,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   };
 
   const handleUndo = () => {
-    engineRef.current.world.bodies.pop();
+    if (!noFriendButStillCool){
+      socket.emit('undo', socket.currentRoom);
+    } else engineRef.current.world.bodies.pop();
   };
 
   const handlePause = () => {

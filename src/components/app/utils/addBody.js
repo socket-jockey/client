@@ -75,7 +75,7 @@ export const addBody = ({
 
   body.pitch = size + 27;
 
-  let amp, mod, vibrato, chorus, feedback;
+  let amp, mod, vibrato, chorus, feedback, pingpong;
   if (shape === 'CHICHI') {
     Body.set(body, {
       restitution: 0.6,
@@ -143,11 +143,23 @@ export const addBody = ({
           density: 0.01,
           frictionAir: 0.01,
         });
+        pingpong = new Tone.PingPongDelay({
+          delayTime: 0.4,
+        });
         vibrato = new Tone.Vibrato({
-          frequency: 0.5,
-          depth: 0.2,
+          frequency: 5,
+          depth: 0.5,
         }).connect(gainRef.current);
-        body.synth = new Tone.FMSynth().connect(vibrato);
+        amp = {
+          attack: 0.03,
+          decay: 0.3,
+          sustain: 0.5,
+          release: 0.9,
+          decayCurve: 'exponential',
+        };
+        body.synth = new Tone.Synth({
+          envelope: amp,
+        }).chain(vibrato, pingpong);
         break;
       case 'CLOTH':
         Body.set(body, {

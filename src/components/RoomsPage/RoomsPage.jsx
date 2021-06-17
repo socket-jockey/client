@@ -4,10 +4,16 @@ import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fade, Modal, Fab, Typography, Button, Drawer } from '@material-ui/core';
+import {
+  Fade,
+  Modal,
+  Fab,
+  Typography,
+  Button,
+  Drawer,
+} from '@material-ui/core';
 import Chat from '../Chat/Chat';
 import DrawingRoom from './DrawingRoom';
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -104,8 +110,6 @@ const RoomsPage = ({ userId }) => {
     setChatView(open);
   };
 
-  
-
   const {
     sceneRef,
     bodyControls,
@@ -126,7 +130,6 @@ const RoomsPage = ({ userId }) => {
     handleLoop,
     handleBegin,
     handleUserColor,
-<<<<<<< HEAD
   } = useMatterCollab({
     noFriendButStillCool,
     canvasX,
@@ -136,10 +139,6 @@ const RoomsPage = ({ userId }) => {
   });
 
   console.log('users object from rooms page', users);
-=======
-  } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
-  
->>>>>>> 4389190003a9a3fd68e7aa136bd326ac046db7fa
   return (
     <main>
       <header className={styles.header}>
@@ -234,7 +233,7 @@ const RoomsPage = ({ userId }) => {
                 height: '200px',
               }}
             >
-              <DrawingRoom /> 
+              <DrawingRoom />
             </Drawer>
             <Button onClick={toggleChat(true)}>Chat</Button>
             <Drawer

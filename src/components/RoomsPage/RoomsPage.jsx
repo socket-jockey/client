@@ -182,7 +182,7 @@ const RoomsPage = () => {
                 }}
                 variant="round"
               >
-                choose
+                
               </Fab>
               <Fab
                 onClick={() => {
@@ -195,7 +195,7 @@ const RoomsPage = () => {
                 }}
                 variant="round"
               >
-                your
+              
               </Fab>
               <Fab
                 onClick={() => {
@@ -241,9 +241,6 @@ const RoomsPage = () => {
             {/* <p id="simple-modal-description">
               Number of participants:{participants}
             </p> */}
-            <Button onClick={handleBegin} style={{ margin: '.5rem' }}>
-              begin
-            </Button>
             <Button onClick={toggleDrawer(true)}>Pass the Time</Button>
             <Drawer
               anchor={'left'}

@@ -43,7 +43,18 @@ export const addBody = ({
   } else if (shape === 'TRIANGLE') {
     body = Bodies.polygon(mouseX, mouseY, 3, bodySize);
   } else if (shape === 'CHICHI') {
-    body = Bodies.polygon(mouseX, mouseY, 3, bodySize);
+    body = Bodies.rectangle(mouseX, mouseY, bodySize / 2, bodySize * 1.5, {
+      render: {
+        sprite: {
+          visible: true,
+          texture: 'https://i.imgur.com/4iHbj73.png',
+          xScale: 0.01 * (bodySize / 10),
+          yScale: 0.01 * (bodySize / 10),
+          yOffset: 0.01,
+          xOffset: 0,
+        },
+      },
+    });
   } else if (shape === 'CLOUD') {
     body = Bodies.rectangle(mouseX, mouseY, bodySize * 2, bodySize, {
       isSensor: true,
@@ -64,89 +75,199 @@ export const addBody = ({
 
   body.pitch = size + 27;
 
-  let amp;
-  switch (material) {
-    case 'WOOD':
-      Body.set(body, {
-        restitution: 0.6,
-        density: 0.005,
-        frictionAir: 0.03 + size / -3000,
-      });
-      amp = new Tone.AmplitudeEnvelope({
-        attack: 0.1,
-        decay: 0.2,
-        sustain: 0,
-        release: 0.4,
-        decayCurve: 'exponential'
-      });
-      body.synth = new Tone.MembraneSynth({
-        envelope: amp,
-        octaves: 1,
-      }).connect(gainRef.current);
+  let amp, mod, vibrato, chorus, feedback;
+  if (shape === 'CHICHI') {
+    Body.set(body, {
+      restitution: 0.6,
+      density: 0.005,
+      frictionAir: 0.01,
+    });
+    body.synth = new Tone.Sampler({
+      urls: {
+        F4: 'chchi.mp3'
+      },
+      baseUrl: '../../../../public/'
+    }).connect(gainRef.current);
+    body.chichi = true;
+  } else {
+    switch (material) {
+      case 'WOOD':
+        Body.set(body, {
+          restitution: 0.5,
+          density: 0.005,
+          frictionAir: 0.01,
+        });
+        amp = {
+          attack: 0.01,
+          decay: 0.5,
+          sustain: 0,
+          release: 0.1,
+          decayCurve: 'exponential',
+        };
+        body.synth = new Tone.MembraneSynth({
+          envelope: amp,
+          octaves: 1,
+        }).connect(gainRef.current);
 
-      break;
-    case 'METAL':
-      Body.set(body, {
-        restitution: 0.3,
-        density: 0.01,
-        frictionAir: 0.01 + size / -5000,
-      });
-      body.synth = new Tone.MetalSynth().connect(gainRef.current);
-      break;
-    case 'RUBBER':
-      Body.set(body, {
-        restitution: 1.5,
-        density: 0.005,
-        frictionAir: speed,
-      });
-      body.synth = new Tone.FMSynth().connect(gainRef.current);
-      break;
-    case 'CLOTH':
-      Body.set(body, {
-        restitution: 0.001,
-        density: 0.001,
-        frictionAir: speed,
-      });
-      body.synth = new Tone.AMSynth().connect(gainRef.current);
-      break;
-    case 'BUBBLE':
-      Body.set(body, {
-        restitution: 0,
-        density: 0.000001,
-        frictionAir: speed * 2,
-        visible: true,
-        render: {
-          visible: true,
-          strokeStyle: '#95f9ddff',
-          fillStyle: 'transparent',
-          lineWidth: 5,
-        },
-      });
-      body.bubble = true;
-      body.synth = new Tone.PluckSynth().connect(gainRef.current);
-      break;
-    case 'GLITTER':
-      Body.set(body, {
-        restitution: 0,
-        density: 0.001,
-        frictionAir: 1,
-      });
-      body.synth = new Tone.Synth().connect(gainRef.current);
-      break;
-    case 'LIQUID':
-      Body.set(body, {
-        restitution: 0,
-        density: 0.001,
-        frictionAir: 1,
-      });
-      body.synth = new Tone.Synth().connect(gainRef.current);
-      break;
-    default:
-      Body.set(body, {
-        restitution: 1,
-        density: 0.003,
-        frictionAir: speed * 5,
-      });
+        break;
+      case 'METAL':
+        Body.set(body, {
+          restitution: 0.3,
+          density: 0.01,
+          frictionAir: 0.01 + size / -5000,
+        });
+        amp = {
+          attack: 0.01,
+          decay: 0.3,
+          sustain: 0,
+          release: 2,
+          decayCurve: 'exponential',
+        };
+        mod = {
+          attack: 0.3,
+          decay: 0.5,
+          sustain: 0,
+          release: 1,
+          decayCurve: 'exponential',
+        };
+        body.synth = new Tone.FMSynth({
+          envelope: amp,
+          harmonicity: 3,
+          modulationIndex: 20 - body.pitch / 2,
+          modulationEnvelope: mod,
+        }).connect(gainRef.current);
+        break;
+      case 'RUBBER':
+        Body.set(body, {
+          restitution: 1.4,
+          density: 0.01,
+          frictionAir: 0.01,
+        });
+        vibrato = new Tone.Vibrato({
+          frequency: 0.5,
+          depth: 0.2,
+        }).connect(gainRef.current);
+        body.synth = new Tone.FMSynth().connect(vibrato);
+        break;
+      case 'CLOTH':
+        Body.set(body, {
+          restitution: 0.001,
+          density: 0.001,
+          frictionAir: speed,
+        });
+        amp = {
+          attack: 0.1,
+          decay: 0.5,
+          sustain: 0.5,
+          release: 1,
+          decayCurve: 'exponential',
+        };
+        body.synth = new Tone.AMSynth({
+          envelope: amp,
+          harmonicity: 0.25,
+          modulationIndex: 15,
+        }).connect(gainRef.current);
+        body.chichi = true;
+        break;
+
+      case 'BUBBLE':
+        Body.set(body, {
+          restitution: 0,
+          density: 0.000001,
+          frictionAir: 1.2,
+          render: {
+            visible: true,
+            fillStyle: 'transparent',
+            lineWidth: 2,
+          },
+        });
+        body.bubble = true;
+        body.synth = new Tone.PluckSynth({
+          attackNoise: 3,
+          dampening: 5000,
+          release: 2,
+          resonance: 0.7
+        }).connect(gainRef.current);
+        break;
+
+      case 'GLITTER':
+        console.log('glitter');
+        Body.set(body, {
+          restitution: 1,
+          density: 0.01,
+          frictionAir: 0.007,
+        });
+        amp = {
+          attack: 0.05,
+          decay: 0.3,
+          sustain: 0.5,
+          release: 0.3,
+          decayCurve: 'exponential',
+        };
+        mod = {
+          attack: 0.01,
+          decay: 0.3,
+          sustain: 0,
+          release: 0.1,
+          decayCurve: 'exponential',
+        };
+        feedback = new Tone.FeedbackDelay(0.08, 0.7).connect(gainRef.current);
+        body.synth = new Tone.MonoSynth({
+          envelope: amp,
+          filterEnvelope: mod,
+          oscillator: {
+            type: 'sawtooth9'
+          },
+          filter: {
+            frequency: 10000,
+            Q: 3
+          }
+        }).connect(feedback);
+        break;
+      case 'LIQUID':
+        Body.set(body, {
+          restitution: 0,
+          density: 0.01,
+          frictionAir: 0.08,
+        });
+        amp = {
+          attack: 0.1,
+          decay: 0.3,
+          sustain: 0.5,
+          release: 1,
+          decayCurve: 'exponential',
+        };
+        mod = {
+          attack: 0.3,
+          decay: 0.3,
+          sustain: 0.5,
+          release: 0.1,
+          decayCurve: 'exponential',
+        };
+        chorus = new Tone.Chorus({
+          delayTime: 5,
+          depth: 0.8,
+          feedback: 0.7,
+        }).connect(gainRef.current);
+        body.synth = new Tone.MonoSynth({
+          envelope: amp,
+          filterEnvelope: mod,
+          oscillator: {
+            type: `square${Math.ceil(Math.random() * 20)}`
+          },
+          filter: {
+            frequency: 8000,
+            Q: 1
+          }
+        }).connect(chorus);
+        break;
+      default:
+        Body.set(body, {
+          restitution: 1,
+          density: 0.003,
+          frictionAir: speed * 5,
+        });
+    }
   }
   body.synth.silent = true;
   if (isStatic) Body.setStatic(body, isStatic);

@@ -41,14 +41,46 @@ const BodyControls = ({
         exclusive
         className={styles.toggleGroup}
       >
-        <ToggleButton value="CIRCLE">circle</ToggleButton>
-        <ToggleButton value="SQUARE">square</ToggleButton>
-        <ToggleButton value="TRIANGLE">triangle</ToggleButton>
-        <ToggleButton value="HEXAGON">hexagon</ToggleButton>
-        <ToggleButton value="CLOUD">cloud</ToggleButton>
-        <ToggleButton value="WALL">wall</ToggleButton>
-        <ToggleButton value="FLOOR">floor</ToggleButton>
-        <ToggleButton value="CHICHI">chichi</ToggleButton>
+        <ToggleButton value="CIRCLE">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.circle} src="https://i.imgur.com/VodNtJk.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="SQUARE">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/icfxcUc.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="TRIANGLE">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/kYqI7g4.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="HEXAGON">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/diZEQHK.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="CLOUD">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/qxER60X.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="WALL">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/BSfqyE1.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="FLOOR">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/zgRUOzc.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="CHICHI">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/4iHbj73.png"/>
+          </Icon>
+        </ToggleButton>
         
       </ToggleButtonGroup>
       <ToggleButtonGroup
@@ -61,13 +93,41 @@ const BodyControls = ({
           justifyContent: 'center',
         }}
       >
-        <ToggleButton value="WOOD">wood</ToggleButton>
-        <ToggleButton value="METAL">metal</ToggleButton>
-        <ToggleButton value="BUBBLE">bubble</ToggleButton>
-        <ToggleButton value="CLOTH">cloth</ToggleButton>
-        <ToggleButton value="RUBBER">rubber</ToggleButton>
-        <ToggleButton value="GLITTER">glitter</ToggleButton>
-        <ToggleButton value="LIQUID">liquid</ToggleButton>
+        <ToggleButton value="WOOD">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/4iHbj73.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="METAL">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/4iHbj73.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="BUBBLE">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/4iHbj73.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="CLOTH">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/4iHbj73.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="RUBBER">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/4iHbj73.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="GLITTER">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/4iHbj73.png"/>
+          </Icon>
+        </ToggleButton>
+        <ToggleButton value="LIQUID">
+          <Icon classes={classes.imageIcon}>
+            <img className={styles.imageIcon} src="https://i.imgur.com/4iHbj73.png"/>
+          </Icon>
+        </ToggleButton>
       </ToggleButtonGroup>
       <Divider
         style={{
@@ -77,9 +137,9 @@ const BodyControls = ({
       />
       <FormGroup>
         <InputLabel>
-          Size
+          Pitch
           <Icon classes={classes.imageIcon}>
-            <img className={styles.imageIcon} src="https://i.imgur.com/Dcy6b4j.png"/>
+            <img className={styles.imageIcon} src="https://i.imgur.com/T940Sx0.png"/>
           </Icon>
           <Slider
             value={bodyControls.size}
@@ -130,7 +190,6 @@ const BodyControls = ({
           style={{ marginLeft: '22%' }}
         >
           <ToggleButton size="large" value="doesLoop">
-            loop
             <Icon classes={classes.imageIcon}>
               <img className={styles.imageIcon} src="https://i.imgur.com/S1V1vRH.png"/>
             </Icon>
@@ -143,7 +202,6 @@ const BodyControls = ({
           style={{ marginLeft: '25%' }}
         >
           <ToggleButton size="large" value="isStatic">
-            static
             <Icon classes={classes.imageIcon}>
               <img className={styles.imageIcon} src="https://i.imgur.com/XNT6FDi.png"/>
             </Icon>
@@ -161,9 +219,8 @@ const BodyControls = ({
         onClick={handleUndo}
         variant="outlined"
       >
-        undo
         <Icon classes={classes.imageIcon}>
-          <img className={styles.imageIcon} src="https://i.imgur.com/0rcSmWm.png"/>
+          <img className={styles.imageIcon} src="https://i.imgur.com/RcCT1T6.png"/>
         </Icon>
       </Button>
     </FormGroup>

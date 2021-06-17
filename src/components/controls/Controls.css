@@ -3,3 +3,27 @@
   justify-content: center;
 }
 
+.imageIcon {
+  width: 3rem;
+}
+
+.sizing {
+  align-items: center;
+}
+
+.loopers {
+  width: 4rem;
+}
+
+.undo {
+  width: 70px;
+  align-content: space-between;
+  justify-content: space-evenly;
+}
+
+.deleteButtons {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+}

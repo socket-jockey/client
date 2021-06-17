@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import styles from './Chat.css';
 import { SocketContext } from '../app/context/socketProvider';
@@ -62,6 +62,7 @@ const Chat = ({ color }) => {
           size="large"
           variant="outlined"
           type="submit"
+          disabled={!input}
         >
           send
         </Button>

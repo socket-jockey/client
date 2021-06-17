@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
-import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
-import Fade from '@material-ui/core/Fade';
+import { Fade, Modal, Fab, Typography, Button } from '@material-ui/core';
 import Chat from '../Chat/Chat';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,11 +15,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     position: 'absolute',
     width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    // backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'transparent',
+    border: '10px solid ',
+    borderImage: ' linear-gradient(45deg, #FFCED8, #D4BEEE ) 100 10%',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
+
+    // background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
   },
   logo: {
     width: '20%',
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     width: '20px',
     height: '20px',
     borderRadius: '50%',
-    backgroundColor: 'blue',
+    backgroundColor: '#FFCED8',
   },
   inlineChat: {
     position: 'static',
@@ -131,6 +133,7 @@ const RoomsPage = ({ userId }) => {
         open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        hideBackdrop={true}
       >
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
@@ -183,7 +186,9 @@ const RoomsPage = ({ userId }) => {
             {/* <p id="simple-modal-description">
               Number of participants:{participants}
             </p> */}
-            <button onClick={handleBegin}>begin</button>
+            <Button onClick={handleBegin} style={{ margin: '.5rem' }}>
+              begin
+            </Button>
           </div>
         </Fade>
       </Modal>

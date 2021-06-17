@@ -126,25 +126,35 @@ export const useMatterCollab = ({
     Composite.add(engineRef.current.world, mouseConstraint);
 
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
-      if (!noFriendButStillCool) {
-        socket.emit('add object', socket.currentRoom, {
-          ...bodyRef.current,
-          mouseX: event.mouse.mousedownPosition.x,
-          mouseY: event.mouse.mousedownPosition.y,
-        });
-      } else {
-        Composite.add(
-          engineRef.current.world,
-          addBody({
+      if (!engineRef.current.isBeingDragged) {
+        if (!noFriendButStillCool) {
+          socket.emit('add object', socket.currentRoom, {
             ...bodyRef.current,
             mouseX: event.mouse.mousedownPosition.x,
             mouseY: event.mouse.mousedownPosition.y,
-            canvasX,
-            canvasY,
-            gainRef,
-          })
-        );
+          });
+        } else {
+          Composite.add(
+            engineRef.current.world,
+            addBody({
+              ...bodyRef.current,
+              mouseX: event.mouse.mousedownPosition.x,
+              mouseY: event.mouse.mousedownPosition.y,
+              canvasX,
+              canvasY,
+              gainRef,
+            })
+          );
+        }
       }
+    });
+
+    //Check if a body is being dragged to avoid creating an unwanted object
+    Matter.Events.on(mouseConstraint, 'startdrag', () => {
+      engineRef.current.isBeingDragged = true;
+    });
+    Matter.Events.on(mouseConstraint, 'enddrag', () => {
+      engineRef.current.isBeingDragged = false;
     });
 
     Matter.Events.on(engineRef.current, 'collisionStart', (event) => {
@@ -152,13 +162,11 @@ export const useMatterCollab = ({
 
       if (bodyA.cloud === true || bodyB.cloud === true) {
         if (bodyA.cloud === true && bodyA.isSounding === false) {
-          console.log('CLOUD COLLISION STARTED', bodyA);
           bodyA.synth.triggerAttack(scales[vibeRef.current][bodyA.pitch]);
           bodyB.render.visible = false;
           bodyA.isSounding = true;
         }
         if (bodyB.cloud === true && bodyB.isSounding === false) {
-          console.log('CLOUD COLLISION STARTED', bodyB);
           bodyB.synth.triggerAttack(scales[vibeRef.current][bodyB.pitch]);
           bodyA.render.visible = false;
           bodyB.isSounding = true;
@@ -179,6 +187,7 @@ export const useMatterCollab = ({
         }
         if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
+
           bodyB.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyB.pitch],
             '16n'
@@ -197,13 +206,11 @@ export const useMatterCollab = ({
       const { bodyA, bodyB } = event.pairs[0];
       if (bodyA.cloud === true || bodyB.cloud === true) {
         if (bodyA.cloud === true) {
-          console.log('CLOUD COLLISION ENDED', bodyA);
           bodyA.synth.triggerRelease();
           bodyB.render.visible = true;
           bodyA.isSounding = false;
         }
         if (bodyB.cloud === true) {
-          console.log('CLOUD COLLISION ENDED', bodyB);
           bodyB.synth.triggerRelease();
           bodyA.render.visible = true;
           bodyB.isSounding = false;
@@ -314,7 +321,10 @@ export const useMatterCollab = ({
   const handleUndo = () => {
     if (!noFriendButStillCool) {
       socket.emit('undo', socket.currentRoom);
-    } else engineRef.current.world.bodies.pop();
+    } else {
+      const body = engineRef.current.world.bodies.pop();
+      body.synth.dispose();
+    }
   };
 
   const handlePause = () => {

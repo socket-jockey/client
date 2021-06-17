@@ -227,8 +227,8 @@ export const addBody = ({
       case 'LIQUID':
         Body.set(body, {
           restitution: 0,
-          density: 0.001,
-          frictionAir: 0.1,
+          density: 0.01,
+          frictionAir: 0.08,
         });
         amp = {
           attack: 0.1,

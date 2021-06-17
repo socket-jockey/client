@@ -7,7 +7,6 @@ import RoomSelectionPage from '../RoomsPage/RoomSelectionPage';
 import { Container } from '@material-ui/core';
 import { SocketContext, socket } from './context/socketProvider';
 
-
 const App = () => {
   // const [room, setRoom] = useState('');
 
@@ -18,8 +17,12 @@ const App = () => {
           <Route exact path="/" component={LandingPage} />
         </Switch>
         <Switch>
-          <Route exact path="/rooms" component={RoomSelectionPage} />
-          <Route exact path="/rooms/:room">
+          <Route exact path="/rooms">
+            <SocketContext.Provider value={socket}>
+              <RoomSelectionPage />
+            </SocketContext.Provider>
+          </Route>
+          <Route exact path="/rooms/:room/:roomId">
             <SocketContext.Provider value={socket}>
               <RoomsPage />
             </SocketContext.Provider>

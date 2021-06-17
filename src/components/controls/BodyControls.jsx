@@ -32,9 +32,10 @@ const BodyControls = ({
         <ToggleButton value="SQUARE">square</ToggleButton>
         <ToggleButton value="TRIANGLE">triangle</ToggleButton>
         <ToggleButton value="HEXAGON">hexagon</ToggleButton>
-        <ToggleButton value="polygon">polygon</ToggleButton>
-        <ToggleButton value="orbit">orbit</ToggleButton>
-        <ToggleButton value="draw">draw</ToggleButton>
+        <ToggleButton value="CLOUD">cloud</ToggleButton>
+        <ToggleButton value="WALL">wall</ToggleButton>
+        <ToggleButton value="FLOOR">floor</ToggleButton>
+        <ToggleButton value="CHICHI">chichi</ToggleButton>
       </ToggleButtonGroup>
       <ToggleButtonGroup
         size="small"
@@ -107,7 +108,9 @@ const BodyControls = ({
           onChange={handleStatic}
           exclusive
         >
-          <ToggleButton size="large" value="isStatic">static</ToggleButton>
+          <ToggleButton size="large" value="isStatic">
+            static
+          </ToggleButton>
         </ToggleButtonGroup>
       </Container>
       <Button

@@ -31,7 +31,8 @@ const RoomSelectionPage = ({ userId }) => {
     }, 3700);
   };
 
-  const handleCollabJoin = (roomId) => {
+  const handleCollabJoin = (e, roomId) => {
+    e.preventDefault();
     socket.emit('set roomId & join', { userId, customRoomId: roomId });
     history.push(`/rooms/collab/${roomId ? roomId : ''}`);
   };
@@ -133,12 +134,7 @@ const RoomSelectionPage = ({ userId }) => {
                   />
                 </div>
               </Animated>
-              <input
-                type="text"
-                placeholder="enter custom room name"
-                value={customRoomId}
-                onChange={(e) => setCustomRoomId(e.target.value)}
-              />
+
               <button
                 style={{
                   backgroundImage: 'url(https://i.imgur.com/z1gULar.png)',
@@ -147,15 +143,17 @@ const RoomSelectionPage = ({ userId }) => {
                   backgroundColor: 'transparent',
                   border: 'none',
                 }}
-                onClick={handleCollabJoin}
+                onClick={(e) => {
+                  handleCollabJoin(e, customRoomId);
+                }}
                 className={visible ? styles.showJoinButton : styles.hide}
               ></button>
               <form style={{ display: 'flex' }}>
                 <input
                   type="text"
-                  // value={customRoomInput}
-                  // onChange={(e)
-                  //   => setCustomRoomInput(e.target.value)}
+                  placeholder="room name"
+                  value={customRoomId}
+                  onChange={(e) => setCustomRoomId(e.target.value)}
                   className={visible ? styles.showCustomInput : styles.hide}
                 />
                 <button
@@ -166,9 +164,11 @@ const RoomSelectionPage = ({ userId }) => {
                     backgroundColor: 'transparent',
                     border: 'none',
                   }}
-                  // onClick={setCustomRoomInput}
+                  onClick={(e) => {
+                    handleCollabJoin(e, customRoomId);
+                  }}
                   className={visible ? styles.showCustomButton : styles.hide}
-                  // value={customRoomInput}
+                  
                 ></button>
               </form>
             </div>

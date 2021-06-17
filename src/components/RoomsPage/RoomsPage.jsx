@@ -177,7 +177,7 @@ const RoomsPage = ({ userId }) => {
               style={{
                 flexDirection: 'row',
               }}
-              disabled={Object.values(users).includes('red')}
+              // disabled={Object.values(users).includes('red')}
             >
               <Fab
                 onClick={() => {

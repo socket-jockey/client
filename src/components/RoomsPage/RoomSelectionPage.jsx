@@ -1,29 +1,20 @@
 import React from 'react';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import { Grid } from '@material-ui/core/';
 import Container from '@material-ui/core/Container';
 import { Animated } from 'react-animated-css';
 import FadeIn from 'react-fade-in';
-// import useStyles from '@material-ui/core/styles';
+import { SocketContext } from '../app/context/socketProvider';
 
-// const useStyles = makeStyles(() => ({
-//   showButton: {
-//     marginTop: '40%',
-//   marginLeft: '30%',
-//   height: '2rem',
-//   animation: 'visible 30s',
-//   },
-
-//   hideButton
-
-// }))
-const RoomSelectionPage = () => {
-  // const classes = useStyles();
+const RoomSelectionPage = ({ userId }) => {
+  const socket = useContext(SocketContext);
   const history = useHistory();
   const [collabAnimation, setCollabAnimation] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [customRoomId, setCustomRoomId] = useState('');
 
   const handleBlackMountain = () => {
     setCollabAnimation(false);
@@ -40,9 +31,11 @@ const RoomSelectionPage = () => {
     }, 3700);
   };
 
-  const handleCollabJoin = () => {
-    history.push('/rooms/collab');
+  const handleCollabJoin = (roomId) => {
+    socket.emit('set roomId & join', { userId, customRoomId: roomId });
+    history.push(`/rooms/collab/${roomId ? roomId : ''}`);
   };
+
   return (
     <FadeIn transitionDuration={4800}>
       <Container
@@ -140,7 +133,12 @@ const RoomSelectionPage = () => {
                   />
                 </div>
               </Animated>
-
+              <input
+                type="text"
+                placeholder="enter custom room name"
+                value={customRoomId}
+                onChange={(e) => setCustomRoomId(e.target.value)}
+              />
               <button
                 style={{
                   backgroundImage: 'url(https://i.imgur.com/z1gULar.png)',
@@ -159,7 +157,6 @@ const RoomSelectionPage = () => {
                   // onChange={(e)
                   //   => setCustomRoomInput(e.target.value)}
                   className={visible ? styles.showCustomInput : styles.hide}
-                  
                 />
                 <button
                   style={{
@@ -180,6 +177,10 @@ const RoomSelectionPage = () => {
       </Container>
     </FadeIn>
   );
+};
+
+RoomSelectionPage.propTypes = {
+  userId: PropTypes.string.isRequired,
 };
 
 export default RoomSelectionPage;

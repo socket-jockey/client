@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
@@ -65,8 +66,9 @@ function getModalStyle() {
   };
 }
 
-const RoomsPage = () => {
+const RoomsPage = ({ userId }) => {
   const classes = useStyles();
+  const { room, roomId } = useParams();
   let canvasX, canvasY;
 
   if (room === 'collab') {
@@ -76,8 +78,6 @@ const RoomsPage = () => {
     canvasX = window.innerWidth;
     canvasY = window.innerHeight;
   }
-
-  const { room } = useParams();
 
   const noFriendButStillCool = room === 'solo';
 
@@ -118,7 +118,6 @@ const RoomsPage = () => {
     participants,
     open,
     users,
-    userId,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -129,7 +128,15 @@ const RoomsPage = () => {
     handleLoop,
     handleBegin,
     handleUserColor,
-  } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
+  } = useMatterCollab({
+    noFriendButStillCool,
+    canvasX,
+    canvasY,
+    roomId,
+    userId,
+  });
+
+
   return (
     <main>
       <header className={styles.header}>
@@ -170,6 +177,7 @@ const RoomsPage = () => {
               style={{
                 flexDirection: 'row',
               }}
+              disabled={Object.values(users).includes('red')}
             >
               <Fab
                 onClick={() => {
@@ -276,4 +284,7 @@ const RoomsPage = () => {
   );
 };
 
+RoomsPage.propTypes = {
+  userId: PropTypes.string.isRequired
+};
 export default RoomsPage;

@@ -197,7 +197,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         }
         if (bodyB.synth && bodyB.speed > 1 && bodyB.synth.silent === true) {
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
-          console.log(bodyB);
+        
           bodyB.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyB.pitch],
             bodyB.chichi ? '4n' : '16n'
@@ -366,7 +366,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   };
 
   const handleUserColor = (color) => {
-    console.log(userId);
+    
     socket.emit('set color', {
       user: { [userId]: color },
       room: socket.currentRoom,

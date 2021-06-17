@@ -40,7 +40,7 @@ const ControlsDrawer = ({
         open={drawerView}
         onClose={toggleDrawer(false)}
         style={{
-          opacity: '0.9',
+          opacity: '1',
         }}
       >
         <Container>

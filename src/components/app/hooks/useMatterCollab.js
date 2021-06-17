@@ -183,9 +183,9 @@ export const useMatterCollab = ({
             bodyA.synth.silent = true;
           }, 50);
           if (bodyA.bubble) {
-            Matter.Composite.remove(engineRef.current.world, bodyA)
+            Matter.Composite.remove(engineRef.current.world, bodyA);
             bodyA.synth.dispose();
-          };
+          }
         }
         if (bodyB.synth && bodyB.speed > 1 && bodyB.synth.silent === true) {
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;

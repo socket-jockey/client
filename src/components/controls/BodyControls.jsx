@@ -37,6 +37,7 @@ const BodyControls = ({
         <ToggleButton value="WALL">wall</ToggleButton>
         <ToggleButton value="FLOOR">floor</ToggleButton>
         <ToggleButton value="CHICHI">chichi</ToggleButton>
+        
       </ToggleButtonGroup>
       <ToggleButtonGroup
         size="small"

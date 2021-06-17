@@ -47,8 +47,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const [pastGrav, setPastGrav] = useState(gravity);
   const [participants, setParticipants] = useState('');
   const [open, setOpen] = useState(true);
+  const [users, setUsers] = useState({});
+  const [userId, setUserId] = useState('');
 
-  
   const Engine = Matter.Engine;
   const Render = Matter.Render;
   // const Bodies = Matter.Bodies;
@@ -56,17 +57,28 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const MouseConstraint = Matter.MouseConstraint;
   const Composite = Matter.Composite;
   const socket = useContext(SocketContext);
+
   useEffect(() => {
-    
     //socket stuff
     if (!noFriendButStillCool) {
+      socket.on('user id', (id) => setUserId(id));
+
       socket.emit('collab');
-      socket.on('set room', (room) => {
+
+      socket.on('set room', ({ room, users }) => {
         socket.currentRoom = room;
+
+        setUsers(users);
       });
+
+      socket.on('state from server', (users) => {
+        setUsers(users);
+      });
+
       socket.on('num participants', (data) => {
         setParticipants(data);
       });
+
       socket.on('close modal', () => {
         handleCloseModal();
       });
@@ -77,7 +89,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
 
     //start audio
     useAudio(reverbRef, gainRef);
-
 
     // create new engine
     engineRef.current = Engine.create({});
@@ -320,6 +331,14 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     }
   };
 
+  const handleUserColor = (color) => {
+    console.log(userId);
+    socket.emit('set color', {
+      user: { [userId]: color },
+      room: socket.currentRoom,
+    });
+  };
+
   return {
     sceneRef,
     bodyControls,
@@ -329,6 +348,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     vibe,
     participants,
     open,
+    users,
+    userId,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -338,5 +359,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     handleStatic,
     handleLoop,
     handleBegin,
+    handleUserColor,
   };
 };

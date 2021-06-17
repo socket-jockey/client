@@ -129,7 +129,7 @@ const RoomsPage = () => {
     handleBegin,
     handleUserColor,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
-
+  
   return (
     <main>
       <header className={styles.header}>

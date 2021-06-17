@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Drawer, Button, Divider, Container } from '@material-ui/core';
 import BodyControls from './BodyControls';
 import WorldControls from './WorldControls';
@@ -19,7 +19,7 @@ const ControlsDrawer = ({
   handleStatic,
   handleLoop,
 }) => {
-  const [drawerView, setDrawerView] = React.useState(false);
+  const [drawerView, setDrawerView] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
     if (

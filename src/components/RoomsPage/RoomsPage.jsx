@@ -4,8 +4,10 @@ import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fade, Modal, Fab, Typography, Button } from '@material-ui/core';
+import { Fade, Modal, Fab, Typography, Button, Drawer } from '@material-ui/core';
 import Chat from '../Chat/Chat';
+import DrawingRoom from './DrawingRoom';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -78,6 +80,33 @@ const RoomsPage = () => {
 
   const [modalStyle] = useState(getModalStyle);
 
+  const [drawerView, setDrawerView] = useState(false);
+  const [chatView, setChatView] = useState(false);
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+
+    setDrawerView(open);
+  };
+
+  const toggleChat = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+
+    setChatView(open);
+  };
+
+  
+
   const {
     sceneRef,
     bodyControls,
@@ -100,7 +129,7 @@ const RoomsPage = () => {
     handleBegin,
     handleUserColor,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
-
+  
   return (
     <main>
       <header className={styles.header}>
@@ -215,6 +244,30 @@ const RoomsPage = () => {
             <Button onClick={handleBegin} style={{ margin: '.5rem' }}>
               begin
             </Button>
+            <Button onClick={toggleDrawer(true)}>Pass the Time</Button>
+            <Drawer
+              anchor={'left'}
+              open={drawerView}
+              onClose={toggleDrawer(false)}
+              style={{
+                opacity: '0.9',
+                width: '50%',
+                height: '200px',
+              }}
+            >
+              <DrawingRoom /> 
+            </Drawer>
+            <Button onClick={toggleChat(true)}>Chat</Button>
+            <Drawer
+              anchor={'right'}
+              open={chatView}
+              onClose={toggleChat(false)}
+              style={{
+                opacity: '0.9',
+              }}
+            >
+              <Chat />
+            </Drawer>
           </div>
         </Fade>
       </Modal>

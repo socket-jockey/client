@@ -104,20 +104,8 @@ const RoomsPage = () => {
 
   console.log('users object from rooms page', users);
   return (
-    <main
-      className={styles.roomContainer}
-      style={{
-        position: 'relative',
-      }}
-    >
-      <header
-        style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          paddingRight: '1rem',
-        }}
-      >
+    <main>
+      <header className={styles.header}>
         <ControlsDrawer
           handleBodyControls={handleBodyControls}
           bodyControls={bodyControls}
@@ -204,17 +192,6 @@ const RoomsPage = () => {
       <section
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}
-        style={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-          minHeight: '100vh',
-          // paddingBottom: '4rem',
-        }}
       ></section>
     </main>
   );

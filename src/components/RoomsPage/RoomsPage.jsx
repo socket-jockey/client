@@ -4,7 +4,7 @@ import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fade, Modal, Fab, Typography, Button } from '@material-ui/core';
+import { Fade, Modal, Fab } from '@material-ui/core';
 import Chat from '../Chat/Chat';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     // background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
   },
   logo: {
-    width: '20%',
+    width: '100%',
   },
   dotContainer: {
     width: '50%',
@@ -46,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
   },
   inlineChat: {
     position: 'static',
+  },
+  button: {
+    backgroundImage: 'url(begin.png)',
+    margin: '.5rem',
   },
 }));
 
@@ -132,6 +136,11 @@ const RoomsPage = () => {
       >
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
+            <img
+              src="https://i.imgur.com/CZrIZin.png"
+              alt=""
+              className={classes.logo}
+            />
             <section
               style={{
                 flexDirection: 'row',
@@ -148,7 +157,7 @@ const RoomsPage = () => {
                 }}
                 variant="round"
               >
-                choose
+                {/* choose */}
               </Fab>
               <Fab
                 onClick={() => {
@@ -161,7 +170,7 @@ const RoomsPage = () => {
                 }}
                 variant="round"
               >
-                your
+                {/* your */}
               </Fab>
               <Fab
                 onClick={() => {
@@ -174,28 +183,13 @@ const RoomsPage = () => {
                 }}
                 variant="round"
               >
-                color
+                {/* color */}
               </Fab>
             </section>
-
-            <Typography
-              variant="h3"
-              align="center"
-              gutterBottom={true}
-              id="simple-modal-title"
-              className={styles.modalTitle}
-            >
-              Welcome to the Collab Room!
-            </Typography>
-
-            <Typography variant="caption" align="center" gutterBottom={true}>
-              Wait here until others arrive, then push begin when everyone is
-              ready.
-            </Typography>
             <img
-              className={classes.logo}
-              src="https://icon-library.com/images/36f183ca9c_30066.png"
+              src="https://i.imgur.com/6j7l3kL.png"
               alt=""
+              className={classes.logo}
             />
             <section className={classes.dotContainer}>
               <div className={classes.dotFilled}></div>
@@ -208,13 +202,16 @@ const RoomsPage = () => {
                 }
               ></div>
             </section>
-            {/* {open && <Chat className={classes.inlineChat}/>} */}
-            {/* <p id="simple-modal-description">
-              Number of participants:{participants}
-            </p> */}
-            <Button onClick={handleBegin} style={{ margin: '.5rem' }}>
-              begin
-            </Button>
+            <img
+              onClick={handleBegin}
+              src="/begin.png"
+              alt=""
+              style={{
+                marginTop: '2rem',
+                width: '25%',
+                cursor: 'pointer',
+              }}
+            />
           </div>
         </Fade>
       </Modal>

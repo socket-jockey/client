@@ -7,6 +7,7 @@ import {
   InputLabel,
   Slider,
   Container,
+  Divider,
 } from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
@@ -44,6 +45,9 @@ const BodyControls = ({
         onChange={(_, value) => handleBodyControls('material', value)}
         exclusive
         className={styles.toggleGroup}
+        style={{
+          justifyContent: 'center',
+        }}
       >
         <ToggleButton value="WOOD">wood</ToggleButton>
         <ToggleButton value="METAL">metal</ToggleButton>
@@ -52,11 +56,16 @@ const BodyControls = ({
         <ToggleButton value="RUBBER">rubber</ToggleButton>
         <ToggleButton value="GLITTER">glitter</ToggleButton>
         <ToggleButton value="LIQUID">liquid</ToggleButton>
-        <ToggleButton value="RANDOM">random</ToggleButton>
       </ToggleButtonGroup>
+      <Divider
+        style={{
+          height: '1rem',
+          backgroundColor: 'white',
+        }}
+      />
       <FormGroup>
         <InputLabel>
-          Size
+          size
           <Slider
             value={bodyControls.size}
             onChange={(_, value) => handleBodyControls('size', value)}
@@ -67,7 +76,7 @@ const BodyControls = ({
           />
         </InputLabel>
         <InputLabel>
-          Air Friction
+          air Friction
           <Slider
             value={bodyControls.speed}
             onChange={(_, value) => handleBodyControls('speed', value)}
@@ -86,16 +95,18 @@ const BodyControls = ({
           />
         </InputLabel>
       </FormGroup>
-      <Container
+      <Divider
         style={{
-          display: 'flex',
-          justifyContent: 'center',
+          height: '1rem',
+          backgroundColor: 'white',
         }}
-      >
+      />
+      <Container>
         <ToggleButtonGroup
           value={bodyControls.doesLoop && 'doesLoop'}
           onChange={handleLoop}
           exclusive
+          style={{ marginLeft: '22%' }}
         >
           <ToggleButton size="large" value="doesLoop">
             loop
@@ -105,12 +116,19 @@ const BodyControls = ({
           value={bodyControls.isStatic && 'isStatic'}
           onChange={handleStatic}
           exclusive
+          style={{ marginLeft: '25%' }}
         >
           <ToggleButton size="large" value="isStatic">
             static
           </ToggleButton>
         </ToggleButtonGroup>
       </Container>
+      <Divider
+        style={{
+          height: '1rem',
+          backgroundColor: 'white',
+        }}
+      />
       <Button
         style={{ margin: '1rem' }}
         onClick={handleUndo}

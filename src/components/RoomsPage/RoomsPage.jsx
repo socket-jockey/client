@@ -85,6 +85,8 @@ const RoomsPage = () => {
     vibe,
     participants,
     open,
+    users,
+    userId,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -94,7 +96,11 @@ const RoomsPage = () => {
     handleStatic,
     handleLoop,
     handleBegin,
+    handleUserColor,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
+
+
+  console.log('users object from rooms page', users);
   return (
     <main>
       <header className={styles.header}>
@@ -116,7 +122,7 @@ const RoomsPage = () => {
         />
       </header>
 
-      {room === 'collab' && <Chat />}
+      {room === 'collab' && <Chat color={users[userId]} />}
 
       <Modal
         open={room === 'collab' && open}
@@ -125,6 +131,33 @@ const RoomsPage = () => {
       >
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
+            <button
+              onClick={() => {
+                handleUserColor('red');
+
+              }}
+              disabled={Object.values(users).includes('red')}
+            >
+              red
+            </button>
+            <button
+              onClick={() => {
+                handleUserColor('green');
+
+              }}
+              disabled={Object.values(users).includes('green')}
+            >
+              green
+            </button>
+            <button
+              onClick={() => {
+                handleUserColor('blue');
+
+              }}
+              disabled={Object.values(users).includes('blue')}
+            >
+              blue
+            </button>
             <h2 id="simple-modal-title">Welcome to the Collab Room!</h2>
             <p>
               Wait here until others arrive, then push begin when everyone is

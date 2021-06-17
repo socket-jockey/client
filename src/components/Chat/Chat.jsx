@@ -3,26 +3,24 @@ import { Button, TextField } from '@material-ui/core';
 import styles from './Chat.css';
 import { SocketContext } from '../app/context/socketProvider';
 
-const Chat = () => {
+const Chat = ({ color }) => {
   const [input, setInput] = useState('');
-  const [display, setDisplay] = useState(['', '', '', '', '', '']);
-  const msgCount = useRef([]);
+  const [display, setDisplay] = useState([]);
+
   const socket = useContext(SocketContext);
 
   useEffect(() => {
     socket.on('server chat', (msg) => {
       setDisplay((prev) => {
-        const subArr = prev.slice(1);
-        return [...subArr, msg];
+        // const subArr = prev.length > 5 ? prev.slice(1) : prev;
+        return [...prev, msg];
       });
-      const subArr = msgCount.current.slice(1);
-      msgCount.current = [...subArr, msg];
     });
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit('client chat', input, socket.currentRoom);
+    socket.emit('client chat', { input, color }, socket.currentRoom);
     setInput('');
   };
 
@@ -31,12 +29,20 @@ const Chat = () => {
   };
   return (
     <div className={styles.chatDivWrapper}>
-      <ul className={styles.chatDivFull}>
+      <ul className={styles.chatUl}>
         {display &&
-          display.map((msg, i) => {
+          display.map(({ input, color }, i) => {
             return (
-              <li key={i} className={styles.chatMessages}>
-                {msg}
+              <li
+                key={i}
+                style={{ backgroundColor: color }}
+                className={
+                  i < display.length - 5
+                    ? styles.chatFloat
+                    : styles.chatMessages
+                }
+              >
+                {input}
               </li>
             );
           })}

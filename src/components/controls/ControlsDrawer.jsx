@@ -1,7 +1,6 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-// import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
 import BodyControls from './BodyControls';
 import WorldControls from './WorldControls';
@@ -44,7 +43,7 @@ const ControlsDrawer = ({
         open={drawerView}
         onClose={toggleDrawer(false)}
         style={{
-          opacity: '0.5',
+          opacity: '0.9',
         }}
       >
         <Container>

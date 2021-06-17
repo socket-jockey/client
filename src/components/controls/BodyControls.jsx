@@ -66,7 +66,6 @@ const BodyControls = ({
             max={0}
             step={1}
             marks
-            orientation="vertical"
           />
         </InputLabel>
         <InputLabel>

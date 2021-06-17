@@ -130,17 +130,14 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           );
         }
       }
-      console.log(bodyRef.current);
     });
     
     //Check if a body is being dragged to avoid creating an unwanted object 
     Matter.Events.on(mouseConstraint, 'startdrag', () => {
       engineRef.current.isBeingDragged = true;
-      console.log('startdrag', engineRef.current.isBeingDragged);
     });
     Matter.Events.on(mouseConstraint, 'enddrag', () => {
       engineRef.current.isBeingDragged = false;
-      console.log('enddrag', engineRef.current.isBeingDragged);
     });
 
     Matter.Events.on(engineRef.current, 'collisionStart', (event) => {
@@ -156,7 +153,10 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         setTimeout(() => {
           bodyA.synth.silent = true;
         }, 50);
-        if (bodyA.bubble) Matter.Composite.remove(engineRef.current.world, bodyA);
+        if (bodyA.bubble) {
+          bodyA.synth.dispose();
+          Matter.Composite.remove(engineRef.current.world, bodyA);
+        };
       }
       if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
         
@@ -169,7 +169,10 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         setTimeout(() => {
           bodyB.synth.silent = true;
         }, 50);
-        if (bodyB.bubble) Matter.Composite.remove(engineRef.current.world, bodyB);
+        if (bodyB.bubble) {
+          bodyB.synth.dispose();
+          Matter.Composite.remove(engineRef.current.world, bodyB);
+        };
       }
     });
     !noFriendButStillCool &&

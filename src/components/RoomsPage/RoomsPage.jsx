@@ -60,7 +60,6 @@ function getModalStyle() {
 
 const RoomsPage = () => {
   const classes = useStyles();
-
   let canvasX, canvasY;
 
   if (room === 'collab') {

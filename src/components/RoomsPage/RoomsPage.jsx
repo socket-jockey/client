@@ -60,7 +60,6 @@ function getModalStyle() {
 
 const RoomsPage = () => {
   const classes = useStyles();
-
   let canvasX, canvasY;
 
   if (room === 'collab') {
@@ -100,6 +99,8 @@ const RoomsPage = () => {
     handleUserColor,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
 
+
+  console.log('users object from rooms page', users);
   return (
     <main>
       <header className={styles.header}>

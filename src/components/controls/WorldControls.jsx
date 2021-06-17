@@ -26,7 +26,7 @@ const WorldControls = ({
     <Container>
       <FormGroup>
         <InputLabel>
-          X Gravity
+          <img className={styles.imageIcon} src="https://i.imgur.com/31CAsd9.png"/>
           <Slider
             value={gravity.x}
             onChange={(_, value) => handleGravityChange('x', value)}
@@ -37,7 +37,7 @@ const WorldControls = ({
           />
         </InputLabel>
         <InputLabel>
-          Y Gravity
+          <img className={styles.imageIcon} src="https://i.imgur.com/tVfuHZQ.png"/>
           <Slider
             value={gravity.y}
             onChange={(_, value) => handleGravityChange('y', value)}
@@ -48,7 +48,7 @@ const WorldControls = ({
           />
         </InputLabel>
         <InputLabel>
-          Reverb
+          <img className={styles.imageIcon} src="https://i.imgur.com/WVfRFaI.png"/>  
           <Slider
             // value={reverb}
             value={reverbAmount}
@@ -75,9 +75,15 @@ const WorldControls = ({
             marginLeft: '21%',
           }}
         >
-          <ToggleButton value="MAJOR">major</ToggleButton>
-          <ToggleButton value="MINOR">minor</ToggleButton>
-          <ToggleButton value="CHROMATIC">chromatic</ToggleButton>
+          <ToggleButton value="MAJOR">
+            <img className={styles.imageIcon} src="https://i.imgur.com/rcisiOE.png"/>
+          </ToggleButton>
+          <ToggleButton value="MINOR">
+            <img className={styles.imageIcon} src="https://i.imgur.com/ZDzpIlF.png"/>          
+          </ToggleButton>
+          <ToggleButton value="CHROMATIC">
+            <img className={styles.imageIcon} src="https://i.imgur.com/rBdXM63.png"/>  
+          </ToggleButton>
         </ToggleButtonGroup>
         <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
         <ToggleButtonGroup
@@ -89,7 +95,9 @@ const WorldControls = ({
             marginLeft: '35%',
           }}
         >
-          <ToggleButton value="paused">pause motion</ToggleButton>
+          <ToggleButton value="paused">
+            <img className={styles.imageIcon} src="https://i.imgur.com/hh947yM.png"/>
+          </ToggleButton>
         </ToggleButtonGroup>
       </Container>
 

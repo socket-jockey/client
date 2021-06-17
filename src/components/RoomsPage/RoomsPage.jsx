@@ -7,8 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   Fade,
   Modal,
-  Fab,
-  Typography,
   Button,
   Drawer,
 } from '@material-ui/core';

@@ -47,7 +47,6 @@ export const useMatterCollab = ({
   });
 
   const vibeRef = useRef(0);
-  const userIdRef = useRef('');
 
   const [reverbAmount, setReverbAmount] = useState(50);
   const [vibe, setVibe] = useState('MAJOR');

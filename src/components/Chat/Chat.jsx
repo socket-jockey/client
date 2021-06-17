@@ -12,7 +12,6 @@ const Chat = ({ color }) => {
   useEffect(() => {
     socket.on('server chat', (msg) => {
       setDisplay((prev) => {
-        // const subArr = prev.length > 5 ? prev.slice(1) : prev;
         return [...prev, msg];
       });
     });

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import P5 from 'p5';
-import io from 'socket.io-client';
 import { SocketContext } from '../app/context/socketProvider';
 
 
@@ -36,28 +35,12 @@ const DrawingRoom = () => {
         strokeWidth
       };
       socket.emit('transmit mouse', socket.currentRoom, data);
-      // p.stroke('black');
-      // p.strokeWeight(5);
-      // p.line(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
-      // sendMouse(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
-      console.log(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
     }; 
   };
-  
-  // function sendMouse(x, y, pX, pY) {
-  //   const data = {
-  //     x,
-  //     y,
-  //     px: pX,
-  //     py: pY,
-  //     color,
-  //     strokeWidth,
-  //     socket.emit('transmit mouse', socket.currentRoom, data);
-  //   };
-  // }
 
   return (
     <div ref={canvasRef}>
+      <input type="color" value="#65aEE6" />
     </div>
   );
 };

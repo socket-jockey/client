@@ -169,18 +169,22 @@ const BodyControls = ({
           backgroundColor: 'white',
         }}
       />
-      <Button
-        style={{ margin: '1.5rem' }}
-        onClick={handleUndo}
+      <Container
+        className={styles.deleteButtons}
       >
-        <img className={`${styles.imageIcon} ${styles.undo}`} src="https://i.imgur.com/D0IYd5o.png"/>
-      </Button>
-      <Button
-        style={{ margin: '1.5rem' }}
-        // onClick={handleClearAll}
-      >
-        <img className={`${styles.imageIcon} ${styles.undo}`} src="https://i.imgur.com/LftdK8C.png"/>
-      </Button>
+        <Button
+          style={{ margin: '1.5rem' }}
+          onClick={handleUndo}
+        >
+          <img className={`${styles.imageIcon} ${styles.undo}`} src="https://i.imgur.com/D0IYd5o.png"/>
+        </Button>
+        <Button
+          style={{ margin: '1.5rem' }}
+          // onClick={handleClearAll}
+        >
+          <img className={`${styles.imageIcon} ${styles.undo}`} src="https://i.imgur.com/LftdK8C.png"/>
+        </Button>
+      </Container>
     </FormGroup>
   );
 };

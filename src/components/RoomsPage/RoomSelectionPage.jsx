@@ -1,16 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { Animated } from 'react-animated-css';
 import FadeIn from 'react-fade-in';
+import { SocketContext } from '../app/context/socketProvider';
 
-const RoomSelectionPage = () => {
+const RoomSelectionPage = ({ userId }) => {
+  const socket = useContext(SocketContext);
   const history = useHistory();
   const [collabAnimation, setCollabAnimation] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [customRoomId, setCustomRoomId] = useState('');
 
   const handleBlackMountain = () => {
     setCollabAnimation(false);
@@ -27,9 +30,11 @@ const RoomSelectionPage = () => {
     }, 3700);
   };
 
-  const handleCollabJoin = () => {
-    history.push('/rooms/collab');
+  const handleCollabJoin = (roomId) => {
+    socket.emit('set roomId & join', { userId, customRoomId: roomId });
+    history.push(`/rooms/collab/${roomId ? roomId : ''}`);
   };
+
   return (
     <FadeIn transitionDuration={4800}>
       <Container
@@ -127,9 +132,14 @@ const RoomSelectionPage = () => {
                   />
                 </div>
               </Animated>
-
+              <input
+                type="text"
+                placeholder="enter custom room name"
+                value={customRoomId}
+                onChange={(e) => setCustomRoomId(e.target.value)}
+              />
               <button
-                onClick={handleCollabJoin}
+                onClick={() => handleCollabJoin(customRoomId)}
                 className={visible ? styles.showButton : styles.hideButton}
               >
                 Join Collab Room

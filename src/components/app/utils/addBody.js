@@ -65,6 +65,8 @@ export const addBody = ({
   body.pitch = size + 27;
 
   let amp;
+  let vibrato;
+  
   switch (material) {
     case 'WOOD':
       Body.set(body, {
@@ -72,13 +74,13 @@ export const addBody = ({
         density: 0.005,
         frictionAir: 0.03 + size / -3000,
       });
-      amp = new Tone.AmplitudeEnvelope({
+      amp = {
         attack: 0.1,
         decay: 0.2,
         sustain: 0,
-        release: 0.4,
+        release: 1,
         decayCurve: 'exponential'
-      });
+      };
       body.synth = new Tone.MembraneSynth({
         envelope: amp,
         octaves: 1,
@@ -96,10 +98,23 @@ export const addBody = ({
     case 'RUBBER':
       Body.set(body, {
         restitution: 1.5,
-        density: 0.005,
+        density: 0.03,
         frictionAir: speed,
       });
-      body.synth = new Tone.FMSynth().connect(gainRef.current);
+     
+      vibrato = new Tone.Vibrato({
+        depth: 0.6,
+        frequency: 12,
+      }).connect(gainRef.current);
+      amp = {
+        attack: 0.1,
+        decay: 0.2,
+        sustain: 0,
+        release: 1,
+      };
+      body.synth = new Tone.MonoSynth({
+        envelope: amp,
+      }).connect(vibrato);
       break;
     case 'CLOTH':
       Body.set(body, {

@@ -45,13 +45,26 @@ export const addBody = ({
   } else if (shape === 'CHICHI') {
     body = Bodies.polygon(mouseX, mouseY, 3, bodySize);
   } else if (shape === 'CLOUD') {
-    body = Bodies.circle(mouseX, mouseY, bodySize, { isSensor: true });
+    body = Bodies.rectangle(mouseX, mouseY, bodySize * 2, bodySize, {
+      isSensor: true,
+      render: {
+        visible: true,
+        sprite: {
+          texture:
+            'https://static.vecteezy.com/system/resources/previews/001/192/683/original/cloud-png.png',
+          xScale: 0.03 * (bodySize / 10),
+          yScale: 0.03 * (bodySize / 10),
+        },
+        // opacity: 0.7
+      },
+    });
     body.cloud = true;
     body.isSounding = false;
   }
 
   body.pitch = size + 27;
 
+  let amp;
   switch (material) {
     case 'WOOD':
       Body.set(body, {
@@ -59,7 +72,18 @@ export const addBody = ({
         density: 0.005,
         frictionAir: 0.03 + size / -3000,
       });
-      body.synth = new Tone.MembraneSynth().connect(gainRef.current);
+      amp = new Tone.AmplitudeEnvelope({
+        attack: 0.1,
+        decay: 0.2,
+        sustain: 0,
+        release: 0.4,
+        decayCurve: 'exponential'
+      });
+      body.synth = new Tone.MembraneSynth({
+        envelope: amp,
+        octaves: 1,
+      }).connect(gainRef.current);
+
       break;
     case 'METAL':
       Body.set(body, {
@@ -99,16 +123,19 @@ export const addBody = ({
       body.bubble = true;
       body.synth = new Tone.PluckSynth().connect(gainRef.current);
       break;
-    case 'CLOUD':
+    case 'GLITTER':
       Body.set(body, {
         restitution: 0,
         density: 0.001,
         frictionAir: 1,
-        render: {
-          visible: true,
-          fillStyle: 'transparent',
-          lineWidth: 5,
-        },
+      });
+      body.synth = new Tone.Synth().connect(gainRef.current);
+      break;
+    case 'LIQUID':
+      Body.set(body, {
+        restitution: 0,
+        density: 0.001,
+        frictionAir: 1,
       });
       body.synth = new Tone.Synth().connect(gainRef.current);
       break;
@@ -121,7 +148,9 @@ export const addBody = ({
   }
   body.synth.silent = true;
   if (isStatic) Body.setStatic(body, isStatic);
-  if (shape === 'CLOUD') Body.setStatic(body, true);
+  if (shape === 'CLOUD') {
+    Body.setStatic(body, true);
+  }
   if (doesLoop) {
     Body.set(body, {
       plugin: {

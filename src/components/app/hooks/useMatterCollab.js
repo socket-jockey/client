@@ -69,7 +69,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         handleCloseModal();
       });
       socket.on('undo last', () => {
-        engineRef.current.world.bodies.pop();
+        const body = engineRef.current.world.bodies.pop();
+        body.synth.dispose();
       });
     }
 
@@ -156,6 +157,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         }
       } else {
         if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
+          console.log(bodyA);
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyA.pitch],
@@ -182,6 +184,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         }
         if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
+          console.log(bodyB);
           bodyB.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyB.pitch],
             '16n'
@@ -327,7 +330,10 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const handleUndo = () => {
     if (!noFriendButStillCool) {
       socket.emit('undo', socket.currentRoom);
-    } else engineRef.current.world.bodies.pop();
+    } else {
+      const body = engineRef.current.world.bodies.pop();
+      body.synth.dispose();
+    }
   };
 
   const handlePause = () => {

@@ -136,7 +136,7 @@ const RoomsPage = ({ userId }) => {
     userId,
   });
 
-  console.log('users object from rooms page', users);
+
   return (
     <main>
       <header className={styles.header}>

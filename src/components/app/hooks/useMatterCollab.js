@@ -175,7 +175,7 @@ export const useMatterCollab = ({
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyA.pitch],
-            '16n'
+            bodyB.chichi ? '4n' : '16n'
           );
           bodyA.synth.silent = false;
           setTimeout(() => {
@@ -184,12 +184,11 @@ export const useMatterCollab = ({
           if (bodyA.bubble)
             Matter.Composite.remove(engineRef.current.world, bodyA);
         }
-        if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
+        if (bodyB.synth && bodyB.speed > 1 && bodyB.synth.silent === true) {
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
-
           bodyB.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyB.pitch],
-            '16n'
+            bodyB.chichi ? '4n' : '16n'
           );
           bodyB.synth.silent = false;
           setTimeout(() => {

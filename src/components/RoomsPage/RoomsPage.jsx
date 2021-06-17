@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Fade,
-  Modal,
-  Button,
-  Drawer,
-} from '@material-ui/core';
+import { Fade, Modal, Fab, Drawer, Button } from '@material-ui/core';
 import Chat from '../Chat/Chat';
 import DrawingRoom from './DrawingRoom';
 
@@ -31,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     // background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
   },
   logo: {
-    width: '20%',
+    width: '100%',
   },
   dotContainer: {
     width: '50%',
@@ -52,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
   },
   inlineChat: {
     position: 'static',
+  },
+  button: {
+    backgroundImage: 'url(begin.png)',
+    margin: '.5rem',
   },
 }));
 
@@ -166,41 +166,63 @@ const RoomsPage = ({ userId }) => {
         aria-describedby="simple-modal-description"
         hideBackdrop={true}
       >
-        <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
+        <Fade in={open} timeout={{ enter: 5800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
-            <button
-              onClick={() => {
-                handleUserColor('red');
-              }}
-              disabled={Object.values(users).includes('red')}
-            >
-              red
-            </button>
-            <button
-              onClick={() => {
-                handleUserColor('green');
-              }}
-              disabled={Object.values(users).includes('green')}
-            >
-              green
-            </button>
-            <button
-              onClick={() => {
-                handleUserColor('blue');
-              }}
-              disabled={Object.values(users).includes('blue')}
-            >
-              blue
-            </button>
-            <h2 id="simple-modal-title">Welcome to the Collab Room!</h2>
-            <p>
-              Wait here until others arrive, then push begin when everyone is
-              ready.
-            </p>
             <img
-              className={classes.logo}
-              src="https://icon-library.com/images/36f183ca9c_30066.png"
+              src="https://i.imgur.com/CZrIZin.png"
               alt=""
+              className={classes.logo}
+            />
+            <section
+              style={{
+                flexDirection: 'row',
+              }}
+              // disabled={Object.values(users).includes('red')}
+            >
+              <Fab
+                onClick={() => {
+                  handleUserColor('#FB998E');
+                }}
+                disabled={Object.values(users).includes('#FB998E')}
+                style={{
+                  backgroundColor: '#FB998E',
+                  margin: '1rem',
+                }}
+                variant="round"
+              >
+                
+              </Fab>
+              <Fab
+                onClick={() => {
+                  handleUserColor('#A3E5FF');
+                }}
+                disabled={Object.values(users).includes('#A3E5FF')}
+                style={{
+                  backgroundColor: '#A3E5FF',
+                  margin: '1rem',
+                }}
+                variant="round"
+              >
+              
+              </Fab>
+              <Fab
+                onClick={() => {
+                  handleUserColor('#D4BEEE');
+                }}
+                disabled={Object.values(users).includes('#D4BEEE')}
+                style={{
+                  backgroundColor: '#D4BEEE',
+                  margin: '1rem',
+                }}
+                variant="round"
+              >
+                {/* color */}
+              </Fab>
+            </section>
+            <img
+              src="https://i.imgur.com/6j7l3kL.png"
+              alt=""
+              className={classes.logo}
             />
             <section className={classes.dotContainer}>
               <div className={classes.dotFilled}></div>
@@ -213,13 +235,20 @@ const RoomsPage = ({ userId }) => {
                 }
               ></div>
             </section>
+            <img
+              onClick={handleBegin}
+              src="/begin.png"
+              alt=""
+              style={{
+                marginTop: '2rem',
+                width: '25%',
+                cursor: 'pointer',
+              }}
+            />
             {/* {open && <Chat className={classes.inlineChat}/>} */}
             {/* <p id="simple-modal-description">
               Number of participants:{participants}
             </p> */}
-            <Button onClick={handleBegin} style={{ margin: '.5rem' }}>
-              begin
-            </Button>
             <Button onClick={toggleDrawer(true)}>Pass the Time</Button>
             <Drawer
               anchor={'left'}
@@ -255,4 +284,7 @@ const RoomsPage = ({ userId }) => {
   );
 };
 
+RoomsPage.propTypes = {
+  userId: PropTypes.string.isRequired
+};
 export default RoomsPage;

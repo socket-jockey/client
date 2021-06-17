@@ -1,12 +1,8 @@
 import React from 'react';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Container from '@material-ui/core/Container';
+import { Drawer, Button, Divider, Container } from '@material-ui/core';
 import BodyControls from './BodyControls';
 import WorldControls from './WorldControls';
 import PropTypes from 'prop-types';
-import styles from './Controls.css';
 const ControlsDrawer = ({
   handleBodyControls,
   bodyControls,

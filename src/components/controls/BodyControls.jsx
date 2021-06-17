@@ -11,15 +11,7 @@ import {
 } from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
-  divider: {
-    height: '1rem',
-    backgroundColor: 'white',
-  }
-
-}));
 const BodyControls = ({
   handleBodyControls,
   bodyControls,
@@ -29,7 +21,7 @@ const BodyControls = ({
   handleLoop,
 }) => {
 
-  const classes = useStyles();
+  
   return (
     <FormGroup>
       <ToggleButtonGroup

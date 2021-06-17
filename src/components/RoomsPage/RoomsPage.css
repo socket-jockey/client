@@ -37,6 +37,15 @@
   /* object-fit: contain; */
 }
 
+.soloMountains:hover {
+  cursor: pointer;
+}
+
+.collabSection {
+  justify-content: center;
+  align-items: center;
+}
+
 .collabContainer {
   width: 50%;
   position: relative;
@@ -72,12 +81,47 @@
   /* object-fit: contain; */
 }
 
+.collabBlackMountains:hover {
+  cursor: pointer;
+}
+
 .slideRight {
   width: 206%;
 }
 
 .slideLeft {
   width: 204%;
+}
+
+.hideButton {
+  opacity: 0;
+}
+
+.showButton {
+  margin-top: 40%;
+  margin-left: 30%;
+  height: 2rem;
+
+  animation: visible 30s;
+}
+
+.collabButton {
+}
+
+.showButton:hover {
+  cursor: pointer;
+}
+
+@keyframes visible {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .modal {

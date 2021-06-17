@@ -7,6 +7,7 @@ import {
   FormGroup,
   InputLabel,
   Slider,
+  Divider,
 } from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
@@ -23,66 +24,74 @@ const WorldControls = ({
 }) => {
   return (
     <Container>
+      <FormGroup>
+        <InputLabel>
+          X Gravity
+          <Slider
+            value={gravity.x}
+            onChange={(_, value) => handleGravityChange('x', value)}
+            min={-1}
+            max={1}
+            step={0.1}
+            valueLabelDisplay="auto"
+          />
+        </InputLabel>
+        <InputLabel>
+          Y Gravity
+          <Slider
+            value={gravity.y}
+            onChange={(_, value) => handleGravityChange('y', value)}
+            min={-1}
+            max={1}
+            step={0.1}
+            valueLabelDisplay="auto"
+          />
+        </InputLabel>
+        <InputLabel>
+          Reverb
+          <Slider
+            // value={reverb}
+            value={reverbAmount}
+            // onChange={(_, value) => setReverb(value)}
+            onChange={handleReverbChange}
+            min={0}
+            max={100}
+            valueLabelDisplay="auto"
+          />
+        </InputLabel>
+      </FormGroup>
+      <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
       <Container
-        styles={{
-          marginTop: '1rem',
+        style={{
+          justifyContent: 'center',
         }}
       >
-        <FormGroup>
-          <InputLabel>
-            X Gravity
-            <Slider
-              value={gravity.x}
-              onChange={(_, value) => handleGravityChange('x', value)}
-              min={-1}
-              max={1}
-              step={0.1}
-              valueLabelDisplay="auto"
-            />
-          </InputLabel>
-          <InputLabel>
-            Y Gravity
-            <Slider
-              value={gravity.y}
-              onChange={(_, value) => handleGravityChange('y', value)}
-              min={-1}
-              max={1}
-              step={0.1}
-              valueLabelDisplay="auto"
-            />
-          </InputLabel>
-          <InputLabel>
-            Reverb
-            <Slider
-              // value={reverb}
-              value={reverbAmount}
-              // onChange={(_, value) => setReverb(value)}
-              onChange={handleReverbChange}
-              min={0}
-              max={100}
-              valueLabelDisplay="auto"
-            />
-          </InputLabel>
-        </FormGroup>
+        <ToggleButtonGroup
+          value={vibe}
+          onChange={handleSettingTheVibe}
+          exclusive
+          // className={styles.toggleGroup}
+          style={{
+            marginLeft: '21%',
+          }}
+        >
+          <ToggleButton value="MAJOR">major</ToggleButton>
+          <ToggleButton value="MINOR">minor</ToggleButton>
+          <ToggleButton value="CHROMATIC">chromatic</ToggleButton>
+        </ToggleButtonGroup>
+        <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
+        <ToggleButtonGroup
+          value={pause}
+          onChange={handlePause}
+          exclusive
+          className={styles.toggleGroup}
+          style={{
+            marginLeft: '35%',
+          }}
+        >
+          <ToggleButton value="paused">pause motion</ToggleButton>
+        </ToggleButtonGroup>
       </Container>
-      <ToggleButtonGroup
-        value={pause}
-        onChange={handlePause}
-        exclusive
-        className={styles.toggleGroup}
-      >
-        <ToggleButton value="paused">pause motion</ToggleButton>
-      </ToggleButtonGroup>
-      <ToggleButtonGroup
-        value={vibe}
-        onChange={handleSettingTheVibe}
-        exclusive
-        className={styles.toggleGroup}
-      >
-        <ToggleButton value="MAJOR">major</ToggleButton>
-        <ToggleButton value="MINOR">minor</ToggleButton>
-        <ToggleButton value="CHROMATIC">chromatic</ToggleButton>
-      </ToggleButtonGroup>
 
       {/* <Button onClick={handleWorldClear} variant="outlined">
         remove all

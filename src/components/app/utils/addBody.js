@@ -45,7 +45,9 @@ export const addBody = ({
   } else if (shape === 'CHICHI') {
     body = Bodies.polygon(mouseX, mouseY, 3, bodySize);
   } else if (shape === 'CLOUD') {
-    body = Bodies.polygon(mouseX, mouseY, 3, bodySize);
+    body = Bodies.circle(mouseX, mouseY, bodySize, { isSensor: true });
+    body.cloud = true;
+    body.isSounding = false;
   }
 
   body.pitch = size + 27;
@@ -53,7 +55,7 @@ export const addBody = ({
   switch (material) {
     case 'WOOD':
       Body.set(body, {
-        restitution: .6,
+        restitution: 0.6,
         density: 0.005,
         frictionAir: 0.03 + size / -3000,
       });
@@ -86,13 +88,13 @@ export const addBody = ({
     case 'BUBBLE':
       Body.set(body, {
         restitution: 0,
-        density: 0.001,
+        density: 0.000001,
         frictionAir: speed * 2,
         render: {
           visible: true,
           fillStyle: 'transparent',
-          lineWidth: 5
-        }
+          lineWidth: 5,
+        },
       });
       body.bubble = true;
       body.synth = new Tone.PluckSynth().connect(gainRef.current);
@@ -105,8 +107,8 @@ export const addBody = ({
         render: {
           visible: true,
           fillStyle: 'transparent',
-          lineWidth: 5
-        }
+          lineWidth: 5,
+        },
       });
       body.synth = new Tone.Synth().connect(gainRef.current);
       break;

@@ -48,7 +48,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const [participants, setParticipants] = useState('');
   const [open, setOpen] = useState(true);
 
-
   const Engine = Matter.Engine;
   const Render = Matter.Render;
   // const Bodies = Matter.Bodies;
@@ -57,7 +56,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const Composite = Matter.Composite;
   const socket = useContext(SocketContext);
   useEffect(() => {
-    
     //socket stuff
     if (!noFriendButStillCool) {
       socket.emit('collab');
@@ -77,7 +75,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
 
     //start audio
     useAudio(reverbRef, gainRef);
-
 
     // create new engine
     engineRef.current = Engine.create({});
@@ -112,7 +109,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     Composite.add(engineRef.current.world, mouseConstraint);
 
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
-      if (!engineRef.current.isBeingDragged){
+      if (!engineRef.current.isBeingDragged) {
         if (!noFriendButStillCool) {
           socket.emit('add object', socket.currentRoom, {
             ...bodyRef.current,
@@ -134,8 +131,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         }
       }
     });
-    
-    //Check if a body is being dragged to avoid creating an unwanted object 
+
+    //Check if a body is being dragged to avoid creating an unwanted object
     Matter.Events.on(mouseConstraint, 'startdrag', () => {
       engineRef.current.isBeingDragged = true;
     });
@@ -159,7 +156,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         }
       } else {
         if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
-          
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyA.pitch],
@@ -169,10 +165,22 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           setTimeout(() => {
             bodyA.synth.silent = true;
           }, 50);
-          if (bodyA.bubble) Matter.Composite.remove(engineRef.current.world, bodyA);
+          if (bodyA.bubble) {
+            bodyA.synth.dispose();
+            Matter.Composite.remove(engineRef.current.world, bodyA);
+          }
+          if (bodyB.bubble) {
+            bodyB.synth.triggerAttackRelease(
+              scales[vibeRef.current][bodyB.pitch],
+              '16n'
+            );
+            setTimeout(() => {
+              bodyB.synth.dispose();
+            }, 200);
+            Matter.Composite.remove(engineRef.current.world, bodyB);
+          }
         }
         if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
-          
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
           bodyB.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyB.pitch],
@@ -182,7 +190,20 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           setTimeout(() => {
             bodyB.synth.silent = true;
           }, 50);
-          if (bodyB.bubble) Matter.Composite.remove(engineRef.current.world, bodyB);
+          if (bodyB.bubble) {
+            bodyB.synth.dispose();
+            Matter.Composite.remove(engineRef.current.world, bodyB);
+          }
+          if (bodyA.bubble) {
+            bodyA.synth.triggerAttackRelease(
+              scales[vibeRef.current][bodyA.pitch],
+              '16n'
+            );
+            setTimeout(() => {
+              bodyA.synth.dispose();
+            }, 200);
+            Matter.Composite.remove(engineRef.current.world, bodyA);
+          }
         }
       }
     });
@@ -194,7 +215,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           bodyA.synth.triggerRelease();
           bodyB.render.visible = true;
           bodyA.isSounding = false;
-
         }
         if (bodyB.cloud === true) {
           bodyB.synth.triggerRelease();
@@ -305,7 +325,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   };
 
   const handleUndo = () => {
-    if (!noFriendButStillCool){
+    if (!noFriendButStillCool) {
       socket.emit('undo', socket.currentRoom);
     } else engineRef.current.world.bodies.pop();
   };

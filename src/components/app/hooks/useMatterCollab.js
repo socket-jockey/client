@@ -48,7 +48,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const [participants, setParticipants] = useState('');
   const [open, setOpen] = useState(true);
 
-  
+
   const Engine = Matter.Engine;
   const Render = Matter.Render;
   // const Bodies = Matter.Bodies;
@@ -109,25 +109,37 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     Composite.add(engineRef.current.world, mouseConstraint);
 
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
-      if (!noFriendButStillCool) {
-        socket.emit('add object', socket.currentRoom, {
-          ...bodyRef.current,
-          mouseX: event.mouse.mousedownPosition.x,
-          mouseY: event.mouse.mousedownPosition.y,
-        });
-      } else {
-        Composite.add(
-          engineRef.current.world,
-          addBody({
+      if (!engineRef.current.isBeingDragged){
+        if (!noFriendButStillCool) {
+          socket.emit('add object', socket.currentRoom, {
             ...bodyRef.current,
             mouseX: event.mouse.mousedownPosition.x,
             mouseY: event.mouse.mousedownPosition.y,
-            canvasX,
-            canvasY,
-            gainRef,
-          })
-        );
+          });
+        } else {
+          Composite.add(
+            engineRef.current.world,
+            addBody({
+              ...bodyRef.current,
+              mouseX: event.mouse.mousedownPosition.x,
+              mouseY: event.mouse.mousedownPosition.y,
+              canvasX,
+              canvasY,
+              gainRef,
+            })
+          );
+        }
       }
+    });
+    
+    //Check if a body is being dragged to avoid creating an unwanted object 
+    Matter.Events.on(mouseConstraint, 'startdrag', () => {
+      engineRef.current.isBeingDragged = true;
+      console.log('startdrag', engineRef.current.isBeingDragged);
+    });
+    Matter.Events.on(mouseConstraint, 'enddrag', () => {
+      engineRef.current.isBeingDragged = false;
+      console.log('enddrag', engineRef.current.isBeingDragged);
     });
 
     Matter.Events.on(engineRef.current, 'collisionStart', (event) => {

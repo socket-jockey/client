@@ -1,7 +1,5 @@
 import Matter from 'matter-js';
 import * as Tone from 'tone';
-const Bodies = Matter.Bodies;
-const Body = Matter.Body;
 try {
   if (typeof MatterWrap !== 'undefined') {
     // either use by name from plugin registry (Browser global)
@@ -13,6 +11,9 @@ try {
 } catch (e) {
   // could not require the plugin or install needed
 }
+const Bodies = Matter.Bodies;
+const Body = Matter.Body;
+
 export const addBody = ({
   shape,
   isStatic,
@@ -25,18 +26,26 @@ export const addBody = ({
   mouseY,
   canvasX,
   canvasY,
-  gainRef
+  gainRef,
 }) => {
   let body;
-  const bodySize = size * -3 + 5; 
+  const bodySize = size * -3 + 5;
   if (shape === 'CIRCLE') {
     body = Bodies.circle(mouseX, mouseY, bodySize);
   } else if (shape === 'SQUARE') {
     body = Bodies.rectangle(mouseX, mouseY, bodySize, bodySize);
   } else if (shape === 'HEXAGON') {
     body = Bodies.polygon(mouseX, mouseY, 6, bodySize);
-  } else if (shape === 'RECTANGLE') {
-    body = Bodies.rectangle(mouseX, mouseY, bodySize * 4, bodySize);
+  } else if (shape === 'WALL') {
+    body = Bodies.rectangle(mouseX, mouseY, bodySize / 4, bodySize * 10);
+  } else if (shape === 'FLOOR') {
+    body = body = Bodies.rectangle(mouseX, mouseY, bodySize * 10, bodySize / 4);
+  } else if (shape === 'TRIANGLE') {
+    body = Bodies.polygon(mouseX, mouseY, 3, bodySize);
+  } else if (shape === 'CHICHI') {
+    body = Bodies.polygon(mouseX, mouseY, 3, bodySize);
+  } else if (shape === 'CLOUD') {
+    body = Bodies.polygon(mouseX, mouseY, 3, bodySize);
   }
 
   body.pitch = size + 27;
@@ -44,9 +53,9 @@ export const addBody = ({
   switch (material) {
     case 'WOOD':
       Body.set(body, {
-        restitution: 0.2,
+        restitution: .6,
         density: 0.005,
-        frictionAir: speed,
+        frictionAir: 0.03 + size / -3000,
       });
       body.synth = new Tone.MembraneSynth().connect(gainRef.current);
       break;
@@ -54,13 +63,13 @@ export const addBody = ({
       Body.set(body, {
         restitution: 0.3,
         density: 0.01,
-        frictionAir: speed,
+        frictionAir: 0.01 + size / -5000,
       });
       body.synth = new Tone.MetalSynth().connect(gainRef.current);
       break;
     case 'RUBBER':
       Body.set(body, {
-        restitution: 1.2,
+        restitution: 1.5,
         density: 0.005,
         frictionAir: speed,
       });
@@ -113,11 +122,11 @@ export const addBody = ({
         wrap: {
           min: {
             x: 0,
-            y: 0
+            y: 0,
           },
           max: {
             x: canvasX,
-            y: canvasY
+            y: canvasY,
           },
         },
       },

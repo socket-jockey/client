@@ -1,11 +1,8 @@
 import React from 'react';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
+import { Drawer, Button, Divider, Container } from '@material-ui/core';
 import BodyControls from './BodyControls';
 import WorldControls from './WorldControls';
 import PropTypes from 'prop-types';
-
 const ControlsDrawer = ({
   handleBodyControls,
   bodyControls,
@@ -47,6 +44,7 @@ const ControlsDrawer = ({
         }}
       >
         <Container>
+          <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
           <BodyControls
             handleBodyControls={handleBodyControls}
             bodyControls={bodyControls}
@@ -56,7 +54,7 @@ const ControlsDrawer = ({
             handleLoop={handleLoop}
           />
         </Container>
-
+        <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
         <Container>
           <WorldControls
             pause={pause}

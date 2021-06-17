@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
-import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
-import Fade from '@material-ui/core/Fade';
+import { Fade, Modal, Fab, Typography, Button } from '@material-ui/core';
 import Chat from '../Chat/Chat';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,11 +15,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     position: 'absolute',
     width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    // backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'transparent',
+    border: '10px solid ',
+    borderImage: ' linear-gradient(45deg, #FFCED8, #D4BEEE ) 100 10%',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
+
+    // background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
   },
   logo: {
     width: '20%',
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     width: '20px',
     height: '20px',
     borderRadius: '50%',
-    backgroundColor: 'blue',
+    backgroundColor: '#FFCED8',
   },
   inlineChat: {
     position: 'static',
@@ -60,7 +62,6 @@ function getModalStyle() {
 
 const RoomsPage = () => {
   const classes = useStyles();
-
   let canvasX, canvasY;
 
   if (room === 'collab') {
@@ -98,13 +99,8 @@ const RoomsPage = () => {
     handleLoop,
     handleBegin,
     handleUserColor,
-  } = useMatterCollab({
-    noFriendButStillCool,
-    canvasX,
-    canvasY,
-  });
+  } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
 
-  console.log('users object from rooms page', users);
   return (
     <main>
       <header className={styles.header}>
@@ -132,38 +128,70 @@ const RoomsPage = () => {
         open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        hideBackdrop={true}
       >
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
-            <button
-              onClick={() => {
-                handleUserColor('red');
+            <section
+              style={{
+                flexDirection: 'row',
               }}
-              disabled={Object.values(users).includes('red')}
             >
-              red
-            </button>
-            <button
-              onClick={() => {
-                handleUserColor('green');
-              }}
-              disabled={Object.values(users).includes('green')}
+              <Fab
+                onClick={() => {
+                  handleUserColor('#FB998E');
+                }}
+                disabled={Object.values(users).includes('#FB998E')}
+                style={{
+                  backgroundColor: '#FB998E',
+                  margin: '1rem',
+                }}
+                variant="round"
+              >
+                choose
+              </Fab>
+              <Fab
+                onClick={() => {
+                  handleUserColor('#A3E5FF');
+                }}
+                disabled={Object.values(users).includes('#A3E5FF')}
+                style={{
+                  backgroundColor: '#A3E5FF',
+                  margin: '1rem',
+                }}
+                variant="round"
+              >
+                your
+              </Fab>
+              <Fab
+                onClick={() => {
+                  handleUserColor('#D4BEEE');
+                }}
+                disabled={Object.values(users).includes('#D4BEEE')}
+                style={{
+                  backgroundColor: '#D4BEEE',
+                  margin: '1rem',
+                }}
+                variant="round"
+              >
+                color
+              </Fab>
+            </section>
+
+            <Typography
+              variant="h3"
+              align="center"
+              gutterBottom={true}
+              id="simple-modal-title"
+              className={styles.modalTitle}
             >
-              green
-            </button>
-            <button
-              onClick={() => {
-                handleUserColor('blue');
-              }}
-              disabled={Object.values(users).includes('blue')}
-            >
-              blue
-            </button>
-            <h2 id="simple-modal-title">Welcome to the Collab Room!</h2>
-            <p>
+              Welcome to the Collab Room!
+            </Typography>
+
+            <Typography variant="caption" align="center" gutterBottom={true}>
               Wait here until others arrive, then push begin when everyone is
               ready.
-            </p>
+            </Typography>
             <img
               className={classes.logo}
               src="https://icon-library.com/images/36f183ca9c_30066.png"
@@ -184,7 +212,9 @@ const RoomsPage = () => {
             {/* <p id="simple-modal-description">
               Number of participants:{participants}
             </p> */}
-            <button onClick={handleBegin}>begin</button>
+            <Button onClick={handleBegin} style={{ margin: '.5rem' }}>
+              begin
+            </Button>
           </div>
         </Fade>
       </Modal>

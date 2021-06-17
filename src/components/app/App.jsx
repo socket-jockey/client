@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LandingPage from '../LandingPage/LandingPage';
 import RoomsPage from '../RoomsPage/RoomsPage';
-import './App.css';
 import RoomSelectionPage from '../RoomsPage/RoomSelectionPage';
+import AboutDevs from '../About/AboutDevs';
+import './App.css';
 import { Container } from '@material-ui/core';
 import { SocketContext, socket } from './context/socketProvider';
 
@@ -27,11 +28,7 @@ const App = () => {
               <RoomsPage />
             </SocketContext.Provider>
           </Route>
-          <Route
-            exact
-            path="/about"
-            // component={AboutDevs}
-          />
+          <Route exact path="/about" component={AboutDevs} />
         </Switch>
         {/* <Footer /> */}
       </Router>

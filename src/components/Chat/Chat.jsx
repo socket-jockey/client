@@ -3,10 +3,9 @@ import { Button, TextField } from '@material-ui/core';
 import styles from './Chat.css';
 import { SocketContext } from '../app/context/socketProvider';
 
-const Chat = () => {
+const Chat = ({ color }) => {
   const [input, setInput] = useState('');
   const [display, setDisplay] = useState([]);
-  const msgCountRef = useRef([]);
 
   const socket = useContext(SocketContext);
 
@@ -14,7 +13,6 @@ const Chat = () => {
     socket.on('server chat', (msg) => {
       setDisplay((prev) => {
         // const subArr = prev.length > 5 ? prev.slice(1) : prev;
-        msgCountRef.current = [...prev, msg];
         return [...prev, msg];
       });
     });
@@ -22,7 +20,7 @@ const Chat = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit('client chat', input, socket.currentRoom);
+    socket.emit('client chat', { input, color }, socket.currentRoom);
     setInput('');
   };
 
@@ -33,17 +31,18 @@ const Chat = () => {
     <div className={styles.chatDivWrapper}>
       <ul className={styles.chatUl}>
         {display &&
-          display.map((msg, i) => {
+          display.map(({ input, color }, i) => {
             return (
               <li
                 key={i}
+                style={{ backgroundColor: color }}
                 className={
                   i < display.length - 5
                     ? styles.chatFloat
                     : styles.chatMessages
                 }
               >
-                {msg}
+                {input}
               </li>
             );
           })}

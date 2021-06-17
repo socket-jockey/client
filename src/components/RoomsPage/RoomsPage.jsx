@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   dotContainer: {
     width: '50%',
     display: 'flex',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   dots: {
     width: '20px',
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inlineChat: {
     position: 'static',
-  }
+  },
 }));
 
 function getModalStyle() {
@@ -86,6 +86,8 @@ const RoomsPage = () => {
     vibe,
     participants,
     open,
+    users,
+    userId,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -95,13 +97,19 @@ const RoomsPage = () => {
     handleStatic,
     handleLoop,
     handleBegin,
+    handleUserColor,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
+
+  const [colorPicked, setColorPicked] = useState(false);
+
+  console.log('users object from rooms page', users);
   return (
     <main
       className={styles.roomContainer}
       style={{
         position: 'relative',
-      }}>
+      }}
+    >
       <header
         style={{
           position: 'absolute',
@@ -125,10 +133,10 @@ const RoomsPage = () => {
           handleReverbChange={handleReverbChange}
           handleStatic={handleStatic}
           handleLoop={handleLoop}
-        />  
+        />
       </header>
-          
-      {room === 'collab' && <Chat />}
+
+      {room === 'collab' && <Chat color={users[userId]} />}
 
       <Modal
         open={room === 'collab' && open}
@@ -137,13 +145,53 @@ const RoomsPage = () => {
       >
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
+            <button
+              onClick={() => {
+                handleUserColor('red');
+                setColorPicked(true);
+              }}
+              disabled={Object.values(users).includes('red')}
+            >
+              red
+            </button>
+            <button
+              onClick={() => {
+                handleUserColor('green');
+                setColorPicked(true);
+              }}
+              disabled={Object.values(users).includes('green')}
+            >
+              green
+            </button>
+            <button
+              onClick={() => {
+                handleUserColor('blue');
+                setColorPicked(true);
+              }}
+              disabled={Object.values(users).includes('blue')}
+            >
+              blue
+            </button>
             <h2 id="simple-modal-title">Welcome to the Collab Room!</h2>
-            <p>Wait here until others arrive, then push begin when everyone is ready.</p>
-            <img className={classes.logo} src="https://icon-library.com/images/36f183ca9c_30066.png" alt="" />
+            <p>
+              Wait here until others arrive, then push begin when everyone is
+              ready.
+            </p>
+            <img
+              className={classes.logo}
+              src="https://icon-library.com/images/36f183ca9c_30066.png"
+              alt=""
+            />
             <section className={classes.dotContainer}>
               <div className={classes.dotFilled}></div>
-              <div className={participants >= 2 ? classes.dotFilled : classes.dots}></div>
-              <div className={participants === 3 ? classes.dotFilled : classes.dots}></div>
+              <div
+                className={participants >= 2 ? classes.dotFilled : classes.dots}
+              ></div>
+              <div
+                className={
+                  participants === 3 ? classes.dotFilled : classes.dots
+                }
+              ></div>
             </section>
             {/* {open && <Chat className={classes.inlineChat}/>} */}
             {/* <p id="simple-modal-description">
@@ -167,8 +215,7 @@ const RoomsPage = () => {
           minHeight: '100vh',
           // paddingBottom: '4rem',
         }}
-      >
-      </section>
+      ></section>
     </main>
   );
 };

@@ -134,7 +134,7 @@ const RoomsPage = () => {
         aria-describedby="simple-modal-description"
         hideBackdrop={true}
       >
-        <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
+        <Fade in={open} timeout={{ enter: 5800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
             <img
               src="https://i.imgur.com/CZrIZin.png"

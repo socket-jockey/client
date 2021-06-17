@@ -2,12 +2,25 @@ import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './RoomsPage.css';
-import Grid from '@material-ui/core/Grid';
+import { Grid } from '@material-ui/core/';
 import Container from '@material-ui/core/Container';
 import { Animated } from 'react-animated-css';
 import FadeIn from 'react-fade-in';
+// import useStyles from '@material-ui/core/styles';
 
+// const useStyles = makeStyles(() => ({
+//   showButton: {
+//     marginTop: '40%',
+//   marginLeft: '30%',
+//   height: '2rem',
+//   animation: 'visible 30s',
+//   },
+
+//   hideButton
+
+// }))
 const RoomSelectionPage = () => {
+  // const classes = useStyles();
   const history = useHistory();
   const [collabAnimation, setCollabAnimation] = useState(true);
   const [visible, setVisible] = useState(false);
@@ -129,11 +142,38 @@ const RoomSelectionPage = () => {
               </Animated>
 
               <button
+                style={{
+                  backgroundImage: 'url(https://i.imgur.com/z1gULar.png)',
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                }}
                 onClick={handleCollabJoin}
-                className={visible ? styles.showButton : styles.hideButton}
-              >
-                Join Collab Room
-              </button>
+                className={visible ? styles.showJoinButton : styles.hide}
+              ></button>
+              <form style={{ display: 'flex' }}>
+                <input
+                  type="text"
+                  // value={customRoomInput}
+                  // onChange={(e)
+                  //   => setCustomRoomInput(e.target.value)}
+                  className={visible ? styles.showCustomInput : styles.hide}
+                  
+                />
+                <button
+                  style={{
+                    backgroundImage: 'url(https://i.imgur.com/aEV7zym.png)',
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                  }}
+                  // onClick={setCustomRoomInput}
+                  className={visible ? styles.showCustomButton : styles.hide}
+                  // value={customRoomInput}
+                ></button>
+              </form>
             </div>
           </Grid>
         </Grid>

@@ -128,7 +128,6 @@ export const addBody = ({
         restitution: 0,
         density: 0.001,
         frictionAir: 1,
-        fillStyle
       });
       body.synth = new Tone.Synth().connect(gainRef.current);
       break;

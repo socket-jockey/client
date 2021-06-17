@@ -181,8 +181,7 @@ export const useMatterCollab = ({
           setTimeout(() => {
             bodyA.synth.silent = true;
           }, 50);
-          if (bodyA.bubble)
-            Matter.Composite.remove(engineRef.current.world, bodyA);
+          if (bodyA.bubble) Matter.Composite.remove(engineRef.current.world, bodyA);
         }
         if (bodyB.synth && bodyB.speed > 1 && bodyB.synth.silent === true) {
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
@@ -194,8 +193,7 @@ export const useMatterCollab = ({
           setTimeout(() => {
             bodyB.synth.silent = true;
           }, 50);
-          if (bodyB.bubble)
-            Matter.Composite.remove(engineRef.current.world, bodyB);
+          if (bodyB.bubble) Matter.Composite.remove(engineRef.current.world, bodyB);
         }
       }
     });

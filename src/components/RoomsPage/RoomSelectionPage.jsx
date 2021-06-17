@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './RoomsPage.css';
-import Grid from '@material-ui/core/Grid';
+import { Grid } from '@material-ui/core/';
 import Container from '@material-ui/core/Container';
 import { Animated } from 'react-animated-css';
 import FadeIn from 'react-fade-in';
@@ -30,7 +31,8 @@ const RoomSelectionPage = ({ userId }) => {
     }, 3700);
   };
 
-  const handleCollabJoin = (roomId) => {
+  const handleCollabJoin = (e, roomId) => {
+    e.preventDefault();
     socket.emit('set roomId & join', { userId, customRoomId: roomId });
     history.push(`/rooms/collab/${roomId ? roomId : ''}`);
   };
@@ -132,24 +134,53 @@ const RoomSelectionPage = ({ userId }) => {
                   />
                 </div>
               </Animated>
-              <input
-                type="text"
-                placeholder="enter custom room name"
-                value={customRoomId}
-                onChange={(e) => setCustomRoomId(e.target.value)}
-              />
+
               <button
-                onClick={() => handleCollabJoin(customRoomId)}
-                className={visible ? styles.showButton : styles.hideButton}
-              >
-                Join Collab Room
-              </button>
+                style={{
+                  backgroundImage: 'url(https://i.imgur.com/z1gULar.png)',
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                }}
+                onClick={(e) => {
+                  handleCollabJoin(e, customRoomId);
+                }}
+                className={visible ? styles.showJoinButton : styles.hide}
+              ></button>
+              <form style={{ display: 'flex' }}>
+                <input
+                  type="text"
+                  placeholder="room name"
+                  value={customRoomId}
+                  onChange={(e) => setCustomRoomId(e.target.value)}
+                  className={visible ? styles.showCustomInput : styles.hide}
+                />
+                <button
+                  style={{
+                    backgroundImage: 'url(https://i.imgur.com/aEV7zym.png)',
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                  }}
+                  onClick={(e) => {
+                    handleCollabJoin(e, customRoomId);
+                  }}
+                  className={visible ? styles.showCustomButton : styles.hide}
+                  
+                ></button>
+              </form>
             </div>
           </Grid>
         </Grid>
       </Container>
     </FadeIn>
   );
+};
+
+RoomSelectionPage.propTypes = {
+  userId: PropTypes.string.isRequired,
 };
 
 export default RoomSelectionPage;

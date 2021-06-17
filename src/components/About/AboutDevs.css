@@ -6,9 +6,11 @@
 }
 .devWrapper {
   border: 1px black solid;
+  border-radius: 15px;
   height: 50vmin;
   margin: 1%;
   width: 35vmin;
+  background-color: rgba(255, 173, 173, 0.25);
 }
 
 .devGlue {
@@ -21,6 +23,7 @@
 
 .devIMage {
   height: 35vmin;
+  border-radius: 15px;
 }
 
 h2 {

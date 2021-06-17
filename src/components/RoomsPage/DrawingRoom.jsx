@@ -37,11 +37,8 @@ const DrawingRoom = () => {
       socket.emit('transmit mouse', socket.currentRoom, data);
     }; 
   };
-
   return (
-    <div ref={canvasRef}>
-      <input type="color" value="#65aEE6" />
-    </div>
+    <div ref={canvasRef}></div>
   );
 };
 

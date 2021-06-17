@@ -171,11 +171,10 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         }
       } else {
         if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
-          console.log(bodyA);
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyA.pitch],
-            '16n'
+            bodyB.chichi ? '4n' : '16n'
           );
           bodyA.synth.silent = false;
           setTimeout(() => {
@@ -196,12 +195,12 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
             Matter.Composite.remove(engineRef.current.world, bodyB);
           }
         }
-        if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
+        if (bodyB.synth && bodyB.speed > 1 && bodyB.synth.silent === true) {
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
           console.log(bodyB);
           bodyB.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyB.pitch],
-            '16n'
+            bodyB.chichi ? '4n' : '16n'
           );
           bodyB.synth.silent = false;
           setTimeout(() => {

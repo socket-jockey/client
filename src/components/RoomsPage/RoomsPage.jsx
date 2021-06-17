@@ -100,9 +100,6 @@ const RoomsPage = () => {
     handleUserColor,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
 
-  const [colorPicked, setColorPicked] = useState(false);
-
-  console.log('users object from rooms page', users);
   return (
     <main>
       <header className={styles.header}>
@@ -136,7 +133,6 @@ const RoomsPage = () => {
             <button
               onClick={() => {
                 handleUserColor('red');
-                setColorPicked(true);
               }}
               disabled={Object.values(users).includes('red')}
             >
@@ -145,7 +141,6 @@ const RoomsPage = () => {
             <button
               onClick={() => {
                 handleUserColor('green');
-                setColorPicked(true);
               }}
               disabled={Object.values(users).includes('green')}
             >
@@ -154,7 +149,6 @@ const RoomsPage = () => {
             <button
               onClick={() => {
                 handleUserColor('blue');
-                setColorPicked(true);
               }}
               disabled={Object.values(users).includes('blue')}
             >

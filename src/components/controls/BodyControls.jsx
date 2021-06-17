@@ -20,8 +20,6 @@ const BodyControls = ({
   handleStatic,
   handleLoop,
 }) => {
-
-  
   return (
     <FormGroup>
       <ToggleButtonGroup
@@ -58,10 +56,12 @@ const BodyControls = ({
         <ToggleButton value="GLITTER">glitter</ToggleButton>
         <ToggleButton value="LIQUID">liquid</ToggleButton>
       </ToggleButtonGroup>
-      <Divider style={{
-        height: '1rem',
-        backgroundColor: 'white'
-      }} />
+      <Divider
+        style={{
+          height: '1rem',
+          backgroundColor: 'white',
+        }}
+      />
       <FormGroup>
         <InputLabel>
           size
@@ -94,15 +94,18 @@ const BodyControls = ({
           />
         </InputLabel>
       </FormGroup>
-      <Divider style={{
-        height: '1rem',
-        backgroundColor: 'white'
-      }} />
+      <Divider
+        style={{
+          height: '1rem',
+          backgroundColor: 'white',
+        }}
+      />
       <Container>
         <ToggleButtonGroup
           value={bodyControls.doesLoop && 'doesLoop'}
           onChange={handleLoop}
           exclusive
+          style={{ marginLeft: '22%' }}
         >
           <ToggleButton size="large" value="doesLoop">
             loop
@@ -112,16 +115,19 @@ const BodyControls = ({
           value={bodyControls.isStatic && 'isStatic'}
           onChange={handleStatic}
           exclusive
+          style={{ marginLeft: '25%' }}
         >
           <ToggleButton size="large" value="isStatic">
             static
           </ToggleButton>
         </ToggleButtonGroup>
       </Container>
-      <Divider style={{
-        height: '1rem',
-        backgroundColor: 'white'
-      }} />
+      <Divider
+        style={{
+          height: '1rem',
+          backgroundColor: 'white',
+        }}
+      />
       <Button
         style={{ margin: '1rem' }}
         onClick={handleUndo}

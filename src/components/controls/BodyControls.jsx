@@ -107,7 +107,9 @@ const BodyControls = ({
           onChange={handleStatic}
           exclusive
         >
-          <ToggleButton size="large" value="isStatic">static</ToggleButton>
+          <ToggleButton size="large" value="isStatic">
+            static
+          </ToggleButton>
         </ToggleButtonGroup>
       </Container>
       <Button

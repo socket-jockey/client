@@ -1,7 +1,20 @@
+
+main {
+  position: relative;
+}
+
 .solo,
 .collab {
   background-image: url('https://i.imgur.com/JKax46x.png');
   background-color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
 }
 
 .soloContainer {
@@ -80,5 +93,9 @@
   width: 204%;
 }
 
-.modal {
+.header {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding-right: 1rem;
 }

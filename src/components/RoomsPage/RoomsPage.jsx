@@ -6,7 +6,7 @@ import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
-import Chat from '../CollabRoomPage/Chat';
+import Chat from '../Chat/Chat';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   dotContainer: {
     width: '50%',
     display: 'flex',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   dots: {
     width: '20px',
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inlineChat: {
     position: 'static',
-  }
+  },
 }));
 
 function getModalStyle() {
@@ -97,19 +97,8 @@ const RoomsPage = () => {
     handleBegin,
   } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
   return (
-    <main
-      className={styles.roomContainer}
-      style={{
-        position: 'relative',
-      }}>
-      <header
-        style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          paddingRight: '1rem',
-        }}
-      >
+    <main>
+      <header className={styles.header}>
         <ControlsDrawer
           handleBodyControls={handleBodyControls}
           bodyControls={bodyControls}
@@ -125,9 +114,9 @@ const RoomsPage = () => {
           handleReverbChange={handleReverbChange}
           handleStatic={handleStatic}
           handleLoop={handleLoop}
-        />  
+        />
       </header>
-          
+
       {room === 'collab' && <Chat />}
 
       <Modal
@@ -138,12 +127,25 @@ const RoomsPage = () => {
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">Welcome to the Collab Room!</h2>
-            <p>Wait here until others arrive, then push begin when everyone is ready.</p>
-            <img className={classes.logo} src="https://icon-library.com/images/36f183ca9c_30066.png" alt="" />
+            <p>
+              Wait here until others arrive, then push begin when everyone is
+              ready.
+            </p>
+            <img
+              className={classes.logo}
+              src="https://icon-library.com/images/36f183ca9c_30066.png"
+              alt=""
+            />
             <section className={classes.dotContainer}>
               <div className={classes.dotFilled}></div>
-              <div className={participants >= 2 ? classes.dotFilled : classes.dots}></div>
-              <div className={participants === 3 ? classes.dotFilled : classes.dots}></div>
+              <div
+                className={participants >= 2 ? classes.dotFilled : classes.dots}
+              ></div>
+              <div
+                className={
+                  participants === 3 ? classes.dotFilled : classes.dots
+                }
+              ></div>
             </section>
             {/* {open && <Chat className={classes.inlineChat}/>} */}
             {/* <p id="simple-modal-description">
@@ -156,19 +158,7 @@ const RoomsPage = () => {
       <section
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}
-        style={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-          minHeight: '100vh',
-          // paddingBottom: '4rem',
-        }}
-      >
-      </section>
+      ></section>
     </main>
   );
 };

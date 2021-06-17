@@ -1,8 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './LandingPage.css';
 
 const LandingPage = () => {
+  const history = useHistory();
+  const [animate, setAnimate] = useState(false);
+
+  const handleHole = () => {
+    setAnimate(() => true);
+    setTimeout(() => {
+      history.push('/rooms');
+    }, 3100);
+  };
   return (
     <main
       style={{
@@ -10,16 +19,18 @@ const LandingPage = () => {
       }}
       className={styles.landing}
     >
-      <Link to="/rooms">
-        <div className={styles.titleContainer}>
-          <p className={styles.colorChange}>
-            Socket
-            <br />
-            Jockey
-          </p>
-          <img src="/theHole.png" alt="the hole" className={styles.hole} />
-        </div>
-      </Link>
+      <div className={styles.titleContainer} onClick={handleHole}>
+        <p className={styles.colorChange}>
+          Socket
+          <br />
+          Jockey
+        </p>
+        <img
+          src="/theHole.png"
+          alt="the hole"
+          className={animate ? styles.grow : styles.hole}
+        />
+      </div>
     </main>
   );
 };

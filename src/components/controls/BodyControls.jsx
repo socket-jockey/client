@@ -44,9 +44,10 @@ const BodyControls = ({
         <ToggleButton value="SQUARE">square</ToggleButton>
         <ToggleButton value="TRIANGLE">triangle</ToggleButton>
         <ToggleButton value="HEXAGON">hexagon</ToggleButton>
-        <ToggleButton value="BOUNDARY">boundary</ToggleButton>
         <ToggleButton value="CLOUD">cloud</ToggleButton>
-        <ToggleButton value="CHICHI">chi chi</ToggleButton>
+        <ToggleButton value="WALL">wall</ToggleButton>
+        <ToggleButton value="FLOOR">floor</ToggleButton>
+        <ToggleButton value="CHICHI">chichi</ToggleButton>
       </ToggleButtonGroup>
       <ToggleButtonGroup
         size="small"

@@ -37,6 +37,10 @@ export const addBody = ({
     body = Bodies.polygon(mouseX, mouseY, 6, bodySize);
   } else if (shape === 'RECTANGLE') {
     body = Bodies.rectangle(mouseX, mouseY, bodySize * 4, bodySize);
+  } else if (shape === 'CLOUD') {
+    body = Bodies.circle(mouseX, mouseY, bodySize * 4, { isSensor: true });
+    body.cloud = true;
+    body.isSounding = false;
   }
 
   body.pitch = size + 27;
@@ -78,20 +82,39 @@ export const addBody = ({
       Body.set(body, {
         restitution: 0,
         density: 0.001,
-        frictionAir: speed * 10,
+        frictionAir: speed * 2,
+        render: {
+          visible: true,
+          fillStyle: 'transparent',
+          lineWidth: 5
+        }
       });
       body.bubble = true;
       body.synth = new Tone.PluckSynth().connect(gainRef.current);
+      break;
+    case 'CLOUD':
+      Body.set(body, {
+        restitution: 0,
+        density: 0.001,
+        frictionAir: 1,
+        render: {
+          visible: true,
+          fillStyle: 'transparent',
+          lineWidth: 5
+        }
+      });
+      body.synth = new Tone.Synth().connect(gainRef.current);
       break;
     default:
       Body.set(body, {
         restitution: 1,
         density: 0.003,
-        frictionAir: speed,
+        frictionAir: speed * 5,
       });
   }
   body.synth.silent = true;
   if (isStatic) Body.setStatic(body, isStatic);
+  if (shape === 'CLOUD') Body.setStatic(body, true);
   if (doesLoop) {
     Body.set(body, {
       plugin: {

@@ -1,8 +1,21 @@
 .toggleGroup {
   margin: 1rem;
   justify-content: center;
+  border: red;
 }
 
 .imageIcon {
-  height: 2rem;
+  width: 3rem;
+}
+
+.sizing {
+  align-items: center;
+}
+
+.loopers {
+  width: 4rem;
+}
+
+.undo {
+  width: 5rem;
 }

@@ -7,10 +7,19 @@ import {
   InputLabel,
   Slider,
   Container,
+  Divider,
 } from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(() => ({
+  divider: {
+    height: '1rem',
+    backgroundColor: 'white',
+  }
+
+}));
 const BodyControls = ({
   handleBodyControls,
   bodyControls,
@@ -19,6 +28,8 @@ const BodyControls = ({
   handleStatic,
   handleLoop,
 }) => {
+
+  const classes = useStyles();
   return (
     <FormGroup>
       <ToggleButtonGroup
@@ -43,22 +54,25 @@ const BodyControls = ({
         onChange={(_, value) => handleBodyControls('material', value)}
         exclusive
         className={styles.toggleGroup}
+        style={{
+          justifyContent: 'center',
+        }}
       >
         <ToggleButton value="WOOD">wood</ToggleButton>
         <ToggleButton value="METAL">metal</ToggleButton>
         <ToggleButton value="BUBBLE">bubble</ToggleButton>
         <ToggleButton value="CLOTH">cloth</ToggleButton>
-        <ToggleButton value="SYNTHETIC">synthetic</ToggleButton>
-        <ToggleButton value="RAIN CLOUD">rain cloud</ToggleButton>
         <ToggleButton value="RUBBER">rubber</ToggleButton>
-        <ToggleButton value="CRYSTAL">crystal</ToggleButton>
         <ToggleButton value="GLITTER">glitter</ToggleButton>
         <ToggleButton value="LIQUID">liquid</ToggleButton>
-        <ToggleButton value="RANDOM">random</ToggleButton>
       </ToggleButtonGroup>
+      <Divider style={{
+        height: '1rem',
+        backgroundColor: 'white'
+      }} />
       <FormGroup>
         <InputLabel>
-          Size
+          size
           <Slider
             value={bodyControls.size}
             onChange={(_, value) => handleBodyControls('size', value)}
@@ -69,7 +83,7 @@ const BodyControls = ({
           />
         </InputLabel>
         <InputLabel>
-          Air Friction
+          air Friction
           <Slider
             value={bodyControls.speed}
             onChange={(_, value) => handleBodyControls('speed', value)}
@@ -88,12 +102,11 @@ const BodyControls = ({
           />
         </InputLabel>
       </FormGroup>
-      <Container
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
+      <Divider style={{
+        height: '1rem',
+        backgroundColor: 'white'
+      }} />
+      <Container>
         <ToggleButtonGroup
           value={bodyControls.doesLoop && 'doesLoop'}
           onChange={handleLoop}
@@ -113,6 +126,10 @@ const BodyControls = ({
           </ToggleButton>
         </ToggleButtonGroup>
       </Container>
+      <Divider style={{
+        height: '1rem',
+        backgroundColor: 'white'
+      }} />
       <Button
         style={{ margin: '1rem' }}
         onClick={handleUndo}

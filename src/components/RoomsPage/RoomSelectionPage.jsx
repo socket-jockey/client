@@ -10,21 +10,26 @@ import FadeIn from 'react-fade-in';
 const RoomSelectionPage = () => {
   const history = useHistory();
   const [collabAnimation, setCollabAnimation] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const handleBlackMountain = () => {
     setCollabAnimation(false);
-    setTimeout(() => {
-      history.push('/rooms/collab');
-    }, 2000);
+    setVisible(() => true);
+    // setTimeout(() => {
+    //   setVisible(() => true);
+    // }, 2000);
   };
 
   const handleSoloMountain = () => {
     setCollabAnimation(false);
     setTimeout(() => {
       history.push('/rooms/solo');
-    }, 2000);
+    }, 3700);
   };
 
+  const handleCollabJoin = () => {
+    history.push('/rooms/collab');
+  };
   return (
     <FadeIn transitionDuration={4800}>
       <Container
@@ -41,7 +46,7 @@ const RoomSelectionPage = () => {
                 height: '100vh',
               }}
             >
-              <a onClick={handleSoloMountain}>
+              <div onClick={handleSoloMountain}>
                 <img
                   src="https://i.imgur.com/kMsm46E.png"
                   alt="solo world experience"
@@ -64,11 +69,12 @@ const RoomSelectionPage = () => {
                     className={styles.soloMountains}
                   />
                 </Animated>
-              </a>
+              </div>
             </div>
           </Grid>
           <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
             <div
+              className={styles.collabSection}
               style={{
                 height: '100vh',
               }}
@@ -81,6 +87,7 @@ const RoomSelectionPage = () => {
                   justifyContent: 'center',
                 }}
               />
+
               <img
                 src="https://i.imgur.com/WGq5sFA.png"
                 alt="collaborative world experience"
@@ -95,7 +102,7 @@ const RoomSelectionPage = () => {
                 isVisible={collabAnimation}
                 className={styles.slideRight}
               >
-                <a onClick={handleBlackMountain}>
+                <div onClick={handleBlackMountain}>
                   <img
                     src="https://i.imgur.com/nDa5QFE.png"
                     alt="collaborative world experience"
@@ -104,7 +111,7 @@ const RoomSelectionPage = () => {
                       justifyContent: 'center',
                     }}
                   />
-                </a>
+                </div>
               </Animated>
               <Animated
                 animationOut="slideOutRight"
@@ -112,14 +119,21 @@ const RoomSelectionPage = () => {
                 isVisible={collabAnimation}
                 className={styles.slideRight}
               >
-                <a onClick={handleBlackMountain}>
+                <div onClick={handleBlackMountain}>
                   <img
                     src="https://i.imgur.com/wCb8kLF.png"
                     alt="collaborative world experience"
                     className={styles.collabBlackMountains}
                   />
-                </a>
+                </div>
               </Animated>
+
+              <button
+                onClick={handleCollabJoin}
+                className={visible ? styles.showButton : styles.hideButton}
+              >
+                Join Collab Room
+              </button>
             </div>
           </Grid>
         </Grid>

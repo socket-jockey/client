@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fade, Modal, Fab, Typography, Button, Drawer } from '@material-ui/core';
+import {
+  Fade,
+  Modal,
+  Fab,
+  Typography,
+  Button,
+  Drawer,
+} from '@material-ui/core';
 import Chat from '../Chat/Chat';
 import DrawingRoom from './DrawingRoom';
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,8 +68,9 @@ function getModalStyle() {
   };
 }
 
-const RoomsPage = () => {
+const RoomsPage = ({ userId }) => {
   const classes = useStyles();
+  const { room, roomId } = useParams();
   let canvasX, canvasY;
 
   if (room === 'collab') {
@@ -73,8 +80,6 @@ const RoomsPage = () => {
     canvasX = window.innerWidth;
     canvasY = window.innerHeight;
   }
-
-  const { room } = useParams();
 
   const noFriendButStillCool = room === 'solo';
 
@@ -105,8 +110,6 @@ const RoomsPage = () => {
     setChatView(open);
   };
 
-  
-
   const {
     sceneRef,
     bodyControls,
@@ -117,7 +120,6 @@ const RoomsPage = () => {
     participants,
     open,
     users,
-    userId,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -128,8 +130,15 @@ const RoomsPage = () => {
     handleLoop,
     handleBegin,
     handleUserColor,
-  } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
-  
+  } = useMatterCollab({
+    noFriendButStillCool,
+    canvasX,
+    canvasY,
+    roomId,
+    userId,
+  });
+
+
   return (
     <main>
       <header className={styles.header}>
@@ -161,66 +170,35 @@ const RoomsPage = () => {
       >
         <Fade in={open} timeout={{ enter: 800, exit: 600 }}>
           <div style={modalStyle} className={classes.paper}>
-            <section
-              style={{
-                flexDirection: 'row',
+            <button
+              onClick={() => {
+                handleUserColor('red');
               }}
+              disabled={Object.values(users).includes('red')}
             >
-              <Fab
-                onClick={() => {
-                  handleUserColor('#FB998E');
-                }}
-                disabled={Object.values(users).includes('#FB998E')}
-                style={{
-                  backgroundColor: '#FB998E',
-                  margin: '1rem',
-                }}
-                variant="round"
-              >
-                choose
-              </Fab>
-              <Fab
-                onClick={() => {
-                  handleUserColor('#A3E5FF');
-                }}
-                disabled={Object.values(users).includes('#A3E5FF')}
-                style={{
-                  backgroundColor: '#A3E5FF',
-                  margin: '1rem',
-                }}
-                variant="round"
-              >
-                your
-              </Fab>
-              <Fab
-                onClick={() => {
-                  handleUserColor('#D4BEEE');
-                }}
-                disabled={Object.values(users).includes('#D4BEEE')}
-                style={{
-                  backgroundColor: '#D4BEEE',
-                  margin: '1rem',
-                }}
-                variant="round"
-              >
-                color
-              </Fab>
-            </section>
-
-            <Typography
-              variant="h3"
-              align="center"
-              gutterBottom={true}
-              id="simple-modal-title"
-              className={styles.modalTitle}
+              red
+            </button>
+            <button
+              onClick={() => {
+                handleUserColor('green');
+              }}
+              disabled={Object.values(users).includes('green')}
             >
-              Welcome to the Collab Room!
-            </Typography>
-
-            <Typography variant="caption" align="center" gutterBottom={true}>
+              green
+            </button>
+            <button
+              onClick={() => {
+                handleUserColor('blue');
+              }}
+              disabled={Object.values(users).includes('blue')}
+            >
+              blue
+            </button>
+            <h2 id="simple-modal-title">Welcome to the Collab Room!</h2>
+            <p>
               Wait here until others arrive, then push begin when everyone is
               ready.
-            </Typography>
+            </p>
             <img
               className={classes.logo}
               src="https://icon-library.com/images/36f183ca9c_30066.png"
@@ -255,7 +233,7 @@ const RoomsPage = () => {
                 height: '200px',
               }}
             >
-              <DrawingRoom /> 
+              <DrawingRoom />
             </Drawer>
             <Button onClick={toggleChat(true)}>Chat</Button>
             <Drawer

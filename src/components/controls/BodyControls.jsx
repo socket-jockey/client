@@ -66,6 +66,7 @@ const BodyControls = ({
             max={0}
             step={1}
             marks
+            orientation="vertical"
           />
         </InputLabel>
         <InputLabel>
@@ -108,7 +109,9 @@ const BodyControls = ({
           onChange={handleStatic}
           exclusive
         >
-          <ToggleButton size="large" value="isStatic">static</ToggleButton>
+          <ToggleButton size="large" value="isStatic">
+            static
+          </ToggleButton>
         </ToggleButtonGroup>
       </Container>
       <Button

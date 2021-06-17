@@ -10,7 +10,7 @@ const LandingPage = () => {
     setAnimate(() => true);
     setTimeout(() => {
       history.push('/rooms');
-    }, 2100);
+    }, 3100);
   };
   return (
     <main

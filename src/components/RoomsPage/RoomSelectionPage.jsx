@@ -26,7 +26,7 @@ const RoomSelectionPage = () => {
   };
 
   return (
-    <FadeIn transitionDuration={2600}>
+    <FadeIn transitionDuration={4800}>
       <Container
         style={{
           height: '100vh',
@@ -35,7 +35,7 @@ const RoomSelectionPage = () => {
         maxWidth={false}
       >
         <Grid container direction="row" wrap="wrap">
-          <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+          <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
             <div
               style={{
                 height: '100vh',
@@ -67,7 +67,7 @@ const RoomSelectionPage = () => {
               </a>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+          <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
             <div
               style={{
                 height: '100vh',

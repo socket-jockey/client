@@ -38,7 +38,6 @@ const WorldControls = ({
               max={1}
               step={0.1}
               valueLabelDisplay="auto"
-              
             />
           </InputLabel>
           <InputLabel>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
@@ -58,9 +58,9 @@ function getModalStyle() {
   };
 }
 
-const RoomsPage = () => {
+const RoomsPage = ({ userId }) => {
   const classes = useStyles();
-
+  const { room, roomId } = useParams();
   let canvasX, canvasY;
 
   if (room === 'collab') {
@@ -70,8 +70,6 @@ const RoomsPage = () => {
     canvasX = window.innerWidth;
     canvasY = window.innerHeight;
   }
-
-  const { room } = useParams();
 
   const noFriendButStillCool = room === 'solo';
 
@@ -87,7 +85,6 @@ const RoomsPage = () => {
     participants,
     open,
     users,
-    userId,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -98,9 +95,13 @@ const RoomsPage = () => {
     handleLoop,
     handleBegin,
     handleUserColor,
-  } = useMatterCollab({ noFriendButStillCool, canvasX, canvasY });
-
-  const [colorPicked, setColorPicked] = useState(false);
+  } = useMatterCollab({
+    noFriendButStillCool,
+    canvasX,
+    canvasY,
+    roomId,
+    userId,
+  });
 
   console.log('users object from rooms page', users);
   return (
@@ -136,7 +137,6 @@ const RoomsPage = () => {
             <button
               onClick={() => {
                 handleUserColor('red');
-                setColorPicked(true);
               }}
               disabled={Object.values(users).includes('red')}
             >
@@ -145,7 +145,6 @@ const RoomsPage = () => {
             <button
               onClick={() => {
                 handleUserColor('green');
-                setColorPicked(true);
               }}
               disabled={Object.values(users).includes('green')}
             >
@@ -154,7 +153,6 @@ const RoomsPage = () => {
             <button
               onClick={() => {
                 handleUserColor('blue');
-                setColorPicked(true);
               }}
               disabled={Object.values(users).includes('blue')}
             >

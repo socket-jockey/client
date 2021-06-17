@@ -7,7 +7,13 @@ import { scales } from '../utils/scales';
 import { useAudio } from './useAudio';
 // import { io } from 'socket.io-client';
 
-export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
+export const useMatterCollab = ({
+  noFriendButStillCool,
+  canvasX,
+  canvasY,
+  roomId,
+  userId,
+}) => {
   try {
     if (typeof MatterWrap !== 'undefined') {
       // either use by name from plugin registry (Browser global)
@@ -40,15 +46,16 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     y: 0.5,
   });
 
+  const vibeRef = useRef(0);
+  const userIdRef = useRef('');
+
   const [reverbAmount, setReverbAmount] = useState(50);
   const [vibe, setVibe] = useState('MAJOR');
-  const vibeRef = useRef(0);
   const [pause, setPause] = useState('');
   const [pastGrav, setPastGrav] = useState(gravity);
   const [participants, setParticipants] = useState('');
   const [open, setOpen] = useState(true);
   const [users, setUsers] = useState({});
-  const [userId, setUserId] = useState('');
 
   const Engine = Matter.Engine;
   const Render = Matter.Render;
@@ -59,33 +66,29 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    //socket stuff
-    if (!noFriendButStillCool) {
-      socket.on('user id', (id) => setUserId(id));
+    socket.on('set userId', (userId) => {
+      // setUserId(userId);
+      socket.emit('set roomId & join', { userId, customRoomId: roomId });
+    });
 
-      socket.emit('collab');
+    socket.on('set roomId', (roomId) => (socket.currentRoom = roomId));
 
-      socket.on('set room', ({ room, users }) => {
-        socket.currentRoom = room;
+    socket.on('state from server', (users) => {
+      setUsers(users);
+      setParticipants(Object.keys(users).length);
+    });
 
-        setUsers(users);
-      });
+    // socket.on('num participants', (data) => {
+    //   setParticipants(data);
+    // });
 
-      socket.on('state from server', (users) => {
-        setUsers(users);
-      });
+    socket.on('close modal', () => {
+      handleCloseModal();
+    });
 
-      socket.on('num participants', (data) => {
-        setParticipants(data);
-      });
-
-      socket.on('close modal', () => {
-        handleCloseModal();
-      });
-      socket.on('undo last', () => {
-        engineRef.current.world.bodies.pop();
-      });
-    }
+    socket.on('undo last', () => {
+      engineRef.current.world.bodies.pop();
+    });
 
     //start audio
     useAudio(reverbRef, gainRef);
@@ -162,7 +165,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
         }
       } else {
         if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
-          
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyA.pitch],
@@ -172,10 +174,10 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           setTimeout(() => {
             bodyA.synth.silent = true;
           }, 50);
-          if (bodyA.bubble) Matter.Composite.remove(engineRef.current.world, bodyA);
+          if (bodyA.bubble)
+            Matter.Composite.remove(engineRef.current.world, bodyA);
         }
         if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
-          
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
           bodyB.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyB.pitch],
@@ -185,7 +187,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           setTimeout(() => {
             bodyB.synth.silent = true;
           }, 50);
-          if (bodyB.bubble) Matter.Composite.remove(engineRef.current.world, bodyB);
+          if (bodyB.bubble)
+            Matter.Composite.remove(engineRef.current.world, bodyB);
         }
       }
     });
@@ -198,7 +201,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           bodyA.synth.triggerRelease();
           bodyB.render.visible = true;
           bodyA.isSounding = false;
-
         }
         if (bodyB.cloud === true) {
           console.log('CLOUD COLLISION ENDED', bodyB);
@@ -310,7 +312,7 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   };
 
   const handleUndo = () => {
-    if (!noFriendButStillCool){
+    if (!noFriendButStillCool) {
       socket.emit('undo', socket.currentRoom);
     } else engineRef.current.world.bodies.pop();
   };
@@ -332,10 +334,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   };
 
   const handleUserColor = (color) => {
-    console.log(userId);
     socket.emit('set color', {
       user: { [userId]: color },
-      room: socket.currentRoom,
+      roomId: socket.currentRoom,
     });
   };
 
@@ -349,7 +350,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     participants,
     open,
     users,
-    userId,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,

@@ -7,6 +7,7 @@ import {
   InputLabel,
   Slider,
   Container,
+  Divider,
 } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/styles';
@@ -48,6 +49,7 @@ const BodyControls = ({
         <ToggleButton value="WALL">wall</ToggleButton>
         <ToggleButton value="FLOOR">floor</ToggleButton>
         <ToggleButton value="CHICHI">chichi</ToggleButton>
+        
       </ToggleButtonGroup>
       <ToggleButtonGroup
         size="small"
@@ -55,6 +57,9 @@ const BodyControls = ({
         onChange={(_, value) => handleBodyControls('material', value)}
         exclusive
         className={styles.toggleGroup}
+        style={{
+          justifyContent: 'center',
+        }}
       >
         <ToggleButton value="WOOD">wood</ToggleButton>
         <ToggleButton value="METAL">metal</ToggleButton>
@@ -64,6 +69,12 @@ const BodyControls = ({
         <ToggleButton value="GLITTER">glitter</ToggleButton>
         <ToggleButton value="LIQUID">liquid</ToggleButton>
       </ToggleButtonGroup>
+      <Divider
+        style={{
+          height: '1rem',
+          backgroundColor: 'white',
+        }}
+      />
       <FormGroup>
         <InputLabel>
           Size
@@ -105,16 +116,18 @@ const BodyControls = ({
           />
         </InputLabel>
       </FormGroup>
-      <Container
+      <Divider
         style={{
-          display: 'flex',
-          justifyContent: 'center',
+          height: '1rem',
+          backgroundColor: 'white',
         }}
-      >
+      />
+      <Container>
         <ToggleButtonGroup
           value={bodyControls.doesLoop && 'doesLoop'}
           onChange={handleLoop}
           exclusive
+          style={{ marginLeft: '22%' }}
         >
           <ToggleButton size="large" value="doesLoop">
             loop
@@ -127,6 +140,7 @@ const BodyControls = ({
           value={bodyControls.isStatic && 'isStatic'}
           onChange={handleStatic}
           exclusive
+          style={{ marginLeft: '25%' }}
         >
           <ToggleButton size="large" value="isStatic">
             static
@@ -136,6 +150,12 @@ const BodyControls = ({
           </ToggleButton>
         </ToggleButtonGroup>
       </Container>
+      <Divider
+        style={{
+          height: '1rem',
+          backgroundColor: 'white',
+        }}
+      />
       <Button
         style={{ margin: '1rem' }}
         onClick={handleUndo}

@@ -47,8 +47,9 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const [pastGrav, setPastGrav] = useState(gravity);
   const [participants, setParticipants] = useState('');
   const [open, setOpen] = useState(true);
+  const [users, setUsers] = useState({});
+  const [userId, setUserId] = useState('');
 
-  
   const Engine = Matter.Engine;
   const Render = Matter.Render;
   // const Bodies = Matter.Bodies;
@@ -56,28 +57,39 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   const MouseConstraint = Matter.MouseConstraint;
   const Composite = Matter.Composite;
   const socket = useContext(SocketContext);
+
   useEffect(() => {
-    
     //socket stuff
     if (!noFriendButStillCool) {
+      socket.on('user id', (id) => setUserId(id));
+
       socket.emit('collab');
-      socket.on('set room', (room) => {
+
+      socket.on('set room', ({ room, users }) => {
         socket.currentRoom = room;
+
+        setUsers(users);
       });
+
+      socket.on('state from server', (users) => {
+        setUsers(users);
+      });
+
       socket.on('num participants', (data) => {
         setParticipants(data);
       });
+
       socket.on('close modal', () => {
         handleCloseModal();
       });
       socket.on('undo last', () => {
-        engineRef.current.world.bodies.pop();
+        const body = engineRef.current.world.bodies.pop();
+        body.synth.dispose();
       });
     }
 
     //start audio
     useAudio(reverbRef, gainRef);
-
 
     // create new engine
     engineRef.current = Engine.create({});
@@ -112,25 +124,35 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     Composite.add(engineRef.current.world, mouseConstraint);
 
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
-      if (!noFriendButStillCool) {
-        socket.emit('add object', socket.currentRoom, {
-          ...bodyRef.current,
-          mouseX: event.mouse.mousedownPosition.x,
-          mouseY: event.mouse.mousedownPosition.y,
-        });
-      } else {
-        Composite.add(
-          engineRef.current.world,
-          addBody({
+      if (!engineRef.current.isBeingDragged) {
+        if (!noFriendButStillCool) {
+          socket.emit('add object', socket.currentRoom, {
             ...bodyRef.current,
             mouseX: event.mouse.mousedownPosition.x,
             mouseY: event.mouse.mousedownPosition.y,
-            canvasX,
-            canvasY,
-            gainRef,
-          })
-        );
+          });
+        } else {
+          Composite.add(
+            engineRef.current.world,
+            addBody({
+              ...bodyRef.current,
+              mouseX: event.mouse.mousedownPosition.x,
+              mouseY: event.mouse.mousedownPosition.y,
+              canvasX,
+              canvasY,
+              gainRef,
+            })
+          );
+        }
       }
+    });
+
+    //Check if a body is being dragged to avoid creating an unwanted object
+    Matter.Events.on(mouseConstraint, 'startdrag', () => {
+      engineRef.current.isBeingDragged = true;
+    });
+    Matter.Events.on(mouseConstraint, 'enddrag', () => {
+      engineRef.current.isBeingDragged = false;
     });
 
     Matter.Events.on(engineRef.current, 'collisionStart', (event) => {
@@ -138,20 +160,18 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
 
       if (bodyA.cloud === true || bodyB.cloud === true) {
         if (bodyA.cloud === true && bodyA.isSounding === false) {
-          console.log('CLOUD COLLISION STARTED', bodyA);
           bodyA.synth.triggerAttack(scales[vibeRef.current][bodyA.pitch]);
           bodyB.render.visible = false;
           bodyA.isSounding = true;
         }
         if (bodyB.cloud === true && bodyB.isSounding === false) {
-          console.log('CLOUD COLLISION STARTED', bodyB);
           bodyB.synth.triggerAttack(scales[vibeRef.current][bodyB.pitch]);
           bodyA.render.visible = false;
           bodyB.isSounding = true;
         }
       } else {
         if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
-          
+          console.log(bodyA);
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyA.pitch],
@@ -161,11 +181,24 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           setTimeout(() => {
             bodyA.synth.silent = true;
           }, 50);
-          if (bodyA.bubble) Matter.Composite.remove(engineRef.current.world, bodyA);
+          if (bodyA.bubble) {
+            bodyA.synth.dispose();
+            Matter.Composite.remove(engineRef.current.world, bodyA);
+          }
+          if (bodyB.bubble) {
+            bodyB.synth.triggerAttackRelease(
+              scales[vibeRef.current][bodyB.pitch],
+              '16n'
+            );
+            setTimeout(() => {
+              bodyB.synth.dispose();
+            }, 200);
+            Matter.Composite.remove(engineRef.current.world, bodyB);
+          }
         }
         if (bodyB.synth && bodyB.speed > 1.5 && bodyB.synth.silent === true) {
-          
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
+          console.log(bodyB);
           bodyB.synth.triggerAttackRelease(
             scales[vibeRef.current][bodyB.pitch],
             '16n'
@@ -174,7 +207,20 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
           setTimeout(() => {
             bodyB.synth.silent = true;
           }, 50);
-          if (bodyB.bubble) Matter.Composite.remove(engineRef.current.world, bodyB);
+          if (bodyB.bubble) {
+            bodyB.synth.dispose();
+            Matter.Composite.remove(engineRef.current.world, bodyB);
+          }
+          if (bodyA.bubble) {
+            bodyA.synth.triggerAttackRelease(
+              scales[vibeRef.current][bodyA.pitch],
+              '16n'
+            );
+            setTimeout(() => {
+              bodyA.synth.dispose();
+            }, 200);
+            Matter.Composite.remove(engineRef.current.world, bodyA);
+          }
         }
       }
     });
@@ -183,14 +229,11 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
       const { bodyA, bodyB } = event.pairs[0];
       if (bodyA.cloud === true || bodyB.cloud === true) {
         if (bodyA.cloud === true) {
-          console.log('CLOUD COLLISION ENDED', bodyA);
           bodyA.synth.triggerRelease();
           bodyB.render.visible = true;
           bodyA.isSounding = false;
-
         }
         if (bodyB.cloud === true) {
-          console.log('CLOUD COLLISION ENDED', bodyB);
           bodyB.synth.triggerRelease();
           bodyA.render.visible = true;
           bodyB.isSounding = false;
@@ -299,9 +342,12 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
   };
 
   const handleUndo = () => {
-    if (!noFriendButStillCool){
+    if (!noFriendButStillCool) {
       socket.emit('undo', socket.currentRoom);
-    } else engineRef.current.world.bodies.pop();
+    } else {
+      const body = engineRef.current.world.bodies.pop();
+      body.synth.dispose();
+    }
   };
 
   const handlePause = () => {
@@ -320,6 +366,14 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     }
   };
 
+  const handleUserColor = (color) => {
+    console.log(userId);
+    socket.emit('set color', {
+      user: { [userId]: color },
+      room: socket.currentRoom,
+    });
+  };
+
   return {
     sceneRef,
     bodyControls,
@@ -329,6 +383,8 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     vibe,
     participants,
     open,
+    users,
+    userId,
     handleBodyControls,
     handleSettingTheVibe,
     handleReverbChange,
@@ -338,5 +394,6 @@ export const useMatterCollab = ({ noFriendButStillCool, canvasX, canvasY }) => {
     handleStatic,
     handleLoop,
     handleBegin,
+    handleUserColor,
   };
 };

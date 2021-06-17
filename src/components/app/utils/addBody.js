@@ -71,6 +71,13 @@ export const addBody = ({
         restitution: 0.6,
         density: 0.005,
         frictionAir: 0.03 + size / -3000,
+        render: {
+          visible: true,
+          opacity: 0.7,
+          fillStyle: '#FFBA7A',
+          strokeStyle: '#FFBA7A',
+          lineWidth: 5,
+        },
       });
       amp = new Tone.AmplitudeEnvelope({
         attack: 0.1,
@@ -90,6 +97,14 @@ export const addBody = ({
         restitution: 0.3,
         density: 0.01,
         frictionAir: 0.01 + size / -5000,
+        render: {
+          visible: true,
+          opacity: 0.7,
+          fillStyle: '#D4BEEE',
+          strokeStyle: '#D4BEEE',
+          lineWidth: 5,
+        },
+        
       });
       body.synth = new Tone.MetalSynth().connect(gainRef.current);
       break;
@@ -98,6 +113,13 @@ export const addBody = ({
         restitution: 1.5,
         density: 0.005,
         frictionAir: speed,
+        render: {
+          visible: true,
+          opacity: 0.7,
+          fillStyle: '#FB998E',
+          strokeStyle: '#FB998E',
+          lineWidth: 5,
+        },
       });
       body.synth = new Tone.FMSynth().connect(gainRef.current);
       break;
@@ -106,6 +128,13 @@ export const addBody = ({
         restitution: 0.001,
         density: 0.001,
         frictionAir: speed,
+        render: {
+          visible: true,
+          opacity: 0.8,
+          fillStyle: '#FFCAD8',
+          strokeStyle: '#FFCAD8',
+          lineWidth: 5,
+        },
       });
       body.synth = new Tone.AMSynth().connect(gainRef.current);
       break;
@@ -114,11 +143,11 @@ export const addBody = ({
         restitution: 0,
         density: 0.000001,
         frictionAir: speed * 2,
-        visible: true,
         render: {
           visible: true,
-          strokeStyle: '#95f9ddff',
+          opacity: 0.7,
           fillStyle: 'transparent',
+          strokeStyle: '#95f9ddff',
           lineWidth: 5,
         },
       });
@@ -130,6 +159,13 @@ export const addBody = ({
         restitution: 0,
         density: 0.001,
         frictionAir: 1,
+        render: {
+          visible: true,
+          opacity: 0.8,
+          fillStyle: '#FFBA7A',
+          strokeStyle: '#FFBA7A',
+          lineWidth: 5,
+        },
       });
       body.synth = new Tone.Synth().connect(gainRef.current);
       break;
@@ -138,6 +174,13 @@ export const addBody = ({
         restitution: 0,
         density: 0.001,
         frictionAir: 1,
+        render: {
+          visible: true,
+          opacity: 0.5,
+          fillStyle: '#A3E5FF',
+          strokeStyle: '#A3E5FF',
+          lineWidth: 5,
+        },
       });
       body.synth = new Tone.Synth().connect(gainRef.current);
       break;

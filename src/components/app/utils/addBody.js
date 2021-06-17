@@ -114,8 +114,10 @@ export const addBody = ({
         restitution: 0,
         density: 0.000001,
         frictionAir: speed * 2,
+        visible: true,
         render: {
           visible: true,
+          strokeStyle: '#95f9ddff',
           fillStyle: 'transparent',
           lineWidth: 5,
         },

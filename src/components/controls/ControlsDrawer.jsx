@@ -20,6 +20,7 @@ const ControlsDrawer = ({
   handleReverbChange,
   handleStatic,
   handleLoop,
+  handleClearAll
 }) => {
   const [drawerView, setDrawerView] = useState(false);
 
@@ -66,6 +67,7 @@ const ControlsDrawer = ({
             handleSettingTheVibe={handleSettingTheVibe}
             reverbAmount={reverbAmount}
             handleReverbChange={handleReverbChange}
+            handleClearAll={handleClearAll}
           />
         </Container>
       </Drawer>
@@ -99,5 +101,6 @@ ControlsDrawer.propTypes = {
   handleSettingTheVibe: PropTypes.func.isRequired,
   reverbAmount: PropTypes.number.isRequired,
   handleReverbChange: PropTypes.func.isRequired,
+  handleClearAll: PropTypes.func.isRequired,
 };
 export default ControlsDrawer;

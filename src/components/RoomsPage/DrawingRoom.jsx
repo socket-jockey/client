@@ -9,8 +9,10 @@ const DrawingRoom = () => {
   const strokeWidth = 4;
   const socket = useContext(SocketContext);
   useEffect(() => {
-    const myp5 = new P5(Sketch, canvasRef.current);
-    return myp5;
+    new P5(Sketch, canvasRef.current);
+    return () => {
+
+    };
   }, []);
 
   const Sketch = (p) => {

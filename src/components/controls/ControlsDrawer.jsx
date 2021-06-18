@@ -3,6 +3,8 @@ import { Drawer, Button, Divider, Container } from '@material-ui/core';
 import BodyControls from './BodyControls';
 import WorldControls from './WorldControls';
 import PropTypes from 'prop-types';
+import styles from './Controls.css';
+
 const ControlsDrawer = ({
   handleBodyControls,
   bodyControls,
@@ -34,31 +36,30 @@ const ControlsDrawer = ({
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>controls</Button>
-      <Drawer
-        anchor={'right'}
-        open={drawerView}
-        onClose={toggleDrawer(false)}
-        style={{
-          opacity: '1',
-        }}
-      >
+      <Button onClick={toggleDrawer(true)}>
+        <img
+          src="https://i.imgur.com/pMNIpfo.png"
+          alt="control panel"
+          className={styles.controlsButton}
+        />
+      </Button>
+      <Drawer anchor={'right'} open={drawerView} onClose={toggleDrawer(false)}>
         <Container>
           <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
           <BodyControls
             handleBodyControls={handleBodyControls}
             bodyControls={bodyControls}
             maxCanvas={maxCanvas}
-            handleUndo={handleUndo}
             handleStatic={handleStatic}
             handleLoop={handleLoop}
+            pause={pause}
+            handlePause={handlePause}
           />
         </Container>
         <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
         <Container>
           <WorldControls
-            pause={pause}
-            handlePause={handlePause}
+            handleUndo={handleUndo}
             gravity={gravity}
             handleGravityChange={handleGravityChange}
             vibe={vibe}

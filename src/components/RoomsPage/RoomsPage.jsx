@@ -124,7 +124,6 @@ const RoomsPage = ({ userId }) => {
     userId,
   });
 
-
   return (
     <main>
       <header className={styles.header}>
@@ -177,9 +176,10 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              > </Fab>
-                
-              
+              >
+                {' '}
+              </Fab>
+
               <Fab
                 onClick={() => {
                   handleUserColor('#A3E5FF');
@@ -190,9 +190,10 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              > </Fab>
-              
-              
+              >
+                {' '}
+              </Fab>
+
               <Fab
                 onClick={() => {
                   handleUserColor('#D4BEEE');
@@ -203,9 +204,9 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              > </Fab>
-                
-             
+              >
+                {' '}
+              </Fab>
             </section>
             <img
               src="https://i.imgur.com/6j7l3kL.png"
@@ -226,18 +227,23 @@ const RoomsPage = ({ userId }) => {
             <img
               onClick={handleBegin}
               src="/begin.png"
-              alt=""
+              alt="begin session"
               style={{
                 marginTop: '2rem',
                 width: '25%',
                 cursor: 'pointer',
               }}
             />
-            {/* {open && <Chat className={classes.inlineChat}/>} */}
-            {/* <p id="simple-modal-description">
-              Number of participants:{participants}
-            </p> */}
-            <Button onClick={toggleDrawer(true)}>Pass the Time</Button>
+            <Button onClick={toggleDrawer(true)}>
+              <img
+                src="https://i.imgur.com/vV1M5YO.png"
+                alt="open drawing canvas"
+                style={{
+                  width: '50%',
+                  cursor: 'pointer',
+                }}
+              />
+            </Button>
             <Drawer
               anchor={'left'}
               open={drawerView}
@@ -262,6 +268,6 @@ const RoomsPage = ({ userId }) => {
 };
 
 RoomsPage.propTypes = {
-  userId: PropTypes.string.isRequired
+  userId: PropTypes.string.isRequired,
 };
 export default RoomsPage;

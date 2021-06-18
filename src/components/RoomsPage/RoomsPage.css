@@ -175,3 +175,9 @@ main {
     opacity: 1;
   }
 }
+.aboutUsLink {
+  padding-top: 45px;
+  padding-left: 20px;
+  height: 22vmin;
+  width: 28vmin;
+}

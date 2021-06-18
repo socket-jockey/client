@@ -48,6 +48,7 @@ const ControlsDrawer = ({
           className={styles.controlsButton}
         />
       </Button>
+
       <Drawer anchor={'right'} open={drawerView} onClose={toggleDrawer(false)}>
         <Container>
           <Divider style={{ height: '1rem', backgroundColor: 'white' }} />

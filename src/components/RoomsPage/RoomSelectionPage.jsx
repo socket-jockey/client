@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './RoomsPage.css';
-import { Grid } from '@material-ui/core/';
+import { Grid, Button } from '@material-ui/core/';
 import Container from '@material-ui/core/Container';
 import { Animated } from 'react-animated-css';
 import FadeIn from 'react-fade-in';
@@ -31,7 +31,6 @@ const RoomSelectionPage = ({ userId }) => {
     }, 3700);
   };
   useEffect(() => {
-    
     return () => {
       clearTimeout(solo);
     };
@@ -154,9 +153,12 @@ const RoomSelectionPage = ({ userId }) => {
                 }}
                 className={visible ? styles.showJoinButton : styles.hide}
               ></button>
-              <form style={{ display: 'flex' }} onSubmit={(e) => {
-                handleCollabJoin(e, customRoomId);
-              }}>
+              <form
+                style={{ display: 'flex' }}
+                onSubmit={(e) => {
+                  handleCollabJoin(e, customRoomId);
+                }}
+              >
                 <input
                   type="text"
                   placeholder="enter room name to join/create"
@@ -165,6 +167,16 @@ const RoomSelectionPage = ({ userId }) => {
                   className={visible ? styles.showCustomInput : styles.hide}
                 />
               </form>
+              <Button
+                onClick={() => history.push('/about')}
+                style={{ position: 'absolute', bottom: '0', right: '0' }}
+              >
+                <img
+                  src="https://i.imgur.com/ZhkQnu3.png"
+                  alt="socket jockey/ about us link"
+                  className={styles.aboutUsLink}
+                />
+              </Button>
             </div>
           </Grid>
         </Grid>

@@ -116,6 +116,7 @@ const RoomsPage = ({ userId }) => {
     handleLoop,
     handleBegin,
     handleUserColor,
+    handleClearAll
   } = useMatterCollab({
     noFriendButStillCool,
     canvasX,
@@ -143,6 +144,7 @@ const RoomsPage = ({ userId }) => {
           handleReverbChange={handleReverbChange}
           handleStatic={handleStatic}
           handleLoop={handleLoop}
+          handleClearAll={handleClearAll}
         />
       </header>
 

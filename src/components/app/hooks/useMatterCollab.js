@@ -83,6 +83,13 @@ export const useMatterCollab = ({
     // socket.on('num participants', (data) => {
     //   setParticipants(data);
     // });
+    socket.on('clear all server', () => {
+      const bodyArr = engineRef.current.world.bodies;
+      for (let i = bodyArr.length - 1; i >= 0; i--){
+        bodyArr[i].synth?.dispose();
+        Composite.remove(engineRef.current.world, bodyArr[i]);
+      }
+    });
 
     socket.on('close modal', () => {
       handleCloseModal();
@@ -128,6 +135,7 @@ export const useMatterCollab = ({
     Composite.add(engineRef.current.world, mouseConstraint);
 
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
+      console.log(engineRef);
       if (!engineRef.current.isBeingDragged) {
         if (!noFriendButStillCool) {
           socket.emit('add object', socket.currentRoom, {
@@ -174,11 +182,9 @@ export const useMatterCollab = ({
           bodyB.isSounding = true;
         }
       } else {
-        if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
-          // const note = Math.ceil(Math.random() * 5);
+        if (bodyA.synth && bodyA.speed > 0.5 && bodyA.synth.silent === true || bodyA.bubble === true) {
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
-            // tonalScale.notes[note],
             scales[vibeRef.current][bodyA.pitch],
             bodyB.chichi ? '4n' : '16n'
           );
@@ -188,14 +194,14 @@ export const useMatterCollab = ({
           }, 50);
           if (bodyA.bubble) {
             Matter.Composite.remove(engineRef.current.world, bodyA);
-            bodyA.synth.dispose();
+            setTimeout(() => {
+              bodyA.synth.dispose();
+            }, 1000);
           }
         }
-        if (bodyB.synth && bodyB.speed > 1 && bodyB.synth.silent === true) {
-          // const note = Math.ceil(Math.random() * 5);
+        if (bodyB.synth && bodyB.speed > 0.5 && bodyB.synth.silent === true || bodyB.bubble === true) {
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
           bodyB.synth.triggerAttackRelease(
-            // tonalScale.notes[note],
             scales[vibeRef.current][bodyB.pitch],
             bodyB.chichi ? '4n' : '16n'
           );
@@ -205,7 +211,9 @@ export const useMatterCollab = ({
           }, 50);
           if (bodyB.bubble){
             Matter.Composite.remove(engineRef.current.world, bodyB);
-            bodyB.synth.dispose();
+            setTimeout(() => {
+              bodyB.synth.dispose();
+            }, 1000);
           }
         }
       }
@@ -261,10 +269,16 @@ export const useMatterCollab = ({
         }
       );
     
-
     Matter.Runner.run(engineRef.current);
     Render.run(render);
   
+    return () => {
+      const bodyArr = Composite.allBodies(engineRef.current.world);
+      for (const body of bodyArr){
+        body.synth?.dispose();
+      }
+      Composite.clear(engineRef.current.world);
+    }; 
   }, []);
 
   //define handlers
@@ -281,8 +295,9 @@ export const useMatterCollab = ({
       setBodyControls((prev) => ({ ...prev, isStatic: false }));
       bodyRef.current.isStatic = false;
     } else {
-      setBodyControls((prev) => ({ ...prev, isStatic: true }));
+      setBodyControls((prev) => ({ ...prev, isStatic: true, doesLoop: false }));
       bodyRef.current.isStatic = true;
+      bodyRef.current.doesLoop = false;
     }
   };
   const handleBegin = () => {
@@ -296,8 +311,9 @@ export const useMatterCollab = ({
       setBodyControls((prev) => ({ ...prev, doesLoop: false }));
       bodyRef.current.doesLoop = false;
     } else {
-      setBodyControls((prev) => ({ ...prev, doesLoop: true }));
+      setBodyControls((prev) => ({ ...prev, doesLoop: true, isStatic: false }));
       bodyRef.current.doesLoop = true;
+      bodyRef.current.isStatic = false;
     }
   };
 
@@ -337,7 +353,17 @@ export const useMatterCollab = ({
       body.synth.dispose();
     }
   };
-
+  const handleClearAll = () => {
+    if (!noFriendButStillCool) {
+      socket.emit('clear all', socket.currentRoom);
+    } else {
+      const bodyArr = engineRef.current.world.bodies;
+      for (let i = bodyArr.length -1; i >= 0; i--){
+        bodyArr[i].synth?.dispose();
+        Composite.remove(engineRef.current.world, bodyArr[i]);
+      }
+    }
+  };
   const handlePause = () => {
     if (pause === '') {
       setPastGrav({
@@ -381,5 +407,6 @@ export const useMatterCollab = ({
     handleLoop,
     handleBegin,
     handleUserColor,
+    handleClearAll
   };
 };

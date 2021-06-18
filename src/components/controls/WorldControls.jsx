@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Controls.css';
 import {
-  // Button,
+  Button,
   Container,
   FormGroup,
   InputLabel,
@@ -21,6 +21,7 @@ const WorldControls = ({
   handleSettingTheVibe,
   reverbAmount,
   handleReverbChange,
+  handleClearAll
 }) => {
   return (
     <Container>
@@ -101,9 +102,9 @@ const WorldControls = ({
         </ToggleButtonGroup>
       </Container>
 
-      {/* <Button onClick={handleWorldClear} variant="outlined">
+      <Button onClick={handleClearAll} variant="outlined">
         remove all
-      </Button> */}
+      </Button>
     </Container>
   );
 };

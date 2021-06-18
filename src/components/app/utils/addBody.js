@@ -75,7 +75,7 @@ export const addBody = ({
 
   body.pitch = size + 27;
 
-  let amp, mod, vibrato, chorus, feedback;
+  let amp, mod, vibrato, chorus, feedback, pingpong;
   if (shape === 'CHICHI') {
     Body.set(body, {
       restitution: 0.6,
@@ -96,6 +96,12 @@ export const addBody = ({
           restitution: 0.5,
           density: 0.005,
           frictionAir: 0.01,
+          render: {
+            visible: true,
+            fillStyle: '#ffba7a',
+            strokeStyle: '#ffba7a',
+            lineWidth: '2',
+          }
         });
         amp = {
           attack: 0.01,
@@ -108,13 +114,19 @@ export const addBody = ({
           envelope: amp,
           octaves: 1,
         }).connect(gainRef.current);
-
         break;
+
       case 'METAL':
         Body.set(body, {
           restitution: 0.3,
           density: 0.01,
           frictionAir: 0.01 + size / -5000,
+          render: {
+            visible: true,
+            fillStyle: '#d4beee',
+            strokeStyle: '#d4beee',
+            lineWidth: '2',
+          }
         });
         amp = {
           attack: 0.01,
@@ -137,23 +149,49 @@ export const addBody = ({
           modulationEnvelope: mod,
         }).connect(gainRef.current);
         break;
+
       case 'RUBBER':
         Body.set(body, {
           restitution: 1.4,
           density: 0.01,
           frictionAir: 0.01,
+          render: {
+            visible: true,
+            fillStyle: '#fb998e',
+            strokeStyle: '#fb998e',
+            lineWidth: '2',
+          }
+        });
+        pingpong = new Tone.PingPongDelay({
+          delayTime: 0.4,
         });
         vibrato = new Tone.Vibrato({
-          frequency: 0.5,
-          depth: 0.2,
+          frequency: 5,
+          depth: 0.5,
         }).connect(gainRef.current);
-        body.synth = new Tone.FMSynth().connect(vibrato);
+        amp = {
+          attack: 0.03,
+          decay: 0.3,
+          sustain: 0.5,
+          release: 0.9,
+          decayCurve: 'exponential',
+        };
+        body.synth = new Tone.Synth({
+          envelope: amp,
+        }).chain(vibrato, pingpong);
         break;
+
       case 'CLOTH':
         Body.set(body, {
           restitution: 0.001,
           density: 0.001,
           frictionAir: speed,
+          render: {
+            visible: true,
+            fillStyle: '#ffcad8',
+            strokeStyle: '#ffcad8',
+            lineWidth: '2',
+          }
         });
         amp = {
           attack: 0.1,
@@ -196,6 +234,12 @@ export const addBody = ({
           restitution: 1,
           density: 0.01,
           frictionAir: 0.007,
+          render: {
+            visible: true,
+            fillStyle: '#fff897',
+            strokeStyle: '#fff897',
+            lineWidth: '2',
+          }
         });
         amp = {
           attack: 0.05,
@@ -224,11 +268,18 @@ export const addBody = ({
           }
         }).connect(feedback);
         break;
+
       case 'LIQUID':
         Body.set(body, {
           restitution: 0,
           density: 0.01,
           frictionAir: 0.08,
+          render: {
+            visible: true,
+            fillStyle: '#a3e5ff',
+            strokeStyle: '#a3e5ff',
+            lineWidth: '2',
+          }
         });
         amp = {
           attack: 0.1,
@@ -261,6 +312,7 @@ export const addBody = ({
           }
         }).connect(chorus);
         break;
+
       default:
         Body.set(body, {
           restitution: 1,

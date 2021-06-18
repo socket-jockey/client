@@ -48,7 +48,6 @@ export const useMatterCollab = ({
 
   const vibeRef = useRef(0);
 
-
   const [reverbAmount, setReverbAmount] = useState(50);
   const [vibe, setVibe] = useState('MAJOR');
   const [pause, setPause] = useState('');

@@ -1,16 +1,26 @@
+@font-face {
+  font-family: 'tan_-_astoriaregular';
+  src: url('../../../public/fonts/tan-astoria-display.woff2') format('woff2'),
+    url('../../../public/fonts/tan-astoria-display.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 .wholePage {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   height: 100%;
+  background-size: 100% 100%;
 }
 .devWrapper {
-  border: 1px black solid;
   border-radius: 15px;
-  height: 50vmin;
-  margin: 1%;
+  height: 40vmin;
+  min-height: 30vmin;
+  min-width: 30vmin;
   width: 35vmin;
-  background-color: rgba(255, 173, 173, 0.25);
+  background-image: url('https://i.imgur.com/vnCqFCq.png');
+  background-size: 170%;
+  background-position-x: center;
 }
 
 .devGlue {
@@ -27,13 +37,31 @@
 }
 
 h2 {
-  font-size: 4vmin;
+  font-size: 3vmin;
+  margin-top: 110px;
+
+  font-family: 'tan_-_astoriaregular';
 }
 
-p {
+a {
   font-size: 2.5vmin;
+  text-decoration: none;
+  font-family: 'tan_-_astoriaregular';
+  color: black;
 }
 
-img {
-  height: 40vm;
+.aboutHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-size: 25%;
+  width: 100%;
+  height: 30vmin;
+}
+
+.headerImage {
+  height: 40vmin;
+  width: 40vmin;
+  padding-top: 35px;
 }

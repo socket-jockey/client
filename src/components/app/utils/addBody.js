@@ -91,18 +91,21 @@ export const addBody = ({
     body.chichi = true;
   } else {
     switch (material) {
+      
       case 'WOOD':
-        Body.set(body, {
-          restitution: 0.5,
-          density: 0.005,
-          frictionAir: 0.01,
-          render: {
-            visible: true,
-            fillStyle: '#ffba7a',
-            strokeStyle: '#ffba7a',
-            lineWidth: '2',
-          }
-        });
+        if (shape !== 'CLOUD'){
+          Body.set(body, {
+            restitution: 0.5,
+            density: 0.005,
+            frictionAir: 0.01,
+            render: {
+              visible: true,
+              fillStyle: '#ffba7a',
+              strokeStyle: '#ffba7a',
+              lineWidth: '2',
+            }
+          });
+        }
         amp = {
           attack: 0.01,
           decay: 0.5,
@@ -117,17 +120,19 @@ export const addBody = ({
         break;
 
       case 'METAL':
-        Body.set(body, {
-          restitution: 0.3,
-          density: 0.01,
-          frictionAir: 0.01 + size / -5000,
-          render: {
-            visible: true,
-            fillStyle: '#d4beee',
-            strokeStyle: '#d4beee',
-            lineWidth: '2',
-          }
-        });
+        if (shape !== 'CLOUD'){
+          Body.set(body, {
+            restitution: 0.3,
+            density: 0.01,
+            frictionAir: 0.01 + size / -5000,
+            render: {
+              visible: true,
+              fillStyle: '#d4beee',
+              strokeStyle: '#d4beee',
+              lineWidth: '2',
+            }
+          });
+        }
         amp = {
           attack: 0.01,
           decay: 0.3,
@@ -151,16 +156,21 @@ export const addBody = ({
         break;
 
       case 'RUBBER':
-        Body.set(body, {
-          restitution: 1.4,
-          density: 0.01,
-          frictionAir: 0.01,
-          render: {
-            visible: true,
-            fillStyle: '#fb998e',
-            strokeStyle: '#fb998e',
-            lineWidth: '2',
-          }
+        if (shape !== 'CLOUD'){
+          Body.set(body, {
+            restitution: 1.4,
+            density: 0.01,
+            frictionAir: 0.01,
+            render: {
+              visible: true,
+              fillStyle: '#fb998e',
+              strokeStyle: '#fb998e',
+              lineWidth: '2',
+            }
+          });
+        }      
+        pingpong = new Tone.PingPongDelay({
+          delayTime: 0.4,
         });
         pingpong = new Tone.PingPongDelay({
           delayTime: 0.4,
@@ -182,17 +192,19 @@ export const addBody = ({
         break;
 
       case 'CLOTH':
-        Body.set(body, {
-          restitution: 0.001,
-          density: 0.001,
-          frictionAir: speed,
-          render: {
-            visible: true,
-            fillStyle: '#ffcad8',
-            strokeStyle: '#ffcad8',
-            lineWidth: '2',
-          }
-        });
+        if (shape !== 'CLOUD'){
+          Body.set(body, {
+            restitution: 0.001,
+            density: 0.001,
+            frictionAir: speed,
+            render: {
+              visible: true,
+              fillStyle: '#ffcad8',
+              strokeStyle: '#ffcad8',
+              lineWidth: '2',
+            }
+          });
+        }
         amp = {
           attack: 0.1,
           decay: 0.5,
@@ -209,16 +221,18 @@ export const addBody = ({
         break;
 
       case 'BUBBLE':
-        Body.set(body, {
-          restitution: 0,
-          density: 0.000001,
-          frictionAir: 1.2,
-          render: {
-            visible: true,
-            fillStyle: 'transparent',
-            lineWidth: 2,
-          },
-        });
+        if (shape !== 'CLOUD'){
+          Body.set(body, {
+            restitution: 0,
+            density: 0.000001,
+            frictionAir: 1.2,
+            render: {
+              visible: true,
+              fillStyle: 'transparent',
+              lineWidth: 2,
+            },
+          });
+        }     
         body.bubble = true;
         body.synth = new Tone.PluckSynth({
           attackNoise: 3,
@@ -229,18 +243,19 @@ export const addBody = ({
         break;
 
       case 'GLITTER':
-        console.log('glitter');
-        Body.set(body, {
-          restitution: 1,
-          density: 0.01,
-          frictionAir: 0.007,
-          render: {
-            visible: true,
-            fillStyle: '#fff897',
-            strokeStyle: '#fff897',
-            lineWidth: '2',
-          }
-        });
+        if (shape !== 'CLOUD'){
+          Body.set(body, {
+            restitution: 1,
+            density: 0.01,
+            frictionAir: 0.007,
+            render: {
+              visible: true,
+              fillStyle: '#fff897',
+              strokeStyle: '#fff897',
+              lineWidth: '2',
+            }
+          });
+        }      
         amp = {
           attack: 0.05,
           decay: 0.3,
@@ -270,17 +285,19 @@ export const addBody = ({
         break;
 
       case 'LIQUID':
-        Body.set(body, {
-          restitution: 0,
-          density: 0.01,
-          frictionAir: 0.08,
-          render: {
-            visible: true,
-            fillStyle: '#a3e5ff',
-            strokeStyle: '#a3e5ff',
-            lineWidth: '2',
-          }
-        });
+        if (shape !== 'CLOUD'){
+          Body.set(body, {
+            restitution: 0,
+            density: 0.01,
+            frictionAir: 0.08,
+            render: {
+              visible: true,
+              fillStyle: '#a3e5ff',
+              strokeStyle: '#a3e5ff',
+              lineWidth: '2',
+            }
+          });
+        }     
         amp = {
           attack: 0.1,
           decay: 0.3,

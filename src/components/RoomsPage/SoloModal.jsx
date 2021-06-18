@@ -19,7 +19,7 @@ const SoloModal = ({ soloOpen, setSoloOpen, room, classes, modalStyle }) => {
         <Fade in={soloOpen} timeout={{ enter: 500, exit: 600 }}>
           <div style={modalStyle} className={classes.plastic}>
             <img
-              src="https://i.imgur.com/V4QFP76.png"
+              src="https://i.imgur.com/HXtxHXZ.png"
               alt=""
               className={classes.logo}
             />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Typography } from '@material-ui/core';
 import styles from './Chat.css';
 import { SocketContext } from '../app/context/socketProvider';
 
@@ -41,7 +41,7 @@ const Chat = ({ color }) => {
                     : styles.chatMessages
                 }
               >
-                {input}
+                <Typography variant="body1">{input}</Typography>
               </li>
             );
           })}
@@ -49,15 +49,21 @@ const Chat = ({ color }) => {
 
       <form onSubmit={handleSubmit}>
         <TextField
+          style={{ marginRight: '1rem', paddingTop: '1.3rem' }}
           margin="none"
-          variant="outlined"
+          variant="standard"
           onChange={handleInputChange}
           value={input}
           type="text"
           placeholder="chat input"
         ></TextField>
         <Button
-          style={{ height: '56px' }}
+          style={{
+            height: '56px',
+            marginRight: '1rem',
+            marginBottom: '1rem',
+            border: 'none',
+          }}
           size="large"
           variant="outlined"
           type="submit"

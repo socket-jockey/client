@@ -135,7 +135,6 @@ export const useMatterCollab = ({
     Composite.add(engineRef.current.world, mouseConstraint);
 
     Matter.Events.on(mouseConstraint, 'mousedown', (event) => {
-      console.log(engineRef);
       if (!engineRef.current.isBeingDragged) {
         if (!noFriendButStillCool) {
           socket.emit('add object', socket.currentRoom, {
@@ -366,7 +365,7 @@ export const useMatterCollab = ({
       socket.emit('clear all', socket.currentRoom);
     } else {
       const bodyArr = engineRef.current.world.bodies;
-      for (let i = bodyArr.length -1; i >= 0; i--){
+      for (let i = bodyArr.length - 1; i >= 0; i--){
         bodyArr[i].synth?.dispose();
         Composite.remove(engineRef.current.world, bodyArr[i]);
       }

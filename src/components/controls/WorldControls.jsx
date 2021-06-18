@@ -13,105 +13,111 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const WorldControls = ({
-  pause,
-  handlePause,
   gravity,
   handleGravityChange,
   vibe,
   handleSettingTheVibe,
   reverbAmount,
   handleReverbChange,
-  handleClearAll
+  handleClearAll,
+  handleUndo,
 }) => {
   return (
-    <Container>
-      <FormGroup>
-        <InputLabel>
-          <img className={styles.imageIcon} src="https://i.imgur.com/31CAsd9.png"/>
-          <Slider
-            value={gravity.x}
-            onChange={(_, value) => handleGravityChange('x', value)}
-            min={-1}
-            max={1}
-            step={0.1}
-            valueLabelDisplay="auto"
-          />
-        </InputLabel>
-        <InputLabel>
-          <img className={styles.imageIcon} src="https://i.imgur.com/tVfuHZQ.png"/>
-          <Slider
-            value={gravity.y}
-            onChange={(_, value) => handleGravityChange('y', value)}
-            min={-1}
-            max={1}
-            step={0.1}
-            valueLabelDisplay="auto"
-          />
-        </InputLabel>
-        <InputLabel>
-          <img className={styles.imageIcon} src="https://i.imgur.com/WVfRFaI.png"/>  
-          <Slider
-            // value={reverb}
-            value={reverbAmount}
-            // onChange={(_, value) => setReverb(value)}
-            onChange={handleReverbChange}
-            min={0}
-            max={100}
-            valueLabelDisplay="auto"
-          />
-        </InputLabel>
-      </FormGroup>
-      <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
+    <FormGroup>
+      <InputLabel style={{ position: 'relative' }}>
+        <img
+          className={`${styles.imageIcon} ${styles.sizing} ${styles.sliderImage}`}
+          src="https://i.imgur.com/31CAsd9.png"
+        />
+        <Slider
+          style={{ width: '70%' }}
+          className={styles.slider}
+          value={gravity.x}
+          onChange={(_, value) => handleGravityChange('x', value)}
+          min={-1}
+          max={1}
+          step={0.1}
+        />
+      </InputLabel>
+      <InputLabel style={{ position: 'relative' }}>
+        <img
+          className={`${styles.imageIcon} ${styles.sizing} ${styles.sliderImage}`}
+          src="https://i.imgur.com/tVfuHZQ.png"
+        />
+        <Slider
+          style={{ width: '70%' }}
+          className={styles.slider}
+          value={gravity.y}
+          onChange={(_, value) => handleGravityChange('y', value)}
+          min={-1}
+          max={1}
+          step={0.1}
+        />
+      </InputLabel>
+      <InputLabel style={{ position: 'relative' }}>
+        <img
+          className={`${styles.imageIcon} ${styles.sizing} ${styles.sliderImage}`}
+          src="https://i.imgur.com/WVfRFaI.png"
+        />
+        <Slider
+          style={{ width: '70%' }}
+          className={styles.slider}
+          value={reverbAmount}
+          onChange={handleReverbChange}
+          min={0}
+          max={100}
+        />
+      </InputLabel>
+      <Divider style={{ height: '2rem', backgroundColor: 'white' }} />
       <Container
         style={{
-          justifyContent: 'center',
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'space-between',
         }}
       >
+        <Button onClick={handleUndo}>
+          <img
+            className={`${styles.imageIcon} ${styles.undo}`}
+            src="https://i.imgur.com/D0IYd5o.png"
+          />
+        </Button>
         <ToggleButtonGroup
           value={vibe}
           onChange={handleSettingTheVibe}
           exclusive
-          // className={styles.toggleGroup}
-          style={{
-            marginLeft: '21%',
-          }}
         >
           <ToggleButton value="MAJOR">
-            <img className={styles.imageIcon} src="https://i.imgur.com/rcisiOE.png"/>
+            <img
+              className={styles.imageIcon}
+              src="https://i.imgur.com/rcisiOE.png"
+            />
           </ToggleButton>
           <ToggleButton value="MINOR">
-            <img className={styles.imageIcon} src="https://i.imgur.com/ZDzpIlF.png"/>          
+            <img
+              className={styles.imageIcon}
+              src="https://i.imgur.com/ZDzpIlF.png"
+            />
           </ToggleButton>
           <ToggleButton value="CHROMATIC">
-            <img className={styles.imageIcon} src="https://i.imgur.com/rBdXM63.png"/>  
+            <img
+              className={styles.imageIcon}
+              src="https://i.imgur.com/rBdXM63.png"
+            />
           </ToggleButton>
         </ToggleButtonGroup>
-        <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
-        <ToggleButtonGroup
-          value={pause}
-          onChange={handlePause}
-          exclusive
-          className={styles.toggleGroup}
-          style={{
-            marginLeft: '35%',
-          }}
-        >
-          <ToggleButton value="paused">
-            <img className={styles.imageIcon} src="https://i.imgur.com/hh947yM.png"/>
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <Button onClick={handleClearAll}>
+          <img
+            className={`${styles.imageIcon} ${styles.undo}`}
+            src="https://i.imgur.com/LftdK8C.png"
+          />
+        </Button>
       </Container>
-
-      <Button onClick={handleClearAll} variant="outlined">
-        remove all
-      </Button>
-    </Container>
+    </FormGroup>
   );
 };
 
 WorldControls.propTypes = {
-  pause: PropTypes.string.isRequired,
-  handlePause: PropTypes.func.isRequired,
   gravity: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -121,6 +127,8 @@ WorldControls.propTypes = {
   handleSettingTheVibe: PropTypes.func.isRequired,
   reverbAmount: PropTypes.number.isRequired,
   handleReverbChange: PropTypes.func.isRequired,
+  handleUndo: PropTypes.func.isRequired,
+  handleClearAll: PropTypes.func.isRequired,
 };
 
 export default WorldControls;

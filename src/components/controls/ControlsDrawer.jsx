@@ -20,7 +20,7 @@ const ControlsDrawer = ({
   handleReverbChange,
   handleStatic,
   handleLoop,
-  handleClearAll
+  handleClearAll,
 }) => {
   const [drawerView, setDrawerView] = useState(false);
 
@@ -37,13 +37,17 @@ const ControlsDrawer = ({
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)} style={{ position: 'absolute', top: '0', right: '0' }}>
+      <Button
+        onClick={toggleDrawer(true)}
+        style={{ position: 'absolute', top: '0', right: '0' }}
+      >
         <img
           src="https://i.imgur.com/pMNIpfo.png"
           alt="control panel"
           className={styles.controlsButton}
         />
       </Button>
+
       <Drawer anchor={'right'} open={drawerView} onClose={toggleDrawer(false)}>
         <Container>
           <Divider style={{ height: '1rem', backgroundColor: 'white' }} />

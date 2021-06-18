@@ -145,7 +145,7 @@ main {
   font-size: 1rem;
   animation: visible 60s infinite;
 }
-.showCustomInput::placeholder{
+.showCustomInput::placeholder {
   text-align: center;
 }
 
@@ -169,4 +169,10 @@ main {
   100% {
     opacity: 1;
   }
+}
+.aboutUsLink {
+  padding-top: 25px;
+  padding-left: 20px;
+  height: 14vmin;
+  width: 20vmin;
 }

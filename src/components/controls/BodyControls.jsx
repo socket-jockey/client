@@ -40,10 +40,9 @@ const BodyControls = ({
       <ToggleButtonGroup
         size="small"
         value={bodyControls.shape}
-        onChange={(_, value) => handleBodyControls('shape', value)}
+        onChange={(_, value) => handleBodyControls('shape', value ? value : 'CIRCLE')}
         exclusive
-        className={styles.toggleGroup}
-        class={classes.styleButton}
+        className={`${styles.toggleGroup} ${classes.styleButton}`}
       >
         <ToggleButton value="CIRCLE"
           variant="text">

@@ -137,7 +137,7 @@ const RoomSelectionPage = ({ userId }) => {
 
               <button
                 style={{
-                  backgroundImage: 'url(https://i.imgur.com/z1gULar.png)',
+                  backgroundImage: 'url(https://i.imgur.com/Y7mH1Pu.png)',
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat',
                   backgroundColor: 'transparent',
@@ -148,28 +148,16 @@ const RoomSelectionPage = ({ userId }) => {
                 }}
                 className={visible ? styles.showJoinButton : styles.hide}
               ></button>
-              <form style={{ display: 'flex' }}>
+              <form style={{ display: 'flex' }} onSubmit={(e) => {
+                handleCollabJoin(e, customRoomId);
+              }}>
                 <input
                   type="text"
-                  placeholder="room name"
+                  placeholder="enter room name to join/create"
                   value={customRoomId}
                   onChange={(e) => setCustomRoomId(e.target.value)}
                   className={visible ? styles.showCustomInput : styles.hide}
                 />
-                <button
-                  style={{
-                    backgroundImage: 'url(https://i.imgur.com/aEV7zym.png)',
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                  }}
-                  onClick={(e) => {
-                    handleCollabJoin(e, customRoomId);
-                  }}
-                  className={visible ? styles.showCustomButton : styles.hide}
-                  
-                ></button>
               </form>
             </div>
           </Grid>

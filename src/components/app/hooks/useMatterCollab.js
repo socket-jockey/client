@@ -6,6 +6,9 @@ import * as Tone from 'tone';
 import { scales } from '../utils/scales';
 import { useAudio } from './useAudio';
 // import { io } from 'socket.io-client';
+import { Scale } from '@tonaljs/tonal';
+export const tonalScale = Scale.get('c5 pentatonic');
+tonalScale.type = 'minor pentatonic';
 
 export const useMatterCollab = ({
   noFriendButStillCool,
@@ -172,9 +175,11 @@ export const useMatterCollab = ({
         }
       } else {
         if (bodyA.synth && bodyA.speed > 1 && bodyA.synth.silent === true) {
+          const note = Math.ceil(Math.random() * 5);
           bodyA.synth.volume.value = Math.log(bodyA.speed) - 10;
           bodyA.synth.triggerAttackRelease(
-            scales[vibeRef.current][bodyA.pitch],
+            tonalScale.notes[note],
+            // scales[vibeRef.current][bodyA.pitch],
             bodyB.chichi ? '4n' : '16n'
           );
           bodyA.synth.silent = false;
@@ -185,9 +190,11 @@ export const useMatterCollab = ({
             Matter.Composite.remove(engineRef.current.world, bodyA);
         }
         if (bodyB.synth && bodyB.speed > 1 && bodyB.synth.silent === true) {
+          const note = Math.ceil(Math.random() * 5);
           bodyB.synth.volume.value = Math.log(bodyB.speed) - 10;
           bodyB.synth.triggerAttackRelease(
-            scales[vibeRef.current][bodyB.pitch],
+            tonalScale.notes[note],
+            // scales[vibeRef.current][bodyB.pitch],
             bodyB.chichi ? '4n' : '16n'
           );
           bodyB.synth.silent = false;

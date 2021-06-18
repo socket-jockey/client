@@ -147,7 +147,7 @@ const RoomsPage = ({ userId }) => {
   });
 
   const handleClipboard = () => {
-    copy(`https://socketjockey-dev.netlify.app/${history.location.pathname}`);
+    copy(`https://socketjockey-dev.netlify.app${history.location.pathname}`);
     setClipboard(true);
   };
 

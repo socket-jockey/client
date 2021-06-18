@@ -47,7 +47,7 @@ export const addBody = ({
       render: {
         sprite: {
           visible: true,
-          texture: 'https://i.imgur.com/4iHbj73.png',
+          texture: 'https://i.imgur.com/C8j4ZoA.png',
           xScale: 0.01 * (bodySize / 10),
           yScale: 0.01 * (bodySize / 10),
           yOffset: 0.01,
@@ -86,7 +86,7 @@ export const addBody = ({
       urls: {
         F4: 'chchi.mp3'
       },
-      baseUrl: '../../../../public/'
+      baseUrl: '/'
     }).connect(gainRef.current);
     body.chichi = true;
   } else {
@@ -158,7 +158,7 @@ export const addBody = ({
       case 'RUBBER':
         if (shape !== 'CLOUD'){
           Body.set(body, {
-            restitution: 1.4,
+            restitution: 1.2,
             density: 0.01,
             frictionAir: 0.01,
             render: {
@@ -173,7 +173,7 @@ export const addBody = ({
           delayTime: 0.4,
         });
         vibrato = new Tone.Vibrato({
-          frequency: 20,
+          frequency: 4,
           depth: 0.40,
         }).connect(gainRef.current);
         amp = {

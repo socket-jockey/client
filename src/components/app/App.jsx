@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LandingPage from '../LandingPage/LandingPage';
 import RoomsPage from '../RoomsPage/RoomsPage';
-import './App.css';
 import RoomSelectionPage from '../RoomsPage/RoomSelectionPage';
+import AboutDevs from '../About/AboutDevs';
+import './App.css';
 import { Container } from '@material-ui/core';
 import { SocketContext, socket } from './context/socketProvider';
 
@@ -21,6 +22,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={LandingPage} />
+          <Route exact path="/about" component={AboutDevs} />
         </Switch>
         <Switch>
           <Route exact path="/rooms">
@@ -36,11 +38,6 @@ const App = () => {
               <RoomsPage userId={userId} />
             </Route>
           </SocketContext.Provider>
-          <Route
-            exact
-            path="/about"
-            // component={AboutDevs}
-          />
         </Switch>
         {/* <Footer /> */}
       </Router>

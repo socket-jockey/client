@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styles from './RoomsPage.css';
-import { Fade, Modal, Button } from '@material-ui/core';
+// import styles from './RoomsPage.css';
+import { Fade, Modal } from '@material-ui/core';
 
-const SoloModal = ({ soloOpen, setSoloOpen, room, classes, modalStyle }) => {
+const SoloModal = ({ soloOpen, setSoloOpen, classes, modalStyle }) => {
   useEffect(() => {}, [soloOpen]);
   return (
     <>
@@ -19,7 +19,7 @@ const SoloModal = ({ soloOpen, setSoloOpen, room, classes, modalStyle }) => {
         <Fade in={soloOpen} timeout={{ enter: 500, exit: 600 }}>
           <div style={modalStyle} className={classes.plastic}>
             <img
-              src="https://i.imgur.com/HXtxHXZ.png"
+              src="https://i.imgur.com/FNFJjCh.png"
               alt=""
               className={classes.logo}
             />
@@ -29,4 +29,12 @@ const SoloModal = ({ soloOpen, setSoloOpen, room, classes, modalStyle }) => {
     </>
   );
 };
+
+SoloModal.propTypes = {
+  soloOpen: PropTypes.bool.isRequired,
+  setSoloOpen: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  modalStyle: PropTypes.object.isRequired,
+};
+
 export default SoloModal;

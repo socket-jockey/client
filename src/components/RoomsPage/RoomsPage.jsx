@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
@@ -17,6 +17,7 @@ import Chat from '../Chat/Chat';
 import DrawingRoom from './DrawingRoom';
 import SoloModal from './SoloModal';
 import HelpIcon from '@material-ui/icons/Help';
+import copy from 'copy-to-clipboard';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
     borderImage: ' linear-gradient(45deg, #FFCED8, #D4BEEE ) 100 10%',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-
-    // background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
   },
   logo: {
     width: '100%',
@@ -69,12 +68,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     position: 'absolute',
     maxHeight: '100vh',
-    // backgroundColor: theme.palette.background.paper,
-    // backgroundColor: 'transparent',
     border: '10px solid ',
     borderImage: ' linear-gradient(45deg, #FFCED8, #D4BEEE ) 100 10%',
-    // boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
   },
 }));
 
@@ -92,6 +87,8 @@ function getModalStyle() {
 const RoomsPage = ({ userId }) => {
   const classes = useStyles();
   const { room, roomId } = useParams();
+  const history = useHistory();
+
   let canvasX, canvasY;
 
   if (room === 'collab') {
@@ -103,10 +100,10 @@ const RoomsPage = ({ userId }) => {
   }
 
   const noFriendButStillCool = room === 'solo';
+
   const [soloOpen, setSoloOpen] = useState(noFriendButStillCool);
-
+  const [clipboard, setClipboard] = useState(false);
   const [modalStyle] = useState(getModalStyle);
-
   const [drawerView, setDrawerView] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
@@ -149,36 +146,50 @@ const RoomsPage = ({ userId }) => {
     userId,
   });
 
+  const handleClipboard = () => {
+    copy(`https://socketjockey-dev.netlify.app/${history.location.pathname}`);
+    setClipboard(true);
+  };
+
   return (
     <main>
-      <header className={styles.header}>
-        <IconButton
-          style={{ position: 'absolute', left: '.5rem', top: '.5rem' }}
-          onClick={() => setSoloOpen(true)}
-        >
-          <HelpIcon />
-        </IconButton>
-        <ControlsDrawer
-          handleBodyControls={handleBodyControls}
-          bodyControls={bodyControls}
-          maxCanvas={canvasX}
-          handleUndo={handleUndo}
-          pause={pause}
-          handlePause={handlePause}
-          gravity={gravity}
-          handleGravityChange={handleGravityChange}
-          vibe={vibe}
-          handleSettingTheVibe={handleSettingTheVibe}
-          reverbAmount={reverbAmount}
-          handleReverbChange={handleReverbChange}
-          handleStatic={handleStatic}
-          handleLoop={handleLoop}
-          handleClearAll={handleClearAll}
-        />
-      </header>
-
-      {room === 'collab' && <Chat color={users[userId]} />}
-
+      {room === 'collab' && !open && (
+        <Fade in={!open} timeout={{ enter: 2500, exit: 600 }}>
+          <header className={styles.header}>
+            <IconButton
+              style={{ position: 'absolute', left: '.5rem', top: '.5rem' }}
+              onClick={() => setSoloOpen(true)}
+            >
+              <HelpIcon />
+              {/* </Fade> */}
+            </IconButton>
+            {/* <Fade in={!open} timeout={{ enter: 2500, exit: 600 }}> */}
+            <ControlsDrawer
+              color={users[userId]}
+              handleBodyControls={handleBodyControls}
+              bodyControls={bodyControls}
+              maxCanvas={canvasX}
+              handleUndo={handleUndo}
+              pause={pause}
+              handlePause={handlePause}
+              gravity={gravity}
+              handleGravityChange={handleGravityChange}
+              vibe={vibe}
+              handleSettingTheVibe={handleSettingTheVibe}
+              reverbAmount={reverbAmount}
+              handleReverbChange={handleReverbChange}
+              handleStatic={handleStatic}
+              handleLoop={handleLoop}
+              handleClearAll={handleClearAll}
+            />
+          </header>
+        </Fade>
+      )}
+      {room === 'collab' && !open && (
+        <Fade in={!open} timeout={{ enter: 2500, exit: 600 }}>
+          <Chat color={users[userId]} />
+        </Fade>
+      )}
       <Modal
         open={room === 'collab' && open}
         aria-labelledby="simple-modal-title"
@@ -211,7 +222,6 @@ const RoomsPage = ({ userId }) => {
               >
                 {' '}
               </Fab>
-
               <Fab
                 onClick={() => {
                   handleUserColor('#A3E5FF');
@@ -225,7 +235,6 @@ const RoomsPage = ({ userId }) => {
               >
                 {' '}
               </Fab>
-
               <Fab
                 onClick={() => {
                   handleUserColor('#D4BEEE');
@@ -245,6 +254,15 @@ const RoomsPage = ({ userId }) => {
               alt=""
               className={classes.logo}
             />
+            {roomId && (
+              <div className={styles.shareLink}>
+                <Button onClick={handleClipboard} style={{ color: 'black' }}>
+                  {!clipboard
+                    ? 'share your custom room link'
+                    : 'copied to clipboard!'}
+                </Button>
+              </div>
+            )}
             <section className={classes.dotContainer}>
               <div className={classes.dotFilled}></div>
               <div

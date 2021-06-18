@@ -2,6 +2,11 @@ main {
   position: relative;
 }
 
+.shareLink {
+  margin-top: -1rem;
+  margin-bottom: 1.5rem;
+}
+
 .solo,
 .collab {
   background-image: url('https://i.imgur.com/JKax46x.png');
@@ -137,7 +142,7 @@ main {
 }
 .showCustomInput {
   text-align: center;
-  width: 35%;
+  width: 15rem;
   margin-left: 25%;
   background-color: transparent;
   border: none;
@@ -145,7 +150,7 @@ main {
   font-size: 1rem;
   animation: visible 60s infinite;
 }
-.showCustomInput::placeholder{
+.showCustomInput::placeholder {
   text-align: center;
 }
 

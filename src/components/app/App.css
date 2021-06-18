@@ -34,3 +34,7 @@ article {
   color: lightgrey;
   /* grid-row: 3 / 4; */
 }
+
+.MuiSlider-root {
+  color: #95f9dd;
+}

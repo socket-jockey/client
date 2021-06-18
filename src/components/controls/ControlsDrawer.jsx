@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import styles from './Controls.css';
 
 const ControlsDrawer = ({
+  color,
   handleBodyControls,
   bodyControls,
   maxCanvas,
@@ -20,7 +21,7 @@ const ControlsDrawer = ({
   handleReverbChange,
   handleStatic,
   handleLoop,
-  handleClearAll
+  handleClearAll,
 }) => {
   const [drawerView, setDrawerView] = useState(false);
 
@@ -37,7 +38,10 @@ const ControlsDrawer = ({
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)} style={{ position: 'absolute', top: '0', right: '0' }}>
+      <Button
+        onClick={toggleDrawer(true)}
+        style={{ position: 'absolute', top: '0', right: '0' }}
+      >
         <img
           src="https://i.imgur.com/pMNIpfo.png"
           alt="control panel"
@@ -48,6 +52,7 @@ const ControlsDrawer = ({
         <Container>
           <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
           <BodyControls
+            color={color}
             handleBodyControls={handleBodyControls}
             bodyControls={bodyControls}
             maxCanvas={maxCanvas}
@@ -60,6 +65,7 @@ const ControlsDrawer = ({
         <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
         <Container>
           <WorldControls
+            color={color}
             handleUndo={handleUndo}
             gravity={gravity}
             handleGravityChange={handleGravityChange}
@@ -102,5 +108,6 @@ ControlsDrawer.propTypes = {
   reverbAmount: PropTypes.number.isRequired,
   handleReverbChange: PropTypes.func.isRequired,
   handleClearAll: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
 };
 export default ControlsDrawer;

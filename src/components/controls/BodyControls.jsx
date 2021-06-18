@@ -167,7 +167,7 @@ const BodyControls = ({
             src="https://i.imgur.com/T940Sx0.png"
           />
           <Slider
-            style={{ width: '70%', color: color }}
+            style={{ width: '70%', color }}
             className={styles.slider}
             value={bodyControls.size}
             onChange={(_, value) => handleBodyControls('size', value)}
@@ -182,7 +182,7 @@ const BodyControls = ({
             src="https://i.imgur.com/MCNe902.png"
           />
           <Slider
-            style={{ width: '70%', color: color }}
+            style={{ width: '70%', color }}
             className={styles.slider}
             value={bodyControls.loopSize}
             onChange={(_, value) => handleBodyControls('loopSize', value)}

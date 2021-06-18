@@ -18,9 +18,9 @@
   min-height: 30vmin;
   min-width: 30vmin;
   width: 35vmin;
-  background-image: url('https://i.imgur.com/vnCqFCq.png');
-  background-size: 170%;
-  background-position-x: center;
+  /* background-image: url('https://i.imgur.com/vnCqFCq.png'); */
+  /* background-size: 170%;
+  background-position-x: center; */
 }
 
 .devGlue {
@@ -38,16 +38,27 @@
 
 h2 {
   font-size: 3vmin;
-  margin-top: 110px;
+  margin-bottom: 50px;
 
   font-family: 'tan_-_astoriaregular';
+  position: absolute;
 }
 
-a {
+.linkedin {
   font-size: 2.5vmin;
   text-decoration: none;
   font-family: 'tan_-_astoriaregular';
   color: black;
+  position: absolute;
+  /* margin-bottom: 20px; */
+}
+.github {
+  font-size: 2.5vmin;
+  text-decoration: none;
+  font-family: 'tan_-_astoriaregular';
+  color: black;
+  position: absolute;
+  margin-top: 60px;
 }
 
 .aboutHeader {
@@ -64,4 +75,10 @@ a {
   height: 40vmin;
   width: 40vmin;
   padding-top: 35px;
+}
+
+.grave {
+  height: 30vmax;
+  width: 40vmax;
+  position: relative;
 }

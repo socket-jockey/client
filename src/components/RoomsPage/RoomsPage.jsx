@@ -5,9 +5,18 @@ import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fade, Modal, Fab, Drawer, Button } from '@material-ui/core';
+import {
+  Fade,
+  Modal,
+  Fab,
+  Drawer,
+  Button,
+  IconButton,
+} from '@material-ui/core';
 import Chat from '../Chat/Chat';
 import DrawingRoom from './DrawingRoom';
+import SoloModal from './SoloModal';
+import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -53,6 +62,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: 'url(begin.png)',
     margin: '.5rem',
   },
+  plastic: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    maxHeight: '100vh',
+    // backgroundColor: theme.palette.background.paper,
+    // backgroundColor: 'transparent',
+    border: '10px solid ',
+    borderImage: ' linear-gradient(45deg, #FFCED8, #D4BEEE ) 100 10%',
+    // boxShadow: theme.shadows[5],
+    // padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 function getModalStyle() {
@@ -80,6 +103,7 @@ const RoomsPage = ({ userId }) => {
   }
 
   const noFriendButStillCool = room === 'solo';
+  const [soloOpen, setSoloOpen] = useState(noFriendButStillCool);
 
   const [modalStyle] = useState(getModalStyle);
 
@@ -116,6 +140,7 @@ const RoomsPage = ({ userId }) => {
     handleLoop,
     handleBegin,
     handleUserColor,
+    handleClearAll,
   } = useMatterCollab({
     noFriendButStillCool,
     canvasX,
@@ -127,6 +152,12 @@ const RoomsPage = ({ userId }) => {
   return (
     <main>
       <header className={styles.header}>
+        <IconButton
+          style={{ position: 'absolute', left: '.5rem', top: '.5rem' }}
+          onClick={() => setSoloOpen(true)}
+        >
+          <HelpIcon />
+        </IconButton>
         <ControlsDrawer
           handleBodyControls={handleBodyControls}
           bodyControls={bodyControls}
@@ -142,6 +173,7 @@ const RoomsPage = ({ userId }) => {
           handleReverbChange={handleReverbChange}
           handleStatic={handleStatic}
           handleLoop={handleLoop}
+          handleClearAll={handleClearAll}
         />
       </header>
 
@@ -259,6 +291,13 @@ const RoomsPage = ({ userId }) => {
           </div>
         </Fade>
       </Modal>
+      <SoloModal
+        soloOpen={soloOpen}
+        setSoloOpen={setSoloOpen}
+        room={room}
+        classes={classes}
+        modalStyle={modalStyle}
+      />
       <section
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}

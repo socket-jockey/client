@@ -124,7 +124,6 @@ const RoomsPage = ({ userId }) => {
     userId,
   });
 
-
   return (
     <main>
       <header className={styles.header}>
@@ -177,9 +176,10 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              > </Fab>
-                
-              
+              >
+                {' '}
+              </Fab>
+
               <Fab
                 onClick={() => {
                   handleUserColor('#A3E5FF');
@@ -190,9 +190,10 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              > </Fab>
-              
-              
+              >
+                {' '}
+              </Fab>
+
               <Fab
                 onClick={() => {
                   handleUserColor('#D4BEEE');
@@ -203,9 +204,9 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              > </Fab>
-                
-             
+              >
+                {' '}
+              </Fab>
             </section>
             <img
               src="https://i.imgur.com/6j7l3kL.png"
@@ -262,6 +263,6 @@ const RoomsPage = ({ userId }) => {
 };
 
 RoomsPage.propTypes = {
-  userId: PropTypes.string.isRequired
+  userId: PropTypes.string.isRequired,
 };
 export default RoomsPage;

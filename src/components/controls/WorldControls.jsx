@@ -13,6 +13,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const WorldControls = ({
+  color,
   gravity,
   handleGravityChange,
   vibe,
@@ -30,7 +31,7 @@ const WorldControls = ({
           src="https://i.imgur.com/31CAsd9.png"
         />
         <Slider
-          style={{ width: '70%' }}
+          style={{ width: '70%', color: color }}
           className={styles.slider}
           value={gravity.x}
           onChange={(_, value) => handleGravityChange('x', value)}
@@ -45,7 +46,7 @@ const WorldControls = ({
           src="https://i.imgur.com/tVfuHZQ.png"
         />
         <Slider
-          style={{ width: '70%' }}
+          style={{ width: '70%', color: color }}
           className={styles.slider}
           value={gravity.y}
           onChange={(_, value) => handleGravityChange('y', value)}
@@ -60,7 +61,7 @@ const WorldControls = ({
           src="https://i.imgur.com/WVfRFaI.png"
         />
         <Slider
-          style={{ width: '70%' }}
+          style={{ width: '70%', color: color }}
           className={styles.slider}
           value={reverbAmount}
           onChange={handleReverbChange}
@@ -129,6 +130,7 @@ WorldControls.propTypes = {
   handleReverbChange: PropTypes.func.isRequired,
   handleUndo: PropTypes.func.isRequired,
   handleClearAll: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export default WorldControls;

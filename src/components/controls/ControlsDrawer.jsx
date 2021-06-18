@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import styles from './Controls.css';
 
 const ControlsDrawer = ({
+  color,
   handleBodyControls,
   bodyControls,
   maxCanvas,
@@ -52,6 +53,7 @@ const ControlsDrawer = ({
         <Container>
           <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
           <BodyControls
+            color={color}
             handleBodyControls={handleBodyControls}
             bodyControls={bodyControls}
             maxCanvas={maxCanvas}
@@ -64,6 +66,7 @@ const ControlsDrawer = ({
         <Divider style={{ height: '1rem', backgroundColor: 'white' }} />
         <Container>
           <WorldControls
+            color={color}
             handleUndo={handleUndo}
             gravity={gravity}
             handleGravityChange={handleGravityChange}
@@ -106,5 +109,6 @@ ControlsDrawer.propTypes = {
   reverbAmount: PropTypes.number.isRequired,
   handleReverbChange: PropTypes.func.isRequired,
   handleClearAll: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
 };
 export default ControlsDrawer;

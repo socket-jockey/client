@@ -67,7 +67,7 @@ const BodyControls = ({
         <ToggleButton value="HEXAGON">
           <img
             className={styles.imageIcon}
-            src="https://i.imgur.com/QmJRIds.png/"
+            src="https://i.imgur.com/atWjQRf.png"
           />
         </ToggleButton>
         <ToggleButton value="CLOUD">

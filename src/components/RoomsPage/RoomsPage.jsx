@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     position: 'absolute',
     width: 400,
-    // backgroundColor: theme.palette.background.paper,
     backgroundColor: 'transparent',
     border: '10px solid ',
     borderImage: ' linear-gradient(45deg, #FFCED8, #D4BEEE ) 100 10%',
@@ -207,9 +206,9 @@ const RoomsPage = ({ userId }) => {
               style={{
                 flexDirection: 'row',
               }}
-              // disabled={Object.values(users).includes('red')}
             >
               <Fab
+                variant="round"
                 onClick={() => {
                   handleUserColor('#FB998E');
                 }}
@@ -218,11 +217,11 @@ const RoomsPage = ({ userId }) => {
                   backgroundColor: '#FB998E',
                   margin: '1rem',
                 }}
-                variant="round"
               >
                 {' '}
               </Fab>
               <Fab
+                variant="round"
                 onClick={() => {
                   handleUserColor('#A3E5FF');
                 }}
@@ -231,11 +230,11 @@ const RoomsPage = ({ userId }) => {
                   backgroundColor: '#A3E5FF',
                   margin: '1rem',
                 }}
-                variant="round"
               >
                 {' '}
               </Fab>
               <Fab
+                variant="round"
                 onClick={() => {
                   handleUserColor('#D4BEEE');
                 }}
@@ -244,7 +243,6 @@ const RoomsPage = ({ userId }) => {
                   backgroundColor: '#D4BEEE',
                   margin: '1rem',
                 }}
-                variant="round"
               >
                 {' '}
               </Fab>

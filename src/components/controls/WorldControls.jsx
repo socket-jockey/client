@@ -19,6 +19,7 @@ const WorldControls = ({
   handleSettingTheVibe,
   reverbAmount,
   handleReverbChange,
+  handleClearAll,
   handleUndo,
 }) => {
   return (
@@ -105,7 +106,7 @@ const WorldControls = ({
             />
           </ToggleButton>
         </ToggleButtonGroup>
-        <Button>
+        <Button onClick={handleClearAll}>
           <img
             className={`${styles.imageIcon} ${styles.undo}`}
             src="https://i.imgur.com/LftdK8C.png"
@@ -127,6 +128,7 @@ WorldControls.propTypes = {
   reverbAmount: PropTypes.number.isRequired,
   handleReverbChange: PropTypes.func.isRequired,
   handleUndo: PropTypes.func.isRequired,
+  handleClearAll: PropTypes.func.isRequired,
 };
 
 export default WorldControls;

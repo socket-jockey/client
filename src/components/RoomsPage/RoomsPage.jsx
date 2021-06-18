@@ -5,7 +5,14 @@ import styles from './RoomsPage.css';
 import ControlsDrawer from '../controls/ControlsDrawer';
 import { useMatterCollab } from '../app/hooks/useMatterCollab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fade, Modal, Fab, Drawer, Button, IconButton } from '@material-ui/core';
+import {
+  Fade,
+  Modal,
+  Fab,
+  Drawer,
+  Button,
+  IconButton,
+} from '@material-ui/core';
 import Chat from '../Chat/Chat';
 import DrawingRoom from './DrawingRoom';
 import SoloModal from './SoloModal';
@@ -133,7 +140,7 @@ const RoomsPage = ({ userId }) => {
     handleLoop,
     handleBegin,
     handleUserColor,
-    handleClearAll
+    handleClearAll,
   } = useMatterCollab({
     noFriendButStillCool,
     canvasX,
@@ -145,7 +152,12 @@ const RoomsPage = ({ userId }) => {
   return (
     <main>
       <header className={styles.header}>
-        <IconButton onClick={() => setSoloOpen(true)}><HelpIcon /></IconButton>
+        <IconButton
+          style={{ position: 'absolute', left: '.5rem', top: '.5rem' }}
+          onClick={() => setSoloOpen(true)}
+        >
+          <HelpIcon />
+        </IconButton>
         <ControlsDrawer
           handleBodyControls={handleBodyControls}
           bodyControls={bodyControls}
@@ -279,7 +291,13 @@ const RoomsPage = ({ userId }) => {
           </div>
         </Fade>
       </Modal>
-      <SoloModal soloOpen={soloOpen} setSoloOpen={setSoloOpen} room={room} classes={classes} modalStyle={modalStyle} />
+      <SoloModal
+        soloOpen={soloOpen}
+        setSoloOpen={setSoloOpen}
+        room={room}
+        classes={classes}
+        modalStyle={modalStyle}
+      />
       <section
         ref={sceneRef}
         className={room === 'solo' ? styles.solo : styles.collab}

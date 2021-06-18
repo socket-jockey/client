@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -23,13 +23,19 @@ const RoomSelectionPage = ({ userId }) => {
     //   setVisible(() => true);
     // }, 2000);
   };
-
+  let solo;
   const handleSoloMountain = () => {
     setCollabAnimation(false);
-    setTimeout(() => {
+    solo = setTimeout(() => {
       history.push('/rooms/solo');
     }, 3700);
   };
+  useEffect(() => {
+    
+    return () => {
+      clearTimeout(solo);
+    };
+  }, []);
 
   const handleCollabJoin = (e, roomId) => {
     e.preventDefault();
@@ -137,7 +143,7 @@ const RoomSelectionPage = ({ userId }) => {
 
               <button
                 style={{
-                  backgroundImage: 'url(https://i.imgur.com/z1gULar.png)',
+                  backgroundImage: 'url(https://i.imgur.com/Y7mH1Pu.png)',
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat',
                   backgroundColor: 'transparent',
@@ -148,28 +154,16 @@ const RoomSelectionPage = ({ userId }) => {
                 }}
                 className={visible ? styles.showJoinButton : styles.hide}
               ></button>
-              <form style={{ display: 'flex' }}>
+              <form style={{ display: 'flex' }} onSubmit={(e) => {
+                handleCollabJoin(e, customRoomId);
+              }}>
                 <input
                   type="text"
-                  placeholder="room name"
+                  placeholder="enter room name to join/create"
                   value={customRoomId}
                   onChange={(e) => setCustomRoomId(e.target.value)}
                   className={visible ? styles.showCustomInput : styles.hide}
                 />
-                <button
-                  style={{
-                    backgroundImage: 'url(https://i.imgur.com/aEV7zym.png)',
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                  }}
-                  onClick={(e) => {
-                    handleCollabJoin(e, customRoomId);
-                  }}
-                  className={visible ? styles.showCustomButton : styles.hide}
-                  
-                ></button>
               </form>
             </div>
           </Grid>

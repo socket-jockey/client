@@ -84,7 +84,6 @@ const RoomsPage = ({ userId }) => {
   const [modalStyle] = useState(getModalStyle);
 
   const [drawerView, setDrawerView] = useState(false);
-  const [chatView, setChatView] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -95,17 +94,6 @@ const RoomsPage = ({ userId }) => {
     }
 
     setDrawerView(open);
-  };
-
-  const toggleChat = (open) => (event) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-
-    setChatView(open);
   };
 
   const {
@@ -189,9 +177,9 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              >
+              > </Fab>
                 
-              </Fab>
+              
               <Fab
                 onClick={() => {
                   handleUserColor('#A3E5FF');
@@ -202,9 +190,9 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              >
+              > </Fab>
               
-              </Fab>
+              
               <Fab
                 onClick={() => {
                   handleUserColor('#D4BEEE');
@@ -215,9 +203,9 @@ const RoomsPage = ({ userId }) => {
                   margin: '1rem',
                 }}
                 variant="round"
-              >
-                {/* color */}
-              </Fab>
+              > </Fab>
+                
+             
             </section>
             <img
               src="https://i.imgur.com/6j7l3kL.png"
@@ -261,17 +249,6 @@ const RoomsPage = ({ userId }) => {
               }}
             >
               <DrawingRoom />
-            </Drawer>
-            <Button onClick={toggleChat(true)}>Chat</Button>
-            <Drawer
-              anchor={'right'}
-              open={chatView}
-              onClose={toggleChat(false)}
-              style={{
-                opacity: '0.9',
-              }}
-            >
-              <Chat />
             </Drawer>
           </div>
         </Fade>

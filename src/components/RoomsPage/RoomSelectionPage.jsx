@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -23,13 +23,19 @@ const RoomSelectionPage = ({ userId }) => {
     //   setVisible(() => true);
     // }, 2000);
   };
-
+  let solo;
   const handleSoloMountain = () => {
     setCollabAnimation(false);
-    setTimeout(() => {
+    solo = setTimeout(() => {
       history.push('/rooms/solo');
     }, 3700);
   };
+  useEffect(() => {
+    
+    return () => {
+      clearTimeout(solo);
+    };
+  }, []);
 
   const handleCollabJoin = (e, roomId) => {
     e.preventDefault();

@@ -75,7 +75,7 @@ const BodyControls = ({
       <ToggleButtonGroup
         size="small"
         value={bodyControls.material}
-        onChange={(_, value) => handleBodyControls('material', value)}
+        onChange={(_, value) => handleBodyControls('material', value ? value : 'WOOD')}
         exclusive
         className={styles.toggleGroup}
         style={{

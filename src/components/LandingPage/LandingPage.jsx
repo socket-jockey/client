@@ -6,12 +6,15 @@ const LandingPage = () => {
   const history = useHistory();
   const [animate, setAnimate] = useState(false);
 
+ 
   const handleHole = () => {
     setAnimate(() => true);
     setTimeout(() => {
       history.push('/rooms');
     }, 3100);
   };
+  
+
   return (
     <main
       style={{

@@ -152,41 +152,40 @@ const RoomsPage = ({ userId }) => {
 
   return (
     <main>
+      <Fade
+        in={(room === 'collab' && !open) || (room === 'solo' && !soloOpen)}
+        timeout={{ enter: 2500, exit: 600 }}
+      >
+        <header className={styles.header}>
+          <IconButton
+            style={{ position: 'absolute', left: '.5rem', top: '.5rem' }}
+            onClick={() => setSoloOpen(true)}
+          >
+            <HelpIcon />
+          </IconButton>
+          <ControlsDrawer
+            color={users[userId] ? users[userId] : '#95f9dd'}
+            handleBodyControls={handleBodyControls}
+            bodyControls={bodyControls}
+            maxCanvas={canvasX}
+            handleUndo={handleUndo}
+            pause={pause}
+            handlePause={handlePause}
+            gravity={gravity}
+            handleGravityChange={handleGravityChange}
+            vibe={vibe}
+            handleSettingTheVibe={handleSettingTheVibe}
+            reverbAmount={reverbAmount}
+            handleReverbChange={handleReverbChange}
+            handleStatic={handleStatic}
+            handleLoop={handleLoop}
+            handleClearAll={handleClearAll}
+          />
+        </header>
+      </Fade>
       {room === 'collab' && !open && (
         <Fade in={!open} timeout={{ enter: 2500, exit: 600 }}>
-          <header className={styles.header}>
-            <IconButton
-              style={{ position: 'absolute', left: '.5rem', top: '.5rem' }}
-              onClick={() => setSoloOpen(true)}
-            >
-              <HelpIcon />
-              {/* </Fade> */}
-            </IconButton>
-            {/* <Fade in={!open} timeout={{ enter: 2500, exit: 600 }}> */}
-            <ControlsDrawer
-              color={users[userId]}
-              handleBodyControls={handleBodyControls}
-              bodyControls={bodyControls}
-              maxCanvas={canvasX}
-              handleUndo={handleUndo}
-              pause={pause}
-              handlePause={handlePause}
-              gravity={gravity}
-              handleGravityChange={handleGravityChange}
-              vibe={vibe}
-              handleSettingTheVibe={handleSettingTheVibe}
-              reverbAmount={reverbAmount}
-              handleReverbChange={handleReverbChange}
-              handleStatic={handleStatic}
-              handleLoop={handleLoop}
-              handleClearAll={handleClearAll}
-            />
-          </header>
-        </Fade>
-      )}
-      {room === 'collab' && !open && (
-        <Fade in={!open} timeout={{ enter: 2500, exit: 600 }}>
-          <Chat color={users[userId]} />
+          <Chat color={users[userId] ? users[userId] : '#95f9dd'} />
         </Fade>
       )}
       <Modal
@@ -323,6 +322,6 @@ const RoomsPage = ({ userId }) => {
 };
 
 RoomsPage.propTypes = {
-  userId: PropTypes.string.isRequired,
+  userId: PropTypes.string,
 };
 export default RoomsPage;

@@ -50,7 +50,10 @@ const Chat = ({ color }) => {
 
       <form onSubmit={handleSubmit}>
         <TextField
-          style={{ marginRight: '1rem', paddingTop: '1.3rem' }}
+          style={{
+            marginRight: '1rem',
+            paddingTop: '1.3rem',
+          }}
           margin="none"
           variant="standard"
           onChange={handleInputChange}

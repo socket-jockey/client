@@ -227,18 +227,23 @@ const RoomsPage = ({ userId }) => {
             <img
               onClick={handleBegin}
               src="/begin.png"
-              alt=""
+              alt="begin session"
               style={{
                 marginTop: '2rem',
                 width: '25%',
                 cursor: 'pointer',
               }}
             />
-            {/* {open && <Chat className={classes.inlineChat}/>} */}
-            {/* <p id="simple-modal-description">
-              Number of participants:{participants}
-            </p> */}
-            <Button onClick={toggleDrawer(true)}>Pass the Time</Button>
+            <Button onClick={toggleDrawer(true)}>
+              <img
+                src="https://i.imgur.com/vV1M5YO.png"
+                alt="open drawing canvas"
+                style={{
+                  width: '50%',
+                  cursor: 'pointer',
+                }}
+              />
+            </Button>
             <Drawer
               anchor={'left'}
               open={drawerView}

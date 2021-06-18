@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Controls.css';
 import {
-  Button,
   FormGroup,
   InputLabel,
   Slider,
@@ -27,10 +26,11 @@ const useStyles = makeStyles({
 });
 
 const BodyControls = ({
+  pause,
+  handlePause,
   handleBodyControls,
   bodyControls,
   maxCanvas,
-  handleUndo,
   handleStatic,
   handleLoop,
 }) => {
@@ -67,7 +67,7 @@ const BodyControls = ({
         <ToggleButton value="HEXAGON">
           <img
             className={styles.imageIcon}
-            src="https://i.imgur.com/QmJRIds.png/"
+            src="https://i.imgur.com/atWjQRf.png"
           />
         </ToggleButton>
         <ToggleButton value="CLOUD">
@@ -152,31 +152,34 @@ const BodyControls = ({
       </ToggleButtonGroup>
       <Divider
         style={{
-          height: '1rem',
+          height: '2rem',
           backgroundColor: 'white',
         }}
       />
       <FormGroup>
-        <InputLabel>
+        <InputLabel style={{ position: 'relative' }}>
           <img
-            className={`${styles.imageIcon} ${styles.sizing}`}
+            className={`${styles.imageIcon} ${styles.sizing} ${styles.sliderImage}`}
             src="https://i.imgur.com/T940Sx0.png"
           />
           <Slider
+            style={{ width: '70%' }}
+            className={styles.slider}
             value={bodyControls.size}
             onChange={(_, value) => handleBodyControls('size', value)}
-            min={-27}
+            min={-20}
             max={0}
             step={1}
-            marks
           />
         </InputLabel>
-        <InputLabel>
+        <InputLabel style={{ position: 'relative' }}>
           <img
-            className={`${styles.imageIcon} ${styles.sizing}`}
+            className={`${styles.imageIcon} ${styles.sizing} ${styles.sliderImage}`}
             src="https://i.imgur.com/MCNe902.png"
           />
           <Slider
+            style={{ width: '70%' }}
+            className={styles.slider}
             value={bodyControls.loopSize}
             onChange={(_, value) => handleBodyControls('loopSize', value)}
             min={50}
@@ -186,18 +189,24 @@ const BodyControls = ({
       </FormGroup>
       <Divider
         style={{
-          height: '1rem',
+          height: '2rem',
           backgroundColor: 'white',
         }}
       />
-      <Container>
+      <Container
+        style={{
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'space-around',
+        }}
+      >
         <ToggleButtonGroup
           value={bodyControls.doesLoop && 'doesLoop'}
           onChange={handleLoop}
           exclusive
-          style={{ marginLeft: '22%' }}
+          // style={{ marginLeft: '22%' }}
         >
-          <ToggleButton size="large" value="doesLoop">
+          <ToggleButton size="small" value="doesLoop">
             <img
               className={`${styles.imageIcon} ${styles.loopers}`}
               src="https://i.imgur.com/S1V1vRH.png"
@@ -208,39 +217,29 @@ const BodyControls = ({
           value={bodyControls.isStatic && 'isStatic'}
           onChange={handleStatic}
           exclusive
-          style={{ marginLeft: '25%' }}
         >
-          <ToggleButton size="large" value="isStatic">
+          <ToggleButton size="small" value="isStatic">
             <img
               className={`${styles.imageIcon} ${styles.loopers}`}
-              src="https://i.imgur.com/XNT6FDi.png"
+              src="https://i.imgur.com/f7DGv5s.png?1"
+            />
+          </ToggleButton>
+        </ToggleButtonGroup>
+        <ToggleButtonGroup value={pause} onChange={handlePause} exclusive>
+          <ToggleButton size="small" value="paused">
+            <img
+              src="https://i.imgur.com/hh947yM.png"
+              className={`${styles.imageIcon} ${styles.loopers}`}
             />
           </ToggleButton>
         </ToggleButtonGroup>
       </Container>
       <Divider
         style={{
-          height: '1rem',
+          height: '2rem',
           backgroundColor: 'white',
         }}
       />
-      <Container className={styles.deleteButtons}>
-        <Button style={{ margin: '1.5rem' }} onClick={handleUndo}>
-          <img
-            className={`${styles.imageIcon} ${styles.undo}`}
-            src="https://i.imgur.com/D0IYd5o.png"
-          />
-        </Button>
-        <Button
-          style={{ margin: '1.5rem' }}
-          // onClick={handleClearAll}
-        >
-          <img
-            className={`${styles.imageIcon} ${styles.undo}`}
-            src="https://i.imgur.com/LftdK8C.png"
-          />
-        </Button>
-      </Container>
     </FormGroup>
   );
 };
@@ -256,11 +255,12 @@ BodyControls.propTypes = {
     speed: PropTypes.number.isRequired,
     toggles: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
+  pause: PropTypes.string.isRequired,
+  handlePause: PropTypes.func.isRequired,
   handleBodyControls: PropTypes.func.isRequired,
   handleStatic: PropTypes.func.isRequired,
   handleLoop: PropTypes.func.isRequired,
   maxCanvas: PropTypes.number.isRequired,
-  handleUndo: PropTypes.func.isRequired,
 };
 
 export default BodyControls;

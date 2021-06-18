@@ -73,7 +73,7 @@ export const addBody = ({
     body.isSounding = false;
   }
 
-  body.pitch = size + 27;
+  body.pitch = size + 20;
 
   let amp, mod, vibrato, chorus, feedback, pingpong;
   if (shape === 'CHICHI') {
@@ -172,12 +172,9 @@ export const addBody = ({
         pingpong = new Tone.PingPongDelay({
           delayTime: 0.4,
         });
-        pingpong = new Tone.PingPongDelay({
-          delayTime: 0.4,
-        });
         vibrato = new Tone.Vibrato({
-          frequency: 5,
-          depth: 0.5,
+          frequency: 20,
+          depth: 0.40,
         }).connect(gainRef.current);
         amp = {
           attack: 0.03,
@@ -208,14 +205,14 @@ export const addBody = ({
         amp = {
           attack: 0.1,
           decay: 0.5,
-          sustain: 0.5,
+          sustain: 1,
           release: 1,
           decayCurve: 'exponential',
         };
         body.synth = new Tone.AMSynth({
           envelope: amp,
           harmonicity: 0.25,
-          modulationIndex: 15,
+          modulationIndex: 25,
         }).connect(gainRef.current);
         body.chichi = true;
         break;
@@ -224,8 +221,8 @@ export const addBody = ({
         if (shape !== 'CLOUD'){
           Body.set(body, {
             restitution: 0,
-            density: 0.000001,
-            frictionAir: 1.2,
+            density: 0.00001,
+            frictionAir: 0.1,
             render: {
               visible: true,
               fillStyle: 'transparent',
@@ -340,9 +337,6 @@ export const addBody = ({
   }
   body.synth.silent = true;
   if (isStatic) Body.setStatic(body, isStatic);
-  if (shape === 'CLOUD') {
-    Body.setStatic(body, true);
-  }
   if (doesLoop) {
     Body.set(body, {
       plugin: {

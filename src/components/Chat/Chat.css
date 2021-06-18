@@ -4,12 +4,14 @@ ul {
 
 .chatMessages,
 .chatFloat {
-  min-height: 50px;
-  border-radius: 25px;
+  width: 280px;
+  max-width: 280px;
+  min-height: 70px;
+  border-radius: 35px;
   background-color: #95f9dd;
   box-shadow: 10px #95f9dd;
   opacity: 0;
-  color: white;
+  color: black;
   display: flex;
   margin: 1rem;
   margin-left: 0px;
@@ -17,12 +19,15 @@ ul {
   justify-content: center;
   word-wrap: normal;
   padding: 15px;
+  word-break: normal;
+  overflow: hidden;
 }
 
 .chatDivWrapper {
   position: absolute;
   bottom: 0px;
   right: 0px;
+  pointer-events: none;
 }
 
 .chatFloat {

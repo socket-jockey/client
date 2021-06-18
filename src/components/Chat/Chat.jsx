@@ -42,7 +42,7 @@ const Chat = ({ color }) => {
                     : styles.chatMessages
                 }
               >
-                <Typography variant="body1">{input}</Typography>
+                <Typography variant="h6">{input}</Typography>
               </li>
             );
           })}
@@ -53,6 +53,8 @@ const Chat = ({ color }) => {
           style={{
             marginRight: '1rem',
             paddingTop: '1.3rem',
+            pointerEvents: 'all',
+
           }}
           margin="none"
           variant="standard"
@@ -67,6 +69,7 @@ const Chat = ({ color }) => {
             marginRight: '1rem',
             marginBottom: '1rem',
             border: 'none',
+            pointerEvents: 'all',
           }}
           size="large"
           variant="outlined"

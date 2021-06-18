@@ -116,7 +116,7 @@ const BodyControls = ({
           <Slider
             value={bodyControls.size}
             onChange={(_, value) => handleBodyControls('size', value)}
-            min={-27}
+            min={-20}
             max={0}
             step={1}
             marks

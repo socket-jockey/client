@@ -73,7 +73,7 @@ export const addBody = ({
     body.isSounding = false;
   }
 
-  body.pitch = size + 27;
+  body.pitch = size + 20;
 
   let amp, mod, vibrato, chorus, feedback, pingpong;
   if (shape === 'CHICHI') {
@@ -173,8 +173,8 @@ export const addBody = ({
           delayTime: 0.4,
         });
         vibrato = new Tone.Vibrato({
-          frequency: 5,
-          depth: 0.42,
+          frequency: 20,
+          depth: 0.40,
         }).connect(gainRef.current);
         amp = {
           attack: 0.03,
@@ -337,9 +337,6 @@ export const addBody = ({
   }
   body.synth.silent = true;
   if (isStatic) Body.setStatic(body, isStatic);
-  if (shape === 'CLOUD') {
-    Body.setStatic(body, true);
-  }
   if (doesLoop) {
     Body.set(body, {
       plugin: {

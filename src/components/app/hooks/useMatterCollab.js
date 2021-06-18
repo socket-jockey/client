@@ -34,8 +34,8 @@ export const useMatterCollab = ({
   const bodyRef = useRef({
     shape: 'CIRCLE',
     isStatic: false,
-    size: -27,
-    material: 'WOOD',
+    size: -13,
+    material: 'METAL',
     doesLoop: false,
     loopSize: 200,
     speed: 0.3,
@@ -51,7 +51,7 @@ export const useMatterCollab = ({
 
   const vibeRef = useRef(0);
 
-  const [reverbAmount, setReverbAmount] = useState(50);
+  const [reverbAmount, setReverbAmount] = useState(30);
   const [vibe, setVibe] = useState('MAJOR');
   const [pause, setPause] = useState('');
   const [pastGrav, setPastGrav] = useState(gravity);
@@ -285,6 +285,14 @@ export const useMatterCollab = ({
   const handleBodyControls = (key, value) => {
     setBodyControls((prev) => ({ ...prev, [key]: value }));
     bodyRef.current[key] = value;
+    if (value === 'WALL' || value === 'FLOOR' || value === 'CLOUD') {
+      setBodyControls((prev) => ({ ...prev, isStatic: true }));
+      bodyRef.current.isStatic = true;
+    }
+    if (value === 'CIRCLE' || value === 'SQUARE' || value === 'TRIANGLE' || value === 'HEXAGON' || value === 'CHICHI') {
+      setBodyControls((prev) => ({ ...prev, isStatic: false }));
+      bodyRef.current.isStatic = false;
+    }
   };
   const handleGravityChange = (key, value) => {
     setGravity((prev) => ({ ...prev, [key]: value }));

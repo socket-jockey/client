@@ -54,6 +54,7 @@ const Chat = ({ color }) => {
             marginRight: '1rem',
             paddingTop: '1.3rem',
             pointerEvents: 'all',
+
           }}
           margin="none"
           variant="standard"

@@ -37,7 +37,7 @@ const ControlsDrawer = ({
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>
+      <Button onClick={toggleDrawer(true)} style={{ position: 'absolute', top: '0', right: '0' }}>
         <img
           src="https://i.imgur.com/pMNIpfo.png"
           alt="control panel"

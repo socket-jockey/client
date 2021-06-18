@@ -121,14 +121,14 @@ main {
   margin-top: 40%;
   margin-left: 30%;
   height: 3rem;
-  animation: visible 30s;
+  animation: visible 60s infinite;
 }
 .showCustomButton {
   width: 20%;
   /* margin-top: 20%; */
   margin-left: 0%;
   height: 3rem;
-  animation: visible 30s;
+  animation: visible 60s infinite;
   justify-content: flex-end;
 }
 .showCustomInput {
@@ -138,7 +138,7 @@ main {
   border: none;
   border-bottom: 2px solid #f9ddff;
   font-size: 1rem;
-  animation: visible 30s;
+  animation: visible 60s infinite;
 }
 
 .showJoinButton:hover {
@@ -154,7 +154,7 @@ main {
   0% {
     opacity: 0;
   }
-  20% {
+  25% {
     opacity: 1;
   }
   100% {

@@ -10,15 +10,17 @@ const colorsArr = [
   '#FFCAD8',
   '#FFBA7a',
   '#FB998E',
+  '#000000',
 ];
 
 const randomColor = (arr) => {
-  return arr[Math.ceil(Math.random() * 6)];
+  return arr[Math.ceil(Math.random() * 7)];
+};
+const randomNumber = () => {
+  return Math.ceil(Math.random() * 20);
 };
 const DrawingRoom = () => {
   const canvasRef = useRef();
-  const color = randomColor(colorsArr);
-  const strokeWidth = 4;
   const socket = useContext(SocketContext);
   useEffect(() => {
     new P5(Sketch, canvasRef.current);
@@ -27,8 +29,8 @@ const DrawingRoom = () => {
 
   const Sketch = (p) => {
     p.setup = () => {
-      p.createCanvas(750, 900);
-      p.background('white');
+      p.createCanvas(500, 1000);
+      p.background('rgba(250, 250, 250, 0.1)');
 
       socket.on('mouse response', (data) => {
         p.stroke(data.color);
@@ -43,8 +45,8 @@ const DrawingRoom = () => {
         y: p.mouseY,
         px: p.pmouseX,
         py: p.pmouseY,
-        color,
-        strokeWidth,
+        color: randomColor(colorsArr),
+        strokeWidth: randomNumber(),
       };
       socket.emit('transmit mouse', socket.currentRoom, data);
     };

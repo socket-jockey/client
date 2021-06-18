@@ -281,7 +281,7 @@ const RoomsPage = ({ userId }) => {
               open={drawerView}
               onClose={toggleDrawer(false)}
               style={{
-                opacity: '0.9',
+                opacity: '0.8',
                 width: '50%',
                 height: '200px',
               }}

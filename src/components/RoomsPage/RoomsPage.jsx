@@ -26,14 +26,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     position: 'absolute',
     width: 400,
-    // backgroundColor: theme.palette.background.paper,
     backgroundColor: 'transparent',
     border: '10px solid ',
     borderImage: ' linear-gradient(45deg, #FFCED8, #D4BEEE ) 100 10%',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-
-    // background: 'linear-gradient(45deg, #a3c0fa 30%, #e2d3f2 60%)',
   },
   logo: {
     width: '100%',
@@ -69,12 +66,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     position: 'absolute',
     maxHeight: '100vh',
-    // backgroundColor: theme.palette.background.paper,
-    // backgroundColor: 'transparent',
     border: '10px solid ',
     borderImage: ' linear-gradient(45deg, #FFCED8, #D4BEEE ) 100 10%',
-    // boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
   },
 }));
 
@@ -153,7 +146,11 @@ const RoomsPage = ({ userId }) => {
     <main>
       <header className={styles.header}>
         <IconButton
-          style={{ position: 'absolute', left: '.5rem', top: '.5rem' }}
+          style={{
+            position: 'absolute',
+            left: '.5rem',
+            top: '.5rem',
+          }}
           onClick={() => setSoloOpen(true)}
         >
           <HelpIcon />
@@ -196,9 +193,9 @@ const RoomsPage = ({ userId }) => {
               style={{
                 flexDirection: 'row',
               }}
-              // disabled={Object.values(users).includes('red')}
             >
               <Fab
+                variant="round"
                 onClick={() => {
                   handleUserColor('#FB998E');
                 }}
@@ -207,12 +204,11 @@ const RoomsPage = ({ userId }) => {
                   backgroundColor: '#FB998E',
                   margin: '1rem',
                 }}
-                variant="round"
               >
                 {' '}
               </Fab>
-
               <Fab
+                variant="round"
                 onClick={() => {
                   handleUserColor('#A3E5FF');
                 }}
@@ -221,12 +217,12 @@ const RoomsPage = ({ userId }) => {
                   backgroundColor: '#A3E5FF',
                   margin: '1rem',
                 }}
-                variant="round"
               >
                 {' '}
               </Fab>
 
               <Fab
+                variant="round"
                 onClick={() => {
                   handleUserColor('#D4BEEE');
                 }}
@@ -235,7 +231,6 @@ const RoomsPage = ({ userId }) => {
                   backgroundColor: '#D4BEEE',
                   margin: '1rem',
                 }}
-                variant="round"
               >
                 {' '}
               </Fab>

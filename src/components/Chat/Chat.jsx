@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Button, TextField, Typography } from '@material-ui/core';
 import styles from './Chat.css';
 import { SocketContext } from '../app/context/socketProvider';
@@ -74,6 +75,10 @@ const Chat = ({ color }) => {
       </form>
     </div>
   );
+};
+
+Chat.propTypes = {
+  color: PropTypes.string.isRequired,
 };
 
 export default Chat;
